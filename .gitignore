@@ -1,0 +1,39 @@
+
+#ignore target dir
+target*/
+
+#*.orig
+#
+# Eclipse project files
+#
+.classpath
+.project
+.settings*/
+.springBeans
+MANIFEST.MF
+bin*/
+war*/
+
+#
+# IntelliJ IDEA project files
+#
+.idea*/
+*.ipr
+*.iml
+*.iws
+*.ids
+
+#ignore NetBeans project files
+nb-configuration.xml
+profiles.xml
+catalog.xml
+nbactions.xml
+
+#ignore some temporary files
+*.vpp~*
+
+#ignore thumbnails created by windows
+Thumbs.db
+
+#ignore some log files
+#script/*.log
