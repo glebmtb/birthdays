@@ -22,7 +22,7 @@ war*/
 *.iml
 *.iws
 *.ids
-
+*.dic
 #ignore NetBeans project files
 nb-configuration.xml
 profiles.xml
