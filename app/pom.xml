@@ -130,7 +130,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.2.1</version>
         <configuration>
-          <mainClass>ru.n5g.birthdays.HomeController</mainClass>
+          <mainClass>ru.n5g.birthdays.app.server.controller.HomeController</mainClass>
         </configuration>
       </plugin>
     </plugins>

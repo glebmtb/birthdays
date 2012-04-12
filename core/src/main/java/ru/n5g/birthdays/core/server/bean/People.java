@@ -1,4 +1,4 @@
-package server.bean;
+package ru.n5g.birthdays.core.server.bean;
 
 import javax.persistence.*;
 

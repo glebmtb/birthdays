@@ -1,4 +1,4 @@
-package ru.n5g.birthdays;
+package ru.n5g.birthdays.app.server.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
