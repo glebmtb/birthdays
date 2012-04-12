@@ -7,9 +7,11 @@
     <groupId>ru.n5g</groupId>
     <version>0.1-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
 
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ru.n5g.birthdays</groupId>
   <artifactId>app</artifactId>
+  <packaging>war</packaging>
 
 
 </project>
