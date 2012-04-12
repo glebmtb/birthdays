@@ -28,6 +28,12 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>ru.n5g.birthdays</groupId>
+        <artifactId>core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>${postgresql.version}</version>

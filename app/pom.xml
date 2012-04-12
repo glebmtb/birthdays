@@ -15,6 +15,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>ru.n5g.birthdays</groupId>
+      <artifactId>core</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>postgresql</groupId>
       <artifactId>postgresql</artifactId>
     </dependency>
