@@ -21,6 +21,11 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>ru.n5g.birthdays</groupId>
+      <artifactId>core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <!-- Spring -->
     <dependency>
       <groupId>org.springframework</groupId>
