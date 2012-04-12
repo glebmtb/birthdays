@@ -14,4 +14,32 @@
   </modules>
   <name>Birthdays</name>
 
+
+
+
+
+  <repositories>
+    <repository>
+      <id>codehaus-maven-repo</id>
+      <name>Codehaus repo</name>
+      <url>http://repository.codehaus.org/org/codehaus/mojo/</url>
+    </repository>
+    <repository>
+      <id>gwt-maven</id>
+      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+    </repository>
+    <repository>
+      <id>sonatype-nexus-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+    <repository>
+      <id>iplantCollaborative</id>
+      <url>http://projects.iplantcollaborative.org/archiva/repository/internal/</url>
+    </repository>
+    <repository>
+      <id>central</id>
+      <url>http://repo1.maven.org/maven2</url>
+    </repository>
+  </repositories>
+
 </project>
