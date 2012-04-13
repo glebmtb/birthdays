@@ -13,4 +13,6 @@
   <context:component-scan base-package="ru.n5g.birthdays.app.server.service"/>
   <context:component-scan base-package="ru.n5g.birthdays.core.server.dao"/>
 
+  <!--Файл с настройками ресурсов для работы с данными (Data Access Resources)-->
+  <import resource="../db-config.xml"/>
 </beans>

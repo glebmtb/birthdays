@@ -178,10 +178,15 @@
         <artifactId>hibernate-commons-annotations</artifactId>
         <version>3.3.0.ga</version>
       </dependency>
+      <dependency>
+        <groupId>org.hibernate.javax.persistence</groupId>
+        <artifactId>hibernate-jpa-2.0-api</artifactId>
+        <version>1.0.0.Final</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
-  <repositories>
+<!--  <repositories>
     <repository>
       <id>codehaus-maven-repo</id>
       <name>Codehaus repo</name>
@@ -203,6 +208,19 @@
       <id>central</id>
       <url>http://repo1.maven.org/maven2</url>
     </repository>
-  </repositories>
+  </repositories>-->
 
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>CG Repo</name>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>http://10.10.31.104:8081/artifactory/repo</url>
+    </repository>
+  </repositories>
 </project>
