@@ -12,6 +12,9 @@
 </head>
 <body>
 <h1>Страничка отправки SMS используя шлюз Giper.mobi</h1>
+<a href="<c:url value="/logout" />">
+  <spring:message code="label.logout"/>
+</a>
 <hr>
 
 <form:form method="post" action="sendSms" commandName="sms">

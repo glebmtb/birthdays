@@ -12,6 +12,8 @@ public class BirthdaysServiceImpl implements BirthdaysService {
 
   public String getHelloWorld() {
     People people = peopleDAO.get(new Long(1));
+    if (people == null)
+      return "Пусто";
     return people.getFirstName();
   }
 

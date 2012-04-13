@@ -72,6 +72,21 @@
         <artifactId>spring-orm</artifactId>
         <version>${org.springframework-version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${org.springframework-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${org.springframework-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-core</artifactId>
+        <version>${org.springframework-version}</version>
+      </dependency>
 
       <!-- AspectJ -->
       <dependency>
@@ -186,7 +201,7 @@
     </dependencies>
   </dependencyManagement>
 
-<!--  <repositories>
+  <repositories>
     <repository>
       <id>codehaus-maven-repo</id>
       <name>Codehaus repo</name>
@@ -208,9 +223,9 @@
       <id>central</id>
       <url>http://repo1.maven.org/maven2</url>
     </repository>
-  </repositories>-->
+  </repositories>
 
-  <repositories>
+<!--  <repositories>
     <repository>
       <id>central</id>
       <name>CG Repo</name>
@@ -222,5 +237,5 @@
       </snapshots>
       <url>http://10.10.31.104:8081/artifactory/repo</url>
     </repository>
-  </repositories>
+  </repositories>-->
 </project>
