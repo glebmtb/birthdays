@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.n5g.birthdays.app.server.service.BirthdaysService;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 
@@ -24,12 +21,8 @@ public class HomeController {
   @Autowired
   private BirthdaysService birthdaysService;
 
-  /**
-   * Simply selects the home view to render by returning its name.
-   */
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public String home(Locale locale, Model model) {
-    logger.info("Welcome home! the client locale is " + locale.toString());
 
     Date date = new Date();
     DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
