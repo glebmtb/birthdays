@@ -12,5 +12,7 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 <P>  Сообщение с сервиса: "${serverMessage}". </P>
+
+<P>Ид: "${id}", Пользователь: ${people} </P>
 </body>
 </html>
