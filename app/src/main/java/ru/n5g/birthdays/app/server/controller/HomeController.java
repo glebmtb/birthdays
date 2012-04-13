@@ -62,13 +62,27 @@ public class HomeController {
     String phone = "79274313113";
     SMS sms1 = new SMS(smsText, smsId, sender_id, phone);
 
-    SendingSMS sendingSMS = new SendingSMS("mabden","casper");
-    String xml =sendingSMS.makeXML(sms1);
+    SendingSMS sendingSMS = new SendingSMS("mabden", "casper");
+    String xml = sendingSMS.makeXML(sms1);
     String response = sendingSMS.send(sms1);
 
     model.addAttribute("xml", xml.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&gt;&lt;", "&gt;<br>&lt;"));
     model.addAttribute("response", response);
     return "sendSms";
+  }
+
+  @RequestMapping(value = "/report", method = RequestMethod.GET)
+  public String report(Model model) throws UnsupportedEncodingException {
+    String smsText = "Hellow World SMS2";
+    String smsId = "111111111111111111111112";
+    String sender_id = "79274313113";
+    String phone = "79274313113";
+    SMS sms1 = new SMS(smsText, smsId, sender_id, phone);
+    SendingSMS sendingSMS = new SendingSMS("mabden", "casper");
+    String response = sendingSMS.getStatus(sms1);
+
+    model.addAttribute("response", response);
+    return "getDeliveryReport";
   }
 
   @RequestMapping(value = "/*", method = RequestMethod.GET)
