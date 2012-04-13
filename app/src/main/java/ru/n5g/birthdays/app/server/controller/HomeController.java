@@ -1,5 +1,6 @@
 package ru.n5g.birthdays.app.server.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.n5g.birthdays.app.server.service.BirthdaysService;
+import ru.n5g.birthdays.core.server.util.SendingSMS;
+import ru.n5g.birthdays.core.shared.bean.SMS;
 
 @Controller
 public class HomeController {
@@ -46,8 +49,31 @@ public class HomeController {
     return "home";
   }
 
+  @RequestMapping(value = "/get", method = RequestMethod.GET)
+  public String getDeliveryReport() {
+    return "getDeliveryReport";
+  }
+
+  @RequestMapping(value = "/send", method = RequestMethod.GET)
+  public String sendSms(Model model) throws UnsupportedEncodingException {
+    String smsText = "Hellow World SMS2";
+    String smsId = "111111111111111111111112";
+    String sender_id = "79274313113";
+    String phone = "79274313113";
+    SMS sms1 = new SMS(smsText, smsId, sender_id, phone);
+
+    SendingSMS sendingSMS = new SendingSMS("mabden","casper");
+    String xml =sendingSMS.makeXML(sms1);
+    String response = sendingSMS.send(sms1);
+
+    model.addAttribute("xml", xml.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&gt;&lt;", "&gt;<br>&lt;"));
+    model.addAttribute("response", response);
+    return "sendSms";
+  }
+
   @RequestMapping(value = "/*", method = RequestMethod.GET)
   public String other() {
     return "redirect:/";
   }
+
 }
