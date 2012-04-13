@@ -1,0 +1,12 @@
+CREATE ROLE birthdaysuser LOGIN
+  ENCRYPTED PASSWORD 'md5cc8d2b003d5b628227fb286a95ec2558'
+  NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
+
+CREATE DATABASE birthdays
+  WITH OWNER = birthdaysuser
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Russian_Russia.1251'
+       LC_CTYPE = 'Russian_Russia.1251'
+       CONNECTION LIMIT = -1;
+
