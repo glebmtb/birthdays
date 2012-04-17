@@ -17,13 +17,16 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
   </http>
 
   <authentication-manager>
-    <authentication-provider>
-      <user-service>
-        <user name="admin" password="pass" authorities="ROLE_ADMIN,ROLE_USER"/>
-        <user name="user1" password="1111" authorities="ROLE_USER"/>
-        <user name="user2" password="2222" disabled="true" authorities="ROLE_USER"/>
-      </user-service>
+    <authentication-provider user-service-ref="userDetailsService">
+      <password-encoder hash="md5"/>
+      <!--<user-service>-->
+        <!--<user name="admin" password="pass" authorities="ROLE_ADMIN,ROLE_USER"/>-->
+        <!--<user name="user1" password="1111" authorities="ROLE_USER"/>-->
+        <!--<user name="user2" password="2222" disabled="true" authorities="ROLE_USER"/>-->
+      <!--</user-service>-->
     </authentication-provider>
   </authentication-manager>
+
+  <beans:bean name="userDetailsService" class="ru.n5g.birthdays.core.server.service.UserServiceImpl"/>
 
 </beans:beans>
