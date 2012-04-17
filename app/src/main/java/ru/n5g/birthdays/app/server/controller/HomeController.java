@@ -8,6 +8,8 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,6 +60,7 @@ public class HomeController {
 
   @RequestMapping(value = "/send", method = RequestMethod.GET)
   public String sendSms(Model model) throws UnsupportedEncodingException {
+    model.addAttribute("login", getUser().getName());
     model.addAttribute("sms", new SMS());
     model.addAttribute("xml", new String());
     model.addAttribute("response", new String());
@@ -91,6 +94,7 @@ public class HomeController {
     String xml = sendingSMS.makeXML(sms1);
     String response = sendingSMS.send(sms1);
 
+    model.addAttribute("login", getUser().getName());
     model.addAttribute("sms", new SMS());
     model.addAttribute("xml", xml.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&gt;&lt;", "&gt;<br>&lt;"));
     model.addAttribute("response", response);
@@ -102,4 +106,7 @@ public class HomeController {
     return "redirect:/";
   }
 
+  private Authentication getUser(){
+    return SecurityContextHolder.getContext().getAuthentication();
+  }
 }

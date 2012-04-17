@@ -203,6 +203,17 @@
 
   <repositories>
     <repository>
+      <id>central</id>
+      <name>CG Repo</name>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>http://10.10.31.4:8081/artifactory/repo</url>
+    </repository>
+    <repository>
       <id>codehaus-maven-repo</id>
       <name>Codehaus repo</name>
       <url>http://repository.codehaus.org/org/codehaus/mojo/</url>
@@ -219,23 +230,9 @@
       <id>iplantCollaborative</id>
       <url>http://projects.iplantcollaborative.org/archiva/repository/internal/</url>
     </repository>
-    <repository>
+<!--    <repository>
       <id>central</id>
       <url>http://repo1.maven.org/maven2</url>
-    </repository>
+    </repository>-->
   </repositories>
-
-<!--  <repositories>
-    <repository>
-      <id>central</id>
-      <name>CG Repo</name>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <url>http://10.10.31.104:8081/artifactory/repo</url>
-    </repository>
-  </repositories>-->
 </project>
