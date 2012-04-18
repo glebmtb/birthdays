@@ -7,7 +7,7 @@ import java.lang.reflect.TypeVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class BaseDAOImpl<T> implements BaseDAO<T> {
+public class BaseDaoImpl<T> implements BaseDao<T> {
   private Class<T> beanClass;
   @Autowired
   protected HibernateTemplate hibernateTemplate = null;
