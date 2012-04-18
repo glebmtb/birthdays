@@ -35,7 +35,8 @@
     <url-pattern>*.rpc</url-pattern>
     <url-pattern>/send</url-pattern>
     <url-pattern>/sendSms</url-pattern>
-    <url-pattern>/jsp/*</url-pattern>
+    <url-pattern>/s/</url-pattern>
+    <url-pattern>/s/*</url-pattern>
   </servlet-mapping>
 
   <!-- Фильтр для перекодировки в utf8 -->
