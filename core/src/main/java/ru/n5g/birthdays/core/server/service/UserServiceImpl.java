@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     Users user = userDao.loadByUserName(username);
+    if (user == null)
+      user = new Users();
     AppUserDetails appUserDetails = new AppUserDetails(user);
     String newPass = passwordEncoder.encodePassword("pass", null);
     return appUserDetails;
