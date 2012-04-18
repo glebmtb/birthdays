@@ -11,6 +11,8 @@
   <modules>
     <module>app</module>
     <module>core</module>
+    <module>administrator</module>
+    <module>SMSService</module>
   </modules>
   <name>Birthdays</name>
 
