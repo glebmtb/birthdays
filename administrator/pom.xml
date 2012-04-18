@@ -131,7 +131,6 @@
         <artifactId>maven-source-plugin</artifactId>
       </plugin>
     </plugins>
-
     <resources>
       <resource>
         <directory>src/main/java</directory>
@@ -144,5 +143,6 @@
         <directory>src/main/resources</directory>
       </resource>
     </resources>
+    <finalName>administrator</finalName>
   </build>
 </project>

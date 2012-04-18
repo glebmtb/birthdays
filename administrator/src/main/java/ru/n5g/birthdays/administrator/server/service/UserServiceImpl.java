@@ -1,4 +1,4 @@
-package ru.n5g.birthdays.core.server.service;
+package ru.n5g.birthdays.administrator.server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
@@ -6,14 +6,10 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.core.server.bean.AppUserDetails;
 import ru.n5g.birthdays.core.server.bean.Users;
 import ru.n5g.birthdays.core.server.dao.UserDao;
 
-@Component
-@Transactional
 public class UserServiceImpl implements UserDetailsService {
   @Autowired
   UserDao userDao;
