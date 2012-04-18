@@ -7,7 +7,9 @@ http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
   <http access-denied-page="/error403.jsp">
-    <intercept-url pattern="/send*" access="ROLE_USER, ROLE_ADMIN"/>
+    <intercept-url pattern="/login.jsp*" access="ROLE_ANONYMOUS"/>
+    <intercept-url pattern="/resources/**" access="ROLE_ANONYMOUS"/>
+    <intercept-url pattern="/**" access="ROLE_USER, ROLE_ADMIN"/>
     <form-login login-page="/login.jsp" default-target-url="/index"
                 authentication-failure-url="/login.jsp?error=true"/>
     <logout logout-url="/logout" logout-success-url="/index"/>
@@ -19,11 +21,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
   <authentication-manager>
     <authentication-provider user-service-ref="userDetailsService">
       <password-encoder hash="md5"/>
-      <!--<user-service>-->
-        <!--<user name="admin" password="pass" authorities="ROLE_ADMIN,ROLE_USER"/>-->
-        <!--<user name="user1" password="1111" authorities="ROLE_USER"/>-->
-        <!--<user name="user2" password="2222" disabled="true" authorities="ROLE_USER"/>-->
-      <!--</user-service>-->
     </authentication-provider>
   </authentication-manager>
 
