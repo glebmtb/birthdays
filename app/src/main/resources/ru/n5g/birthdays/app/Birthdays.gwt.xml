@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='birthdays'>
+  <inherits name="ru.n5g.birthdays.core.Core"/>
+
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.extjs.gxt.ui.GXT'/>
   <inherits name="com.extjs.gxt.desktop.WebDesktop"/>
+  <inherits name="com.google.gwt.place.Place"/>
+  <inherits name="com.google.gwt.activity.Activity"/>
 
   <entry-point class='ru.n5g.birthdays.app.client.MainEntryPoint'/>
+
+  <replace-with class="ru.n5g.birthdays.app.client.mvp.AppClientFactoryImpl">
+    <when-type-is class="ru.n5g.birthdays.app.client.mvp.AppClientFactory"/>
+  </replace-with>
 
   <source path='client'/>
 </module>

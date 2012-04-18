@@ -649,7 +649,7 @@ html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,bloc
 
 ul.x-tab-strip {
   display: block;
-  width: 7000px;
+  width: 20000px;
   zoom: 1;
 }
 
@@ -1532,7 +1532,7 @@ fieldset.x-panel-collapsed .x-fieldset-bwrap {
 }
 
 /* make top of checkbox/tools visible in webkit */
-.ext-webkit .x-fieldset-header, .ext-ie .x-fieldset-header {
+.ext-webkit .x-fieldset-header {
   padding-top: 1px;
 }
 
@@ -2411,7 +2411,15 @@ div.x-toolbar-no-items {
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   padding: 3px 3px 3px 5px;
+}
+
+.x-grid3-cell-inner{
   white-space: nowrap;
+}
+
+.x-grid3-hd-inner  {
+  white-space: wrap;
+  vertical-align: middle;
 }
 
 .x-grid3-hd-inner {
@@ -2964,6 +2972,7 @@ a.x-grid3-hd-btn:hover {
   z-index: 1;
   position: absolute;
   right: 0px;
+  width: 18px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -3449,10 +3458,6 @@ a.x-grid3-hd-btn:hover {
 	padding: 0 0 0 3px;
 	position: relative;
 	top: -4px;
-}
-
-.ext-ie9 .x-tree3-node-text-widget  {
-  display: block;	
 }
 
 .x-tree3-node-ct {
@@ -6092,7 +6097,7 @@ body.ext-ie6.x-body-masked .x-window select {
     color: gray;
 }
 .x-item-disabled * {
-    color: gray !important;
+    color: black !important;
 }
 .x-splitbar-proxy {
     background-color: #aaa;
@@ -6353,7 +6358,7 @@ ul.x-tab-strip-bottom{
     font-style:normal;
     font-weight:normal;
 }
-.x-btn-tl, .x-btn-tr, .x-btn-tc, .x-btn-ml, .x-btn-mr, .x-btn-mc, .x-btn-bl, .x-btn-br, .x-btn-bc{
+    .x-btn-tl, .x-btn-tr, .x-btn-tc, .x-btn-ml, .x-btn-mr, .x-btn-mc, .x-btn-bl, .x-btn-br, .x-btn-bc{
 	background-image:url(../images/default/button/btn.gif);
 }
 .x-btn-click .x-btn-text, .x-btn-menu-active .x-btn-text, .x-btn-pressed .x-btn-text{
@@ -7127,6 +7132,7 @@ a.x-menu-item {
 }
 .x-combo-list-item {
     border-color:#fff;
+	height:14px !important;
 }
 .x-combo-list .x-combo-selected{
 	border-color:#a3bae9 !important;
