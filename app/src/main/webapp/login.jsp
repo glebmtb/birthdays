@@ -26,7 +26,7 @@
       <h1><spring:message code="label.input"/></h1>
       <% if (errorCode != null) { %>
       <font color="red"> <spring:message code="label.loginerror"/>
-        : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"]} </font>
+        : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} </font>
       <% } %>
 
       <form action='<%=request.getContextPath()%>/j_spring_security_check' method="post" name="f">
