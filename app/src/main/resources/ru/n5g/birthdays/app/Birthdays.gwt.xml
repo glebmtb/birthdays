@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='birthdays'>
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='com.extjs.gxt.ui.GXT'/>
+  <inherits name="com.extjs.gxt.desktop.WebDesktop"/>
+
+  <entry-point class='ru.n5g.birthdays.app.client.MainEntryPoint'/>
+
+  <source path='client'/>
+</module>

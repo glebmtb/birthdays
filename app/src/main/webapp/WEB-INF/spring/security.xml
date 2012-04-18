@@ -8,7 +8,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
   <http access-denied-page="/error403.jsp">
     <intercept-url pattern="/login.jsp*" access="ROLE_ANONYMOUS"/>
-    <intercept-url pattern="/resources/**" access="ROLE_ANONYMOUS"/>
+    <intercept-url pattern="/resources/**" access="ROLE_ANONYMOUS, ROLE_USER, ROLE_ADMIN"/>
     <intercept-url pattern="/**" access="ROLE_USER, ROLE_ADMIN"/>
     <form-login login-page="/login.jsp" default-target-url="/index"
                 authentication-failure-url="/login.jsp?error=true"/>

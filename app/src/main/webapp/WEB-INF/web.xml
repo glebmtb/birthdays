@@ -9,6 +9,11 @@
     <param-value>/WEB-INF/spring/root-context.xml</param-value>
   </context-param>
 
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>/birthdays</param-value>
+  </context-param>
+
   <!-- Creates the Spring Container shared by all Servlets and Filters -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -26,7 +31,11 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>appServlet</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>*.htm</url-pattern>
+    <url-pattern>*.rpc</url-pattern>
+    <url-pattern>/send</url-pattern>
+    <url-pattern>/sendSms</url-pattern>
+    <url-pattern>/jsp/*</url-pattern>
   </servlet-mapping>
 
   <!-- Фильтр для перекодировки в utf8 -->
@@ -57,5 +66,11 @@
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
     <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
+
+  <welcome-file-list>
+    <welcome-file>/WEB-INF/views/main.jsp</welcome-file>
+  </welcome-file-list>
 </web-app>
