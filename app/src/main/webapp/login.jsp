@@ -25,7 +25,7 @@
     <div class="panel-content" <%=divStyle%>>
       <h1><spring:message code="label.input"/></h1>
       <% if (errorCode != null) { %>
-      <font color="red"> <spring:message code="label.loginerror"/>
+      <font color="red"> <spring:message code="label.login_error"/>
         : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} </font>
       <% } %>
 

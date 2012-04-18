@@ -29,7 +29,7 @@ public class HomeController {
   @Autowired
   private BirthdaysService birthdaysService;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @RequestMapping(value = "/s/", method = RequestMethod.GET)
   public String home(Locale locale, Model model) {
     return homeID(null, locale, model);
   }
@@ -103,7 +103,7 @@ public class HomeController {
 
   @RequestMapping(value = "/*", method = RequestMethod.GET)
   public String other() {
-    return "redirect:/";
+    return "redirect:/s/";
   }
 
   private Authentication getUser(){

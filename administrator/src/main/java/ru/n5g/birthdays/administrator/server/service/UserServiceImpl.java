@@ -6,10 +6,12 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.core.server.bean.AppUserDetails;
 import ru.n5g.birthdays.core.server.bean.Users;
 import ru.n5g.birthdays.core.server.dao.UserDao;
 
+@Transactional
 public class UserServiceImpl implements UserDetailsService {
   @Autowired
   UserDao userDao;

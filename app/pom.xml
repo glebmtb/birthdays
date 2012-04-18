@@ -118,6 +118,20 @@
       <groupId>org.hibernate.javax.persistence</groupId>
       <artifactId>hibernate-jpa-2.0-api</artifactId>
     </dependency>
+
+    <!--GWT/GXT-->
+    <dependency>
+      <groupId>com.extjs</groupId>
+      <artifactId>gxt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-servlet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -155,7 +169,50 @@
           <mainClass>ru.n5g.birthdays.app.server.controller.HomeController</mainClass>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>${gwt-maven-plugin.version}</version>
+        <configuration>
+          <module>${project.build.module}</module>
+          <hostedWebapp>${project.build.directory}/${project.artifactId}</hostedWebapp>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     <finalName>birthdays</finalName>
   </build>
+
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>gwt-maven-plugin</artifactId>
+            <configuration>
+              <module>ru.n5g.birthdays.app.BirthdaysDev</module>
+              <draftCompile>true</draftCompile>
+              <style>PRETTY</style>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
