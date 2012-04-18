@@ -25,6 +25,9 @@
     <postgresql.version>9.1-901.jdbc4</postgresql.version>
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
+    <gwt-maven-plugin.version>2.3.0</gwt-maven-plugin.version>
+    <gwt.version>2.3.0</gwt.version>
+    <gxt.version>2.2.5</gxt.version>
   </properties>
 
   <dependencyManagement>
@@ -204,6 +207,26 @@
         <groupId>org.hibernate.javax.persistence</groupId>
         <artifactId>hibernate-jpa-2.0-api</artifactId>
         <version>1.0.0.Final</version>
+      </dependency>
+
+      <!--GWT/GXT-->
+      <dependency>
+        <groupId>com.extjs</groupId>
+        <artifactId>gxt</artifactId>
+        <version>${gxt.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.gwt</groupId>
+        <artifactId>gwt-servlet</artifactId>
+        <version>${gwt.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.gwt</groupId>
+        <artifactId>gwt-user</artifactId>
+        <version>${gwt.version}</version>
+        <scope>provided</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
