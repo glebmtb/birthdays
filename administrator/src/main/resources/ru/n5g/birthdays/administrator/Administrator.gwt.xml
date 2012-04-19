@@ -9,6 +9,7 @@
   <inherits name="com.google.gwt.place.Place"/>
   <inherits name="com.google.gwt.activity.Activity"/>
 
+
+
   <source path="client"/>
-  <source path="shared"/>
 </module>
