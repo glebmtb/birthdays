@@ -157,6 +157,6 @@
         <directory>src/main/resources</directory>
       </resource>
     </resources>
-    <finalName>administrator</finalName>
+    <finalName>birthdays-administrator</finalName>
   </build>
 </project>
