@@ -216,7 +216,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       columns.add(new ColumnConfig("4", localization.smsLimit(), 50));
 
       ColumnModel cm = new ColumnModel(columns);
-      ListStore store = new ListStore<UserDTO>();
+      ListStore store = presenter.loadUserList();
 
       LiveGridView liveView;
       liveView = new LiveGridView();
