@@ -163,4 +163,36 @@ public class AppPageImpl extends ContentPanel implements AppPage {
   public AcceptsOneWidget getWidgetContainer() {
     return appContainer;
   }
+
+  @Override
+  public void selectTab(TabEnum tab) {
+    selectedTab=tab;
+    chooseTab();
+  }
+
+  @Override
+  public void setHeader(String heading1, String heading2) {
+    String lblHeader1Text = localization.header().concat(": ");
+    if (heading1 != null) {
+      lblHeader1Text = lblHeader1Text.concat(heading1).concat(" &gt; ");
+    }
+
+    String lblHeader2Text = "";
+    if (heading2 != null) {
+      lblHeader2Text = heading2;
+    }
+    lblHeader1.setText(lblHeader1Text);
+    lblHeader2.setText(lblHeader2Text);
+  }
+
+  protected void chooseTab() {
+    switch (selectedTab) {
+      case ADMINISTRATOR:
+        toolBar.setSelection(btnAdmin);
+        break;
+      default:
+        toolBar.setSelection(btnAdmin);
+        break;
+    }
+  }
 }

@@ -1,10 +1,13 @@
-package ru.n5g.birthdays.app.client.mvp;
+package ru.n5g.birthdays.app.client.factory;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
+import ru.n5g.birthdays.administrator.client.factory.AdministratorFactory;
+import ru.n5g.birthdays.administrator.client.factory.AdministratorFactoryImpl;
+import ru.n5g.birthdays.administrator.client.place.AdministratorPlace;
 import ru.n5g.birthdays.app.client.localization.AppLocalization;
 import ru.n5g.birthdays.app.client.view.AppPage;
 import ru.n5g.birthdays.app.client.view.AppPageImpl;
@@ -15,8 +18,17 @@ public class AppClientFactoryImpl implements AppClientFactory {
   private AppLocalization localization = GWT.create(AppLocalization.class);
   private static final PlaceController placeController = new PlaceController(eventBus);
 
+  private AdministratorFactory administratorFactory;
+
   public EventBus getEventBus() {
     return eventBus;
+  }
+
+  @Override
+  public AdministratorFactory getAdministratorFactory() {
+    if(administratorFactory==null)
+      administratorFactory = new AdministratorFactoryImpl(this);
+    return administratorFactory;
   }
 
   @Override
@@ -30,7 +42,13 @@ public class AppClientFactoryImpl implements AppClientFactory {
   }
 
   @Override
-  public Place getDefaultPlace() {
-    return null;  //TODO: implement this method
+     public Place getDefaultPlace() {
+    return new AdministratorPlace();
   }
+
+  @Override
+  public AppLocalization getLocalization() {
+    return localization;
+  }
+
 }

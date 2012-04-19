@@ -3,7 +3,7 @@ package ru.n5g.birthdays.app.client.presenter;
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
-import ru.n5g.birthdays.app.client.mvp.AppClientFactory;
+import ru.n5g.birthdays.app.client.factory.AppClientFactory;
 import ru.n5g.birthdays.app.client.view.AppPage;
 
 public class AppPresenter implements AppPage.Presenter {
