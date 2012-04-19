@@ -26,7 +26,7 @@ import ru.n5g.birthdays.administrator.client.localization.AdministratorLocalizat
 import ru.n5g.birthdays.administrator.client.presenter.AdministratorPresenter;
 import ru.n5g.birthdays.core.client.resources.Resources;
 import ru.n5g.birthdays.core.client.util.IconUtils;
-import ru.n5g.birthdays.core.shared.bean.UserDTO;
+import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 public class AdministratorViewImpl extends LayoutContainer implements AdministratorView {
   private AdministratorPresenter presenter;
@@ -96,18 +96,18 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       toolBarBottom = createToolBarBottom(gridMain);
       new QuickTip(gridMain);
 
-      gridMain.addListener(Events.RowDoubleClick, new Listener<GridEvent<UserDTO>>() {
+      gridMain.addListener(Events.RowDoubleClick, new Listener<GridEvent<UsersDTO>>() {
         @Override
-        public void handleEvent(GridEvent<UserDTO> be) {
+        public void handleEvent(GridEvent<UsersDTO> be) {
           if (btnEdit.isVisible() && btnEdit.isEnabled()) {
 //            presenter.editUser(be.getModel(), userType);
           }
         }
       });
 
-      gridMain.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<UserDTO>() {
+      gridMain.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<UsersDTO>() {
         @Override
-        public void selectionChanged(SelectionChangedEvent<UserDTO> se) {
+        public void selectionChanged(SelectionChangedEvent<UsersDTO> se) {
           if (se.getSelection().size() > 0) {
             btnEdit.enable();
             btnDel.enable();
@@ -137,7 +137,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       return button;
     }
 
-    private ToolBar createToolBarBottom(Grid<UserDTO> grid) {
+    private ToolBar createToolBarBottom(Grid<UsersDTO> grid) {
       ToolBar toolBarBottom;
       toolBarBottom = new ToolBar();
       LiveToolItem item;
@@ -208,20 +208,21 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
     private Grid createGrid() {
       List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-      columns.add(new ColumnConfig("1", localization.userLogin(), 50));
+      columns.add(new ColumnConfig(UsersDTO.LOGIN, localization.userLogin(), 50));
       columns.add(new ColumnConfig("2", localization.firstName(), 50));
       columns.add(new ColumnConfig("3", localization.lastName(), 50));
       columns.add(new ColumnConfig("4", localization.smsLimit(), 50));
 
       ColumnModel cm = new ColumnModel(columns);
-      ListStore store = new ListStore<UserDTO>();
+      ListStore<UsersDTO> store;
+      store = presenter.loadUserList();
 
       LiveGridView liveView;
       liveView = new LiveGridView();
       liveView.setEmptyText(localization.listEmpty());
 
-      Grid<UserDTO> grid;
-      grid = new Grid<UserDTO>(store, cm);
+      Grid<UsersDTO> grid;
+      grid = new Grid<UsersDTO>(store, cm);
       grid.setBorders(false);
       grid.setLoadMask(true);
       grid.setStripeRows(true);
