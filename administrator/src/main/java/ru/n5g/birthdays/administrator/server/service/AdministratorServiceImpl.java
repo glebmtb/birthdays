@@ -1,8 +1,12 @@
 package ru.n5g.birthdays.administrator.server.service;
 
-import org.springframework.stereotype.Service;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import ru.n5g.birthdays.administrator.client.service.AdministratorService;
 
-@Service
-public class AdministratorServiceImpl implements AdministratorService{
+@SuppressWarnings("serial")
+public class AdministratorServiceImpl extends RemoteServiceServlet implements AdministratorService{
+  @Override
+  public String getMessage() {
+    return "Hello World 2";
+  }
 }

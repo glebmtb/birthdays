@@ -49,6 +49,8 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
 
     mainPanel.add(new UserPanel(localization, presenter));
     add(mainPanel);
+
+    presenter.getMessage();
   }
 
   private class UserPanel extends LayoutContainer {

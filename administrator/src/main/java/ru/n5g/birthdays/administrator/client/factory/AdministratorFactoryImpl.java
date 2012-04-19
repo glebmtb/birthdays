@@ -28,4 +28,9 @@ public class AdministratorFactoryImpl implements AdministratorFactory {
       presenter = new AdministratorPresenter(this);
     return presenter;
   }
+
+  @Override
+  public AdministratorServiceAsync getService() {
+    return service;
+  }
 }
