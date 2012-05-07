@@ -6,8 +6,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
-@RemoteServiceRelativePath("administratorService")
-public interface AdministratorService extends RemoteService {
+@RemoteServiceRelativePath("administratorService.rpc")
+public interface AdministratorService extends RemoteService  {
   String getMessage();
 
   BasePagingLoadResult<UsersDTO> loadUserList(BasePagingLoadConfig loadConfig);

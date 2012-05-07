@@ -5,16 +5,16 @@ import java.util.List;
 
 import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.n5g.birthdays.administrator.client.service.AdministratorService;
 import ru.n5g.birthdays.core.server.bean.Users;
 import ru.n5g.birthdays.core.server.dao.PeopleDao;
 import ru.n5g.birthdays.core.server.dao.UserDao;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
-@SuppressWarnings("serial")
-public class AdministratorServiceImpl extends RemoteServiceServlet implements AdministratorService{
+@Service("administratorService.rpc")
+public class AdministratorServiceImpl implements AdministratorService{
   @Autowired
   UserDao userDao;
 

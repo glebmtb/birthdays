@@ -21,5 +21,5 @@
     <beans:property name="suffix" value=".jsp" />
   </beans:bean>
 
-  <context:component-scan base-package="ru.n5g.birthdays.app.server.controller" />
+  <context:component-scan base-package="ru.n5g.birthdays.app.server.controller"/>
 </beans:beans>
