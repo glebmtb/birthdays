@@ -244,15 +244,8 @@
 
   <repositories>
     <repository>
-      <id>central</id>
-      <name>CG Repo</name>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <url>http://10.10.31.4:8081/artifactory/repo</url>
+      <id>cestpasdur-public</id>
+      <url>http://nexus.cestpasdur.com/nexus/content/groups/everything/</url>
     </repository>
     <repository>
       <id>codehaus-maven-repo</id>
@@ -271,9 +264,5 @@
       <id>iplantCollaborative</id>
       <url>http://projects.iplantcollaborative.org/archiva/repository/internal/</url>
     </repository>
-    <!--<repository>
-      <id>central</id>
-      <url>http://repo1.maven.org/maven2</url>
-    </repository>-->
   </repositories>
 </project>
