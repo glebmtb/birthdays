@@ -6,8 +6,8 @@
   <changeSet id="001" author="belyaev">
     <comment>Создание новой таблицы people - список людей</comment>
     <createTable tableName="people" remarks="список людей">
-      <column name="id" type="int">
-        <constraints primaryKey="true" nullable="false"/>
+      <column name="id" autoIncrement="true" type="bigint" remarks="П.К.">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_people"/>
       </column>
       <column name="first_name" type="varchar(255)" remarks="Имя">
         <constraints nullable="false"/>
@@ -22,5 +22,29 @@
       <column name="comment" type="varchar(1000)" remarks="Комментарий"/>
     </createTable>
     <addUniqueConstraint tableName="people" columnNames="phone" constraintName="uni_phone"/>
+  </changeSet>
+
+  <changeSet id="002" author="belyaev">
+    <comment>Создание новой таблицы users - список людей</comment>
+    <createTable tableName="users" remarks="пользователи">
+      <column name="id" autoIncrement="true" type="bigint" remarks="П.К.">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_users"/>
+      </column>
+      <column name="login " type="varchar(255)" remarks="логин">
+        <constraints nullable="false"/>
+      </column>
+      <column name="password" type="varchar(255)" remarks="пароль">
+        <constraints nullable="false"/>
+      </column>
+      <column name="role" type="varchar(1000)" remarks="комментарий"/>
+      <column name="comment" type="varchar(255)" remarks="комментарий"/>
+    </createTable>
+    <addUniqueConstraint tableName="users" columnNames="login" constraintName="uni_login"/>
+    <insert tableName="users">
+      <column name="login" value="admin"/>
+      <column name="password" value="1a1dc91c907325c69271ddf0c944bc72"/>
+      <column name="role" value="ROLE_ADMIN"/>
+      <column name="comment" value="pass"/>
+    </insert>
   </changeSet>
 </databaseChangeLog>
