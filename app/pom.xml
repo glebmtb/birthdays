@@ -149,12 +149,6 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.jboss.as.plugins</groupId>
-        <artifactId>jboss-as-maven-plugin</artifactId>
-        <version>7.2.Final</version>
-      </plugin>
-
-      <plugin>
         <groupId>org.liquibase</groupId>
         <artifactId>liquibase-maven-plugin</artifactId>
         <version>${liquibase.version}</version>
@@ -229,9 +223,15 @@
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <groupId>org.jboss.as.plugins</groupId>
+            <artifactId>jboss-as-maven-plugin</artifactId>
+            <version>7.2.Final</version>
+          </plugin>
         </plugins>
       </build>
     </profile>
+
     <profile>
       <id>openshift</id>
       <build>
