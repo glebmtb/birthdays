@@ -64,7 +64,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
 
     private ToolBar toolBarTop;
     private ToolBar toolBarBottom;
-    private Grid gridMain;
+    private Grid<UsersDTO> gridMain;
 
     private UserPanel(AdministratorLocalization localization, AdministratorPresenter presenter) {
       super(new FitLayout());
@@ -156,7 +156,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       button.addSelectionListener(new SelectionListener<ButtonEvent>() {
         @Override
         public void componentSelected(ButtonEvent buttonEvent) {
-//          presenter.editUser(gridMain.getSelectionModel().getSelectedItem(), userType);
+          presenter.editUser(gridMain.getSelectionModel().getSelectedItem());
         }
       });
       button.disable();

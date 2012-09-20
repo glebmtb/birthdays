@@ -32,4 +32,22 @@ public interface AdministratorLocalization extends SimpleWindowLocalization {
   String btnAdd();
 
   String titleEditUserWindow();
+
+  String login();
+
+  String password();
+
+  String passwordRepetition();
+
+  String btnAddUser();
+
+  String errorTitle();
+
+  String errorPassword();
+
+  String errorOnlyLatin();
+
+  String errorOnlyLatinDigital();
+
+  String titleEditUserWindowAddNewUser();
 }

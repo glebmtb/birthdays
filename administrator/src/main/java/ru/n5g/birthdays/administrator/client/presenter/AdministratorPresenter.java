@@ -52,11 +52,16 @@ public class AdministratorPresenter extends SimpleWindowPresenter{
   }
 
   public void addUser() {
-    EditUserWindow  window = new EditUserWindow(this);
+    EditUserWindow  window = new EditUserWindow(this, null);
     window.show();
   }
 
   public void editUser(UsersDTO model) {
+    EditUserWindow  window = new EditUserWindow(this, model);
+    window.show();
+  }
+
+  public void saveEditUserWindow(UsersDTO dto) {
     //TODO: implement this method
   }
 }
