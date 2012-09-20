@@ -6,7 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 public interface AdministratorServiceAsync {
-  void getMessage(AsyncCallback<String> callback);
-
   void loadUserList(BasePagingLoadConfig loadConfig, AsyncCallback<BasePagingLoadResult<UsersDTO>> callback);
+
+  void setUsers(UsersDTO dto, AsyncCallback<Void> asyncCallback);
 }

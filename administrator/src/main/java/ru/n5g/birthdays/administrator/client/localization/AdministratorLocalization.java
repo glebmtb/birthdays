@@ -19,7 +19,7 @@ public interface AdministratorLocalization extends SimpleWindowLocalization {
 
   String dialogConfirm();
 
-  String confirmationDeletings();
+  String confirmationDeleting();
 
   String btnEdit();
 
@@ -50,4 +50,8 @@ public interface AdministratorLocalization extends SimpleWindowLocalization {
   String errorOnlyLatinDigital();
 
   String titleEditUserWindowAddNewUser();
+
+  String information();
+
+  String saveSuccess();
 }

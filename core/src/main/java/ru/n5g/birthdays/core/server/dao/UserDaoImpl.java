@@ -16,7 +16,7 @@ import ru.n5g.birthdays.core.server.bean.Users;
 
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl extends BaseDaoImpl<Users> implements UserDao{
 
   @Autowired
   private HibernateTemplate hibernateTemplate;

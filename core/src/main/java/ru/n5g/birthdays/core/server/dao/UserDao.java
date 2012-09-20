@@ -4,7 +4,7 @@ import java.util.List;
 
 import ru.n5g.birthdays.core.server.bean.Users;
 
-public interface UserDao {
+public interface UserDao extends BaseDao<Users>{
   
   Users loadByUserName(String username);
 

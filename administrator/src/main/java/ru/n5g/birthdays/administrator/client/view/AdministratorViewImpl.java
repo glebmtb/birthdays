@@ -31,6 +31,7 @@ import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 public class AdministratorViewImpl extends LayoutContainer implements AdministratorView {
   private AdministratorPresenter presenter;
   private AdministratorLocalization localization;
+  private UserPanel userPanel;
 
   public AdministratorViewImpl(AdministratorPresenter presenter, AdministratorLocalization localization) {
     super(new FitLayout());
@@ -47,10 +48,14 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
     mainPanel.setBorders(false);
     mainPanel.addStyleName("form-styled");
 
-    mainPanel.add(new UserPanel(localization, presenter));
+    userPanel = new UserPanel(localization, presenter);
+    mainPanel.add(userPanel);
     add(mainPanel);
+  }
 
-    presenter.getMessage();
+  @Override
+  public void refresh() {
+    userPanel.refresh();
   }
 
   private class UserPanel extends LayoutContainer {
@@ -169,7 +174,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       button.addSelectionListener(new SelectionListener<ButtonEvent>() {
         @Override
         public void componentSelected(ButtonEvent buttonEvent) {
-          MessageBox messageBox = MessageBox.confirm(localization.dialogConfirm(), localization.confirmationDeletings(),
+          MessageBox messageBox = MessageBox.confirm(localization.dialogConfirm(), localization.confirmationDeleting(),
               new Listener<MessageBoxEvent>() {
                 @Override
                 public void handleEvent(MessageBoxEvent ce) {
@@ -236,11 +241,16 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
     }
 
     public void refreshUserList() {
-      ((LiveGridView) gridMain.getView()).refresh();
+//      ((LiveGridView) gridMain.getView()).refresh();
+      refresh();
     }
 
     public void setDeleteButtonEnabled(boolean b) {
       btnDel.setEnabled(b);
+    }
+
+    public void refresh() {
+      gridMain.getStore().getLoader().load();
     }
   }
 }

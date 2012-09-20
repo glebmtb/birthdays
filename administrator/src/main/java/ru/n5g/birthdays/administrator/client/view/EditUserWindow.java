@@ -1,6 +1,8 @@
 package ru.n5g.birthdays.administrator.client.view;
 
+import com.extjs.gxt.ui.client.widget.form.Field;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.Validator;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.administrator.client.localization.AdministratorLocalization;
 import ru.n5g.birthdays.administrator.client.presenter.AdministratorPresenter;
@@ -35,7 +37,7 @@ public class EditUserWindow extends SimpleWindowView {
 
   @Override
   protected String getTitleWindow() {
-    if(dto==null){
+    if (dto == null) {
       return localization.titleEditUserWindowAddNewUser();
     }
     return localization.titleEditUserWindow();
@@ -47,8 +49,16 @@ public class EditUserWindow extends SimpleWindowView {
     login.setMaxLength(255);
     login.setFieldLabel(localization.login());
     login.setLabelStyle(LABEL_STYLE);
-    login.setRegex("([a-zA-Z]+)");
-    login.getMessages().setRegexText(localization.errorOnlyLatin());
+    login.setRegex("([a-zA-Z0-9]+)");
+    login.getMessages().setRegexText(localization.errorOnlyLatinDigital());
+    login.setValidator(new Validator() {
+      @Override
+      public String validate(Field<?> field, String value) {
+//         if (value.charAt(0)) TODO добавить проверку на то что первый сивол не цифра
+//          return localization.errorCodePoint();
+        return null;
+      }
+    });
     TestIdSetter.resetTestId(login, "form_201208251452");
     RequiredFieldsUtil.setRequired(login, true);
 
@@ -89,7 +99,7 @@ public class EditUserWindow extends SimpleWindowView {
       dto = new UsersDTO();
     dto.setLogin(login.getValue());
     dto.setPassword(password.getValue());
-    presenter.saveEditUserWindow(dto);
+    presenter.saveEditUserWindow(dto, this);
   }
 
   private boolean checkPassword() {

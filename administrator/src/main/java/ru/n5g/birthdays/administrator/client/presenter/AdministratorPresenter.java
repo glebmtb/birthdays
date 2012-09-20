@@ -11,7 +11,7 @@ import ru.n5g.birthdays.administrator.client.view.EditUserWindow;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
-public class AdministratorPresenter extends SimpleWindowPresenter{
+public class AdministratorPresenter extends SimpleWindowPresenter {
   private AdministratorView view;
   private AdministratorFactory factory;
 
@@ -24,18 +24,6 @@ public class AdministratorPresenter extends SimpleWindowPresenter{
     if (view == null)
       view = new AdministratorViewImpl(this, factory.getLocalization());
     return view;
-  }
-
-  public void getMessage(){
-    factory.getService().getMessage(new AsyncCallback<String>() {
-      public void onFailure(Throwable caught) {
-        Info.display("service", "error");
-      }
-
-      public void onSuccess(String result) {
-        Info.display("service", result);
-      }
-    });
   }
 
   public ListStore<UsersDTO> loadUserList() {
@@ -52,16 +40,26 @@ public class AdministratorPresenter extends SimpleWindowPresenter{
   }
 
   public void addUser() {
-    EditUserWindow  window = new EditUserWindow(this, null);
+    EditUserWindow window = new EditUserWindow(this, null);
     window.show();
   }
 
   public void editUser(UsersDTO model) {
-    EditUserWindow  window = new EditUserWindow(this, model);
+    EditUserWindow window = new EditUserWindow(this, model);
     window.show();
   }
 
-  public void saveEditUserWindow(UsersDTO dto) {
-    //TODO: implement this method
+  public void saveEditUserWindow(UsersDTO dto, final EditUserWindow window) {
+    factory.getService().setUsers(dto, new AsyncCallback<Void>() {
+      public void onFailure(Throwable caught) {
+        Info.display("service", "error");
+      }
+
+      public void onSuccess(Void result) {
+        window.hide();
+        view.refresh();
+        Info.display(factory.getLocalization().information(), factory.getLocalization().saveSuccess());
+      }
+    });
   }
 }

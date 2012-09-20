@@ -8,7 +8,7 @@ import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 @RemoteServiceRelativePath("administratorService.rpc")
 public interface AdministratorService extends RemoteService  {
-  String getMessage();
-
   BasePagingLoadResult<UsersDTO> loadUserList(BasePagingLoadConfig loadConfig);
+
+  void setUsers(UsersDTO dto);
 }
