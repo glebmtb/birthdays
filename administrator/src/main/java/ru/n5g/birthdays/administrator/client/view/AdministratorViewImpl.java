@@ -181,7 +181,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
                   Button btn = ce.getButtonClicked();
                   if (btn.getItemId().equals("yes")) {
                     btnDel.disable();
-//                    presenter.delUser(gridMain.getSelectionModel().getSelectedItem());
+                    presenter.delUser(gridMain.getSelectionModel().getSelectedItem());
                   }
                 }
               });

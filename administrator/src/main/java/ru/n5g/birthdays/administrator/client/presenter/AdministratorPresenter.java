@@ -52,13 +52,26 @@ public class AdministratorPresenter extends SimpleWindowPresenter {
   public void saveEditUserWindow(UsersDTO dto, final EditUserWindow window) {
     factory.getService().setUsers(dto, new AsyncCallback<Void>() {
       public void onFailure(Throwable caught) {
-        Info.display("service", "error");
+        Info.display("Error", caught.getMessage());
       }
 
       public void onSuccess(Void result) {
         window.hide();
         view.refresh();
         Info.display(factory.getLocalization().information(), factory.getLocalization().saveSuccess());
+      }
+    });
+  }
+
+  public void delUser(UsersDTO dto) {
+    factory.getService().delUsers(dto, new AsyncCallback<Void>() {
+      public void onFailure(Throwable caught) {
+        Info.display("Error", caught.getMessage());
+      }
+
+      public void onSuccess(Void result) {
+        view.refresh();
+        Info.display(factory.getLocalization().information(), factory.getLocalization().delSuccess());
       }
     });
   }

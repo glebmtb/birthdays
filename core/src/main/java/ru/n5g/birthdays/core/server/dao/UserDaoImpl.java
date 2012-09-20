@@ -13,10 +13,11 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import ru.n5g.birthdays.core.server.bean.Users;
+import ru.n5g.birthdays.core.shared.bean.UserRoleCode;
 
 
 @Repository
-public class UserDaoImpl extends BaseDaoImpl<Users> implements UserDao{
+public class UserDaoImpl extends BaseDaoImpl<Users> implements UserDao {
 
   @Autowired
   private HibernateTemplate hibernateTemplate;
@@ -52,6 +53,21 @@ public class UserDaoImpl extends BaseDaoImpl<Users> implements UserDao{
         Criteria criteria = session.createCriteria(Users.class);
         criteria.setProjection(Projections.count("id"));
         return ((Number) criteria.uniqueResult()).intValue();
+      }
+    });
+  }
+
+  @Override
+  public boolean isLastAdmin() {
+    return hibernateTemplate.execute(new HibernateCallback<Boolean>() {
+      @Override
+      public Boolean doInHibernate(Session session) throws HibernateException, SQLException {
+        Criteria criteria = session.createCriteria(Users.class);
+        criteria.createCriteria("role", "role");
+        criteria.add(Restrictions.eq("role.code", UserRoleCode.ROLE_ADMIN));
+        criteria.setProjection(Projections.rowCount());
+        Number count = (Number) criteria.uniqueResult();
+        return count.intValue() == 1;
       }
     });
   }

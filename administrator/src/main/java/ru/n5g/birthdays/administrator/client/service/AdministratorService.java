@@ -11,4 +11,6 @@ public interface AdministratorService extends RemoteService  {
   BasePagingLoadResult<UsersDTO> loadUserList(BasePagingLoadConfig loadConfig);
 
   void setUsers(UsersDTO dto);
+
+  void delUsers(UsersDTO dto);
 }

@@ -45,4 +45,15 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
   public void saveOrUpdate(T bean) {
     saveOrUpdateNonTransactional(bean);
   }
+
+  @Override
+  @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+  public void delete(T bean) {
+    deleteNonTransactional(bean);
+  }
+
+  @Override
+  public void deleteNonTransactional(T bean) {
+    hibernateTemplate.delete(bean);
+  }
 }

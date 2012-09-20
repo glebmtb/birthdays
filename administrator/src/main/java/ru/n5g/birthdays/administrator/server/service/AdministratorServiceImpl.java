@@ -59,6 +59,15 @@ public class AdministratorServiceImpl implements AdministratorService {
     userDao.saveOrUpdateNonTransactional(user);
   }
 
+  @Override
+  public void delUsers(UsersDTO dto) {
+    if(userDao.isLastAdmin()){
+      throw new RuntimeException("Нельзя удалить последнего администратора!");
+    }
+    Users user = userDao.get(dto.getId());
+    userDao.delete(user);
+  }
+
   protected List<UsersDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {

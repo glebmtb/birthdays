@@ -11,4 +11,6 @@ public interface UserDao extends BaseDao<Users>{
   List loadTableRows();
 
   int getTableRowsCount();
+
+  boolean isLastAdmin();
 }

@@ -54,4 +54,6 @@ public interface AdministratorLocalization extends SimpleWindowLocalization {
   String information();
 
   String saveSuccess();
+
+  String delSuccess();
 }

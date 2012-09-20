@@ -9,4 +9,6 @@ public interface AdministratorServiceAsync {
   void loadUserList(BasePagingLoadConfig loadConfig, AsyncCallback<BasePagingLoadResult<UsersDTO>> callback);
 
   void setUsers(UsersDTO dto, AsyncCallback<Void> asyncCallback);
+
+  void delUsers(UsersDTO dto, AsyncCallback<Void> asyncCallback);
 }
