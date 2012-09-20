@@ -20,6 +20,10 @@
     </dependency>
     <dependency>
       <groupId>ru.n5g.birthdays</groupId>
+      <artifactId>components</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ru.n5g.birthdays</groupId>
       <artifactId>administrator</artifactId>
     </dependency>
 

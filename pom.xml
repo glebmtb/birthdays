@@ -11,6 +11,7 @@
   <modules>
     <module>app</module>
     <module>core</module>
+    <module>components</module>
     <module>administrator</module>
     <module>sms_service</module>
   </modules>
@@ -37,6 +38,11 @@
       <dependency>
         <groupId>ru.n5g.birthdays</groupId>
         <artifactId>core</artifactId>
+        <version>0.2-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>ru.n5g.birthdays</groupId>
+        <artifactId>components</artifactId>
         <version>0.2-SNAPSHOT</version>
       </dependency>
       <dependency>

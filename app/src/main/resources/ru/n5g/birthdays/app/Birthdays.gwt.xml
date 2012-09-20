@@ -3,6 +3,7 @@
     "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
 <module rename-to='birthdays'>
   <inherits name="ru.n5g.birthdays.core.Core"/>
+  <inherits name="ru.n5g.birthdays.components.Components"/>
   <inherits name="ru.n5g.birthdays.administrator.Administrator"/>
 
   <inherits name='com.google.gwt.user.User'/>
