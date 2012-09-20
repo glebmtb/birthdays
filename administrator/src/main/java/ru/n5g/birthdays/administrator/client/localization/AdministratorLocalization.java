@@ -1,8 +1,8 @@
 package ru.n5g.birthdays.administrator.client.localization;
 
-import com.google.gwt.i18n.client.Constants;
+import ru.n5g.birthdays.components.client.localization.SimpleWindowLocalization;
 
-public interface AdministratorLocalization extends Constants {
+public interface AdministratorLocalization extends SimpleWindowLocalization {
   String title();
 
   String userLogin();
@@ -30,4 +30,6 @@ public interface AdministratorLocalization extends Constants {
   String no();
 
   String btnAdd();
+
+  String titleEditUserWindow();
 }

@@ -102,7 +102,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
         @Override
         public void handleEvent(GridEvent<UsersDTO> be) {
           if (btnEdit.isVisible() && btnEdit.isEnabled()) {
-//            presenter.editUser(be.getModel(), userType);
+            presenter.editUser(be.getModel());
           }
         }
       });
@@ -194,7 +194,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       button.addSelectionListener(new SelectionListener<ButtonEvent>() {
         @Override
         public void componentSelected(ButtonEvent buttonEvent) {
-//          presenter.addUser(userType);
+          presenter.addUser();
         }
       });
       return button;

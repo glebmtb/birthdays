@@ -10,6 +10,7 @@
   <inherits name="com.google.gwt.activity.Activity"/>
 
   <inherits name="ru.n5g.birthdays.core.Core"/>
+  <inherits name="ru.n5g.birthdays.components.Components"/>
 
   <source path="client"/>
 </module>

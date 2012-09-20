@@ -7,13 +7,16 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.administrator.client.factory.AdministratorFactory;
 import ru.n5g.birthdays.administrator.client.view.AdministratorView;
 import ru.n5g.birthdays.administrator.client.view.AdministratorViewImpl;
+import ru.n5g.birthdays.administrator.client.view.EditUserWindow;
+import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
-public class AdministratorPresenter {
+public class AdministratorPresenter extends SimpleWindowPresenter{
   private AdministratorView view;
   private AdministratorFactory factory;
 
   public AdministratorPresenter(AdministratorFactory factory) {
+    super(factory.getLocalization());
     this.factory = factory;
   }
 
@@ -48,4 +51,12 @@ public class AdministratorPresenter {
     return new ListStore<UsersDTO>(loader);
   }
 
+  public void addUser() {
+    EditUserWindow  window = new EditUserWindow(this);
+    window.show();
+  }
+
+  public void editUser(UsersDTO model) {
+    //TODO: implement this method
+  }
 }
