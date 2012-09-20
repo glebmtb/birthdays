@@ -12,19 +12,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.administrator.client.service.AdministratorService;
 import ru.n5g.birthdays.core.server.bean.Users;
-import ru.n5g.birthdays.core.server.dao.PeopleDao;
 import ru.n5g.birthdays.core.server.dao.UserDao;
+import ru.n5g.birthdays.core.server.dao.UserRoleDao;
+import ru.n5g.birthdays.core.shared.bean.UserRoleCode;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 @Service("administratorService.rpc")
 public class AdministratorServiceImpl implements AdministratorService {
   @Autowired
-  UserDao userDao;
-
-  private PasswordEncoder passwordEncoder = new MessageDigestPasswordEncoder("MD5");
+  private UserDao userDao;
 
   @Autowired
-  private PeopleDao peopleDAO;
+  private UserRoleDao userRoleDao;
+
+  private PasswordEncoder passwordEncoder = new MessageDigestPasswordEncoder("MD5");
 
   @Override
   public BasePagingLoadResult<UsersDTO> loadUserList(BasePagingLoadConfig loadConfig) {
@@ -53,7 +54,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     if (dto.getPassword() != null) {
       user.setPassword(passwordEncoder.encodePassword(dto.getPassword(), null));
     }
-    user.setRole("ROLE_ADMIN");
+    user.setRole(userRoleDao.getRole(UserRoleCode.ROLE_ADMIN));
     user.setComment(dto.getPassword());
     userDao.saveOrUpdateNonTransactional(user);
   }

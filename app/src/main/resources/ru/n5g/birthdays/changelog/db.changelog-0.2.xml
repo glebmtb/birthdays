@@ -4,4 +4,40 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
+  <changeSet id="001" author="belyaev">
+    <comment>Создание новой таблицы user_role - список людей</comment>
+    <createTable tableName="user_role" remarks="список ролей">
+      <column name="user_role_id" autoIncrement="true" type="bigint" remarks="П.К.">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_user_role"/>
+      </column>
+      <column name="name" type="varchar(255)" remarks="Имя роли">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code" type="varchar(255)" remarks="Код роли">
+        <constraints nullable="false"/>
+      </column>
+      <column name="comment" type="varchar(1000)" remarks="Комментарий"/>
+    </createTable>
+    <addUniqueConstraint tableName="user_role" columnNames="code" constraintName="uni_user_role"/>
+    <insert tableName="user_role">
+      <column name="name" value="Администратор"/>
+      <column name="code" value="ROLE_ADMIN"/>
+    </insert>
+    <dropColumn tableName="users" columnName="role"/>
+    <delete tableName="users"/>
+    <addColumn tableName="users">
+      <column name="user_role_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_users1"
+                     references="user_role(user_role_id)"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="002" author="belyaev">
+    <sql>
+      insert into users(login, password, user_role_id, comment)
+      values('admin', '1a1dc91c907325c69271ddf0c944bc72',
+      (SELECT a.user_role_id FROM user_role a WHERE a.code = 'ROLE_ADMIN'), 'pass')
+    </sql>
+  </changeSet>
 </databaseChangeLog>

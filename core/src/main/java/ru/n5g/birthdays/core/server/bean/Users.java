@@ -10,7 +10,7 @@ public class Users {
   private String login;
   private String password;
   private String comment;
-  private String role;
+  private UserRole role;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Users {
     this.login = login;
   }
 
-  @Column(name = "password",nullable = false, length = 255)
+  @Column(name = "password", nullable = false, length = 255)
   public String getPassword() {
     return password;
   }
@@ -50,12 +50,13 @@ public class Users {
     this.comment = comment;
   }
 
-  @Column(name = "role", length = 255)
-  public String getRole() {
+  @ManyToOne
+  @JoinColumn(name = "user_role_id", nullable = false)
+  public UserRole getRole() {
     return role;
   }
 
-  public void setRole(String role) {
+  public void setRole(UserRole role) {
     this.role = role;
   }
 }

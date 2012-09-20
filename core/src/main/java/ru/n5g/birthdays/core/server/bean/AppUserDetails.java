@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.n5g.birthdays.core.server.bean.Users;
 
 public class AppUserDetails implements UserDetails {
   private Users user;
@@ -19,7 +18,7 @@ public class AppUserDetails implements UserDetails {
     GrantedAuthority authority = new GrantedAuthority() {
       @Override
       public String getAuthority() {
-        return user.getRole();
+        return user.getRole().getCode().toString();
       }
     };
     Collection<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
