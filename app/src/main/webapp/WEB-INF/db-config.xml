@@ -34,8 +34,8 @@ p:location="/WEB-INF/jdbc.properties"/>    -->
   <!-- Непосредственно бин dataSource Датасорс, используется для подключения к БД.
   Мы предоставляем класс jdbc-драйвера, имя пользователя, пароль, другие настройки.-->
   <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-    <!--Tomcat<property name="jndiName" value="java:/comp/env/BirthdaysPool"/>-->
-    <property name="jndiName" value="java:jboss/datasources/PostgreSQLDS"/>
+   <property name="jndiName" value="java:/comp/env/BirthdaysPool"/>
+    <!--<property name="jndiName" value="java:jboss/datasources/PostgreSQLDS"/>-->
   </bean>
 
   <!-- Настройки фабрики сессий Хибернейта
