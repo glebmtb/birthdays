@@ -41,11 +41,11 @@ public class UsersDTO extends BaseModelData {
     set(COMMENT, comment);
   }
 
-  public String getRole() {
+  public UserRoleDTO getRole() {
     return get(ROLE);
   }
 
-  public void setRole(String role) {
+  public void setRole(UserRoleDTO role) {
     set(ROLE, role);
   }
 }

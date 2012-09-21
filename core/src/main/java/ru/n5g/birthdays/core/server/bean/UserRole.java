@@ -3,6 +3,7 @@ package ru.n5g.birthdays.core.server.bean;
 import javax.persistence.*;
 
 import ru.n5g.birthdays.core.shared.bean.UserRoleCode;
+import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 
 /**
  * @author home
@@ -52,5 +53,23 @@ public class UserRole {
 
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+  public static UserRoleDTO convert(UserRole bean) {
+    UserRoleDTO dto = new UserRoleDTO();
+    dto.setId(bean.getId());
+    dto.setName(bean.getName());
+    dto.setCode(bean.getCode());
+    dto.setComment(bean.getComment());
+    return dto;
+  }
+
+  public static UserRole convert(UserRoleDTO dto) {
+    UserRole bean = new UserRole();
+    bean.setId(dto.getId());
+    bean.setName(dto.getName());
+    bean.setCode(dto.getCode());
+    bean.setComment(dto.getComment());
+    return bean;
   }
 }

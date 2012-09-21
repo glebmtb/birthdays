@@ -9,7 +9,7 @@ import ru.n5g.birthdays.core.server.dao.combo_box.ComboBoxDao;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 
 @Service
-public class UserRoleComboBoxService extends LoadComboBoxServiceImpl<UserRoleDTO>{
+public class UserRoleComboBoxService extends LoadComboBoxServiceImpl<UserRoleDTO> {
 
   @Override
   public void setComboBoxDao(ComboBoxDao comboBoxDao) {
@@ -21,13 +21,7 @@ public class UserRoleComboBoxService extends LoadComboBoxServiceImpl<UserRoleDTO
     List<UserRoleDTO> list = new ArrayList<UserRoleDTO>();
     UserRoleDTO dto;
     for (Object o : dataList) {
-      UserRole bean = (UserRole) o;
-      dto = new UserRoleDTO();
-      dto.setId(bean.getId());
-      dto.setName(bean.getName());
-      dto.setCode(bean.getCode());
-      dto.setComment(bean.getComment());
-      list.add(dto);
+      list.add(UserRole.convert((UserRole) o));
     }
     return list;
   }

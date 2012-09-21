@@ -12,13 +12,13 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.administrator.client.service.AdministratorService;
+import ru.n5g.birthdays.core.server.bean.UserRole;
 import ru.n5g.birthdays.core.server.bean.Users;
 import ru.n5g.birthdays.core.server.dao.UserDao;
 import ru.n5g.birthdays.core.server.dao.UserRoleDao;
 import ru.n5g.birthdays.core.server.dao.combo_box.UserRoleComboBoxDao;
 import ru.n5g.birthdays.core.server.service.combo_box.UserRoleComboBoxService;
 import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
-import ru.n5g.birthdays.core.shared.bean.UserRoleCode;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
@@ -65,7 +65,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     if (dto.getPassword() != null) {
       user.setPassword(passwordEncoder.encodePassword(dto.getPassword(), null));
     }
-    user.setRole(userRoleDao.getRole(UserRoleCode.ROLE_ADMIN));
+    user.setRole(UserRole.convert(dto.getRole()));
     user.setComment(dto.getPassword());
     userDao.saveOrUpdateNonTransactional(user);
   }
@@ -94,11 +94,7 @@ public class AdministratorServiceImpl implements AdministratorService {
   protected List<UsersDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {
-      UsersDTO dto = new UsersDTO();
-      Users bean = (Users) o;
-      dto.setId(bean.getId());
-      dto.setLogin(bean.getLogin());
-      resultList.add(dto);
+      resultList.add(Users.convert((Users) o));
     }
     return resultList;
   }

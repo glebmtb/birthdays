@@ -106,9 +106,11 @@ public class EditUserWindow extends SimpleWindowView {
 
     if (dto != null) {
       login.setValue(dto.getLogin());
+      userRoleCombo.setValue(dto.getRole());
     }
   }
 
+  //TODO сделать кнопку сохранить не активной пока данные в полях не имзенялись
   @Override
   protected void onSave() {
     if (checkPassword()) return;
@@ -116,6 +118,7 @@ public class EditUserWindow extends SimpleWindowView {
       dto = new UsersDTO();
     dto.setLogin(login.getValue());
     dto.setPassword(password.getValue());
+    dto.setRole(userRoleCombo.getValue());
     presenter.saveEditUserWindow(dto, this);
   }
 
