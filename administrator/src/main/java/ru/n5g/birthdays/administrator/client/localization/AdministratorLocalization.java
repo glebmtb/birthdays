@@ -56,4 +56,10 @@ public interface AdministratorLocalization extends SimpleWindowLocalization {
   String saveSuccess();
 
   String delSuccess();
+
+  String userRoleCombo();
+
+  String comboBoxLoading();
+
+  String comboBoxInitialization();
 }

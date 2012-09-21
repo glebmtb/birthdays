@@ -6,6 +6,7 @@ import java.util.List;
 import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,11 @@ import ru.n5g.birthdays.administrator.client.service.AdministratorService;
 import ru.n5g.birthdays.core.server.bean.Users;
 import ru.n5g.birthdays.core.server.dao.UserDao;
 import ru.n5g.birthdays.core.server.dao.UserRoleDao;
+import ru.n5g.birthdays.core.server.dao.combo_box.UserRoleComboBoxDao;
+import ru.n5g.birthdays.core.server.service.combo_box.UserRoleComboBoxService;
+import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
 import ru.n5g.birthdays.core.shared.bean.UserRoleCode;
+import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 @Service("administratorService.rpc")
@@ -24,6 +29,12 @@ public class AdministratorServiceImpl implements AdministratorService {
 
   @Autowired
   private UserRoleDao userRoleDao;
+
+  @Autowired
+  private UserRoleComboBoxService userRoleComboBoxService;
+
+  @Autowired
+  private UserRoleComboBoxDao userRolComboBoxDao;
 
   private PasswordEncoder passwordEncoder = new MessageDigestPasswordEncoder("MD5");
 
@@ -61,11 +72,23 @@ public class AdministratorServiceImpl implements AdministratorService {
 
   @Override
   public void delUsers(UsersDTO dto) {
-    if(userDao.isLastAdmin()){
+    if (userDao.isLastAdmin()) {
       throw new RuntimeException("Нельзя удалить последнего администратора!");
     }
     Users user = userDao.get(dto.getId());
     userDao.delete(user);
+  }
+
+  @Override
+  public RpcWhiteList registerClasses(RpcWhiteList whiteList) throws AccessDeniedException, RuntimeException {
+    return new RpcWhiteList();
+  }
+
+
+  @Override
+  public BasePagingLoadResult<UserRoleDTO> loadUserRoleList(BasePagingLoadConfig loadConfig) {
+    userRoleComboBoxService.setComboBoxDao(userRolComboBoxDao);
+    return userRoleComboBoxService.load(loadConfig);
   }
 
   protected List<UsersDTO> getModelList(List dataList) {
@@ -79,5 +102,4 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
     return resultList;
   }
-
 }

@@ -1,5 +1,6 @@
 package ru.n5g.birthdays.administrator.client.presenter;
 
+import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.Info;
@@ -9,6 +10,7 @@ import ru.n5g.birthdays.administrator.client.view.AdministratorView;
 import ru.n5g.birthdays.administrator.client.view.AdministratorViewImpl;
 import ru.n5g.birthdays.administrator.client.view.EditUserWindow;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
+import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 public class AdministratorPresenter extends SimpleWindowPresenter {
@@ -74,5 +76,19 @@ public class AdministratorPresenter extends SimpleWindowPresenter {
         Info.display(factory.getLocalization().information(), factory.getLocalization().delSuccess());
       }
     });
+  }
+
+  public ListStore<UserRoleDTO> getUserRoleComboStore() {
+    RpcProxy<BasePagingLoadResult<UserRoleDTO>> proxy = new RpcProxy<BasePagingLoadResult<UserRoleDTO>>() {
+      @Override
+      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<UserRoleDTO>> callback) {
+        factory.getService().loadUserRoleList((BasePagingLoadConfig) loadConfig, callback);
+      }
+    };
+    PagingLoader<PagingLoadResult<UserRoleDTO>> loader = new BasePagingLoader<PagingLoadResult<UserRoleDTO>>(proxy, new ModelReader());
+    loader.setSortDir(Style.SortDir.ASC);
+    loader.setSortField(UserRoleDTO.NAME);
+    loader.setRemoteSort(true);
+    return new ListStore<UserRoleDTO>(loader);
   }
 }

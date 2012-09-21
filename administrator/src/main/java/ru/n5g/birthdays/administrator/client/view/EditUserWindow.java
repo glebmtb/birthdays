@@ -1,5 +1,6 @@
 package ru.n5g.birthdays.administrator.client.view;
 
+import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.Field;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.Validator;
@@ -8,11 +9,14 @@ import ru.n5g.birthdays.administrator.client.localization.AdministratorLocalizat
 import ru.n5g.birthdays.administrator.client.presenter.AdministratorPresenter;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.components.client.view.SimpleWindowView;
+import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
 import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
 import ru.n5g.birthdays.core.client.util.RequiredFieldsUtil;
 import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
+import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
+import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 
 /**
  * @author belyaev
@@ -23,7 +27,7 @@ public class EditUserWindow extends SimpleWindowView {
   private UsersDTO dto;
 
   private TrimTextField login;
-  //TODO добавить комбобокс с выбором роли
+  private AdvancedComboBox<UserRoleDTO> userRoleCombo;
   private TrimTextField passwordRepetition;
   private TrimTextField password;
 
@@ -54,13 +58,25 @@ public class EditUserWindow extends SimpleWindowView {
     login.setValidator(new Validator() {
       @Override
       public String validate(Field<?> field, String value) {
-//         if (value.charAt(0)) TODO добавить проверку на то что первый сивол не цифра
+//         if (value.charAt(0)) TODO добавить проверку на то что первый сиvвол не цифра
 //          return localization.errorCodePoint();
         return null;
       }
     });
     TestIdSetter.resetTestId(login, "form_201208251452");
     RequiredFieldsUtil.setRequired(login, true);
+
+    userRoleCombo = new AdvancedComboBox<UserRoleDTO>();
+    userRoleCombo.setRemoteFilterType(ComboBoxFilterType.ILIKE);
+    userRoleCombo.setTriggerAction(ComboBox.TriggerAction.ALL);
+    userRoleCombo.setForceSelection(true);
+    userRoleCombo.setLoadingText(localization.comboBoxLoading());
+    userRoleCombo.setInitializingText(localization.comboBoxInitialization());
+    userRoleCombo.setFieldLabel(localization.userRoleCombo());
+    userRoleCombo.setStore(presenter.getUserRoleComboStore());
+    userRoleCombo.setDisplayField(UserRoleDTO.NAME);
+    TestIdSetter.resetTestId(userRoleCombo, "form_2012082514453");
+    RequiredFieldsUtil.setRequired(userRoleCombo, true);
 
     password = new TrimTextField();
     password.setMaxLength(255);
@@ -84,6 +100,7 @@ public class EditUserWindow extends SimpleWindowView {
     }
 
     panel.add(login, formData);
+    panel.add(userRoleCombo, formData);
     panel.add(password, formData);
     panel.add(passwordRepetition, formData);
 
