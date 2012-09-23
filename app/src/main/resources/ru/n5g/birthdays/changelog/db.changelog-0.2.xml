@@ -40,4 +40,17 @@
       (SELECT a.user_role_id FROM user_role a WHERE a.code = 'ROLE_ADMIN'), 'pass')
     </sql>
   </changeSet>
+
+  <changeSet id="003" author="belyaev">
+    <comment>Изменения таблицы people</comment>
+    <dropColumn tableName="people" columnName="phone"/>
+    <addColumn tableName="people">
+      <column name="user_id" type="bigint" remarks="ид пользователя">
+        <constraints nullable="false" foreignKeyName="fk_people1" references="users(id)"/>
+      </column>
+      <column name="nickname" type="varchar(255)" remarks="Прозвище"/>
+    </addColumn>
+    <dropNotNullConstraint tableName="people" columnName="last_name"/>
+    <dropNotNullConstraint tableName="people" columnName="first_name"/>
+  </changeSet>
 </databaseChangeLog>

@@ -9,7 +9,8 @@ public class People {
   private String firstName;
   private String lastName;
   private String middleName;
-  private Integer phone;
+  private String nickname;
+  private Users user;
   private String comment;
 
   @Id
@@ -50,15 +51,6 @@ public class People {
     this.middleName = middleName;
   }
 
-  @Column(name = "phone", nullable = false, unique = true)
-  public Integer getPhone() {
-    return phone;
-  }
-
-  public void setPhone(Integer phone) {
-    this.phone = phone;
-  }
-
   @Column(name = "comment", length = 1000)
   public String getComment() {
     return comment;
@@ -66,5 +58,24 @@ public class People {
 
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+  @Column(name="nickname", length = 255)
+  public String getNickname() {
+    return nickname;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  public Users getUser() {
+    return user;
+  }
+
+  public void setUser(Users user) {
+    this.user = user;
   }
 }
