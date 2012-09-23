@@ -26,6 +26,7 @@ import ru.n5g.birthdays.administrator.client.localization.AdministratorLocalizat
 import ru.n5g.birthdays.administrator.client.presenter.AdministratorPresenter;
 import ru.n5g.birthdays.core.client.resources.Resources;
 import ru.n5g.birthdays.core.client.util.IconUtils;
+import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 public class AdministratorViewImpl extends LayoutContainer implements AdministratorView {
@@ -216,6 +217,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
       columns.add(new ColumnConfig(UsersDTO.LOGIN, localization.userLogin(), 50));
+      columns.add(new ColumnConfig(UsersDTO.ROLE.concat(".").concat(UserRoleDTO.NAME), localization.userRole(), 50));
       columns.add(new ColumnConfig("2", localization.firstName(), 50));
       columns.add(new ColumnConfig("3", localization.lastName(), 50));
       columns.add(new ColumnConfig("4", localization.smsLimit(), 50));
