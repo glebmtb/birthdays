@@ -12,9 +12,10 @@
     <module>app</module>
     <module>core</module>
     <module>components</module>
+    <module>smsService</module>
     <module>database</module>
     <module>administrator</module>
-    <module>sms_service</module>
+    <module>noteBook</module>
   </modules>
   <name>Birthdays</name>
 

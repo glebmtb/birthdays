@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ru.n5g.birthdays</groupId>
   <packaging>jar</packaging>
-  <artifactId>sms_service</artifactId>
+  <artifactId>smsService</artifactId>
 
   <dependencies>
     <dependency>
