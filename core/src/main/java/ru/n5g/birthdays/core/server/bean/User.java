@@ -6,7 +6,7 @@ import javax.persistence.*;
 import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 @Entity
-@Table(name = "users")
+@Table(name = "\"user\"")
 public class User {
   private Long id;
   private String login;
@@ -16,7 +16,7 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id ", nullable = false, unique = true)
+  @Column(name = "user_id ", nullable = false, unique = true)
   public Long getId() {
     return id;
   }

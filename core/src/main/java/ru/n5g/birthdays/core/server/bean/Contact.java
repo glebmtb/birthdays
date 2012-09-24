@@ -3,7 +3,7 @@ package ru.n5g.birthdays.core.server.bean;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "people")
+@Table(name = "contact")
 public class Contact {
   private Long id;
   private String firstName;
@@ -15,7 +15,7 @@ public class Contact {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id ", nullable = false, unique = true)
+  @Column(name = "contact_id ", nullable = false, unique = true)
   public Long getId() {
     return id;
   }

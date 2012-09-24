@@ -53,4 +53,31 @@
     <dropNotNullConstraint tableName="people" columnName="last_name"/>
     <dropNotNullConstraint tableName="people" columnName="first_name"/>
   </changeSet>
+
+  <changeSet id="004" author="belyaev">
+    <comment>Изменение название таблиц User</comment>
+    <dropForeignKeyConstraint constraintName="fk_people1" baseTableName="people"/>
+    <renameTable oldTableName="users" newTableName="user"/>
+    <dropPrimaryKey tableName="user" constraintName="pk_users"/>
+    <renameColumn tableName="user" oldColumnName="id" newColumnName="user_id"/>
+    <addPrimaryKey tableName="user" columnNames="user_id" constraintName="pk_user"/>
+    <dropForeignKeyConstraint constraintName="fk_users1" baseTableName="user"/>
+    <addForeignKeyConstraint constraintName="fk_user1"
+                             baseTableName="user" baseColumnNames="user_role_id"
+                             referencedTableName="user_role" referencedColumnNames="user_role_id"
+        />
+  </changeSet>
+
+  <changeSet id="005" author="belyaev">
+    <comment>Изменение таблицы for people to contact</comment>
+    <dropUniqueConstraint tableName="user" constraintName="uni_login"/>
+    <addUniqueConstraint tableName="user" columnNames="login" constraintName="uni_user1"/>
+    <dropPrimaryKey tableName="people" constraintName="pk_people"/>
+    <renameTable oldTableName="people" newTableName="contact"/>
+    <renameColumn tableName="contact" oldColumnName="id" newColumnName="contact_id"/>
+    <addPrimaryKey tableName="contact" columnNames="contact_id" constraintName="pk_contact"/>
+    <addForeignKeyConstraint constraintName="fk_contact1"
+                             baseTableName="contact" baseColumnNames="user_id"
+                             referencedTableName="user" referencedColumnNames="user_id"/>
+  </changeSet>
 </databaseChangeLog>
