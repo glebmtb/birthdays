@@ -1,1 +1,1 @@
-call mvn -f ../app/pom.xml resources:resources liquibase:update
+call mvn -f ../database/pom.xml resources:resources liquibase:update
