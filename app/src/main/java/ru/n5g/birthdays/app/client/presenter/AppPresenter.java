@@ -35,4 +35,9 @@ public class AppPresenter implements AppPage.Presenter {
   public void openAdministrator() {
     //TODO: implement this method
   }
+
+  @Override
+  public void openContact() {
+    //TODO: implement this method
+  }
 }
