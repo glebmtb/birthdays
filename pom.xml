@@ -12,6 +12,7 @@
     <module>app</module>
     <module>core</module>
     <module>components</module>
+    <module>database</module>
     <module>administrator</module>
     <module>sms_service</module>
   </modules>
@@ -280,4 +281,6 @@
       <url>http://projects.iplantcollaborative.org/archiva/repository/internal/</url>
     </repository>
   </repositories>
+
+
 </project>
