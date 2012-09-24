@@ -2,7 +2,7 @@ package ru.n5g.birthdays.app.server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.n5g.birthdays.core.server.bean.People;
+import ru.n5g.birthdays.core.server.bean.Contact;
 import ru.n5g.birthdays.core.server.dao.PeopleDao;
 
 @Service
@@ -11,10 +11,10 @@ public class BirthdaysServiceImpl implements BirthdaysService {
   private PeopleDao peopleDAO;
 
   public String getHelloWorld() {
-    People people = peopleDAO.get(new Long(1));
-    if (people == null)
+    Contact contact = peopleDAO.get(new Long(1));
+    if (contact == null)
       return "Пусто";
-    return people.getFirstName();
+    return contact.getFirstName();
   }
 
   @Override
@@ -24,12 +24,12 @@ public class BirthdaysServiceImpl implements BirthdaysService {
       s = "Ид не введено";
       return s;
     }
-    People people = peopleDAO.get(new Long(id));
-    if (people == null) {
+    Contact contact = peopleDAO.get(new Long(id));
+    if (contact == null) {
       s = "С таким Id пользователь не существует.";
     }
-    if (people != null) {
-      s = people.getLastName() + " " + people.getFirstName();
+    if (contact != null) {
+      s = contact.getLastName() + " " + contact.getFirstName();
     }
     return s;
   }

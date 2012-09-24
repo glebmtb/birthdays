@@ -7,7 +7,7 @@ import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
   private Long id;
   private String login;
   private String password;
@@ -62,7 +62,7 @@ public class Users {
     this.role = role;
   }
 
-  public static UsersDTO convert(Users bean) {
+  public static UsersDTO convert(User bean) {
     UsersDTO dto = new UsersDTO();
     dto.setId(bean.getId());
     dto.setLogin(bean.getLogin());
@@ -71,8 +71,8 @@ public class Users {
     return dto;
   }
 
-  public static Users convert(UsersDTO dto) {
-    Users bean = new Users();
+  public static User convert(UsersDTO dto) {
+    User bean = new User();
     bean.setId(dto.getId());
     bean.setLogin(dto.getLogin());
     bean.setRole(UserRole.convert(dto.getRole()));

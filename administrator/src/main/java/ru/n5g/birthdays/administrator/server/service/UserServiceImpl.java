@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.core.server.bean.AppUserDetails;
-import ru.n5g.birthdays.core.server.bean.Users;
+import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.server.dao.UserDao;
 
 @Transactional
@@ -20,9 +20,9 @@ public class UserServiceImpl implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Users user = userDao.loadByUserName(username);
+    User user = userDao.loadByUserName(username);
     if (user == null)
-      user = new Users();
+      user = new User();
     AppUserDetails appUserDetails = new AppUserDetails(user);
     String newPass = passwordEncoder.encodePassword("pass", null);
     return appUserDetails;

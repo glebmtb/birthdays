@@ -12,34 +12,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
-import ru.n5g.birthdays.core.server.bean.Users;
+import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.shared.bean.UserRoleCode;
 
 
 @Repository
-public class UserDaoImpl extends BaseDaoImpl<Users> implements UserDao {
+public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
   @Autowired
   private HibernateTemplate hibernateTemplate;
 
   @Override
-  public Users loadByUserName(final String username) {
-    return hibernateTemplate.execute(new HibernateCallback<Users>() {
+  public User loadByUserName(final String username) {
+    return hibernateTemplate.execute(new HibernateCallback<User>() {
       @Override
-      public Users doInHibernate(Session session) throws HibernateException, SQLException {
-        Criteria criteria = session.createCriteria(Users.class);
+      public User doInHibernate(Session session) throws HibernateException, SQLException {
+        Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("login", username));
-        return (Users) criteria.uniqueResult();
+        return (User) criteria.uniqueResult();
       }
     });
   }
 
   @Override
-  public List<Users> loadTableRows() {
-    return hibernateTemplate.executeFind(new HibernateCallback<List<Users>>() {
+  public List<User> loadTableRows() {
+    return hibernateTemplate.executeFind(new HibernateCallback<List<User>>() {
       @Override
-      public List<Users> doInHibernate(Session session) throws HibernateException, SQLException {
-        Criteria criteria = session.createCriteria(Users.class);
+      public List<User> doInHibernate(Session session) throws HibernateException, SQLException {
+        Criteria criteria = session.createCriteria(User.class);
         return criteria.list();
       }
     });
@@ -50,7 +50,7 @@ public class UserDaoImpl extends BaseDaoImpl<Users> implements UserDao {
     return hibernateTemplate.execute(new HibernateCallback<Integer>() {
       @Override
       public Integer doInHibernate(Session session) throws HibernateException, SQLException {
-        Criteria criteria = session.createCriteria(Users.class);
+        Criteria criteria = session.createCriteria(User.class);
         criteria.setProjection(Projections.count("id"));
         return ((Number) criteria.uniqueResult()).intValue();
       }
@@ -62,7 +62,7 @@ public class UserDaoImpl extends BaseDaoImpl<Users> implements UserDao {
     return hibernateTemplate.execute(new HibernateCallback<Boolean>() {
       @Override
       public Boolean doInHibernate(Session session) throws HibernateException, SQLException {
-        Criteria criteria = session.createCriteria(Users.class);
+        Criteria criteria = session.createCriteria(User.class);
         criteria.createCriteria("role", "role");
         criteria.add(Restrictions.eq("role.code", UserRoleCode.ROLE_ADMIN));
         criteria.setProjection(Projections.rowCount());

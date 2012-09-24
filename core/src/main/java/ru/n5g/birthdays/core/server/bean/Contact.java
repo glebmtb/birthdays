@@ -4,13 +4,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "people")
-public class People {
+public class Contact {
   private Long id;
   private String firstName;
   private String lastName;
   private String middleName;
   private String nickname;
-  private Users user;
+  private User user;
   private String comment;
 
   @Id
@@ -71,11 +71,11 @@ public class People {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  public Users getUser() {
+  public User getUser() {
     return user;
   }
 
-  public void setUser(Users user) {
+  public void setUser(User user) {
     this.user = user;
   }
 }

@@ -243,7 +243,6 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
     }
 
     public void refreshUserList() {
-//      ((LiveGridView) gridMain.getView()).refresh();
       refresh();
     }
 

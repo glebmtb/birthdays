@@ -169,6 +169,5 @@
         <directory>src/main/resources</directory>
       </resource>
     </resources>
-    <finalName>administrator</finalName>
   </build>
 </project>

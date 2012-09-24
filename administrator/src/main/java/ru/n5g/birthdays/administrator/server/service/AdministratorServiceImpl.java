@@ -12,8 +12,8 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.administrator.client.service.AdministratorService;
+import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.server.bean.UserRole;
-import ru.n5g.birthdays.core.server.bean.Users;
 import ru.n5g.birthdays.core.server.dao.UserDao;
 import ru.n5g.birthdays.core.server.dao.UserRoleDao;
 import ru.n5g.birthdays.core.server.dao.combo_box.UserRoleComboBoxDao;
@@ -54,10 +54,10 @@ public class AdministratorServiceImpl implements AdministratorService {
   @Transactional
   public void setUsers(UsersDTO dto) {
     Long id = dto.getId();
-    Users user;
+    User user;
 
     if (id == null)
-      user = new Users();
+      user = new User();
     else
       user = userDao.get(id);
 
@@ -75,7 +75,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     if (userDao.isLastAdmin()) {
       throw new RuntimeException("Нельзя удалить последнего администратора!");
     }
-    Users user = userDao.get(dto.getId());
+    User user = userDao.get(dto.getId());
     userDao.delete(user);
   }
 
@@ -94,7 +94,7 @@ public class AdministratorServiceImpl implements AdministratorService {
   protected List<UsersDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {
-      resultList.add(Users.convert((Users) o));
+      resultList.add(User.convert((User) o));
     }
     return resultList;
   }
