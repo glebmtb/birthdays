@@ -195,3 +195,9 @@ btn-chart-large button {
     height: 32px;
     width: 32px;
 }
+
+.btn-contact-new button {
+    background: url("../icons/contact_new.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}

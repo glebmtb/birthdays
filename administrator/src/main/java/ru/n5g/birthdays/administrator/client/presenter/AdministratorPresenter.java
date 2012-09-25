@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.administrator.client.factory.AdministratorFactory;
 import ru.n5g.birthdays.administrator.client.view.AdministratorView;
 import ru.n5g.birthdays.administrator.client.view.AdministratorViewImpl;
-import ru.n5g.birthdays.administrator.client.view.EditUserWindow;
+import ru.n5g.birthdays.administrator.client.view.EditUserWindowImpl;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
@@ -42,16 +42,16 @@ public class AdministratorPresenter extends SimpleWindowPresenter {
   }
 
   public void addUser() {
-    EditUserWindow window = new EditUserWindow(this, null);
+    EditUserWindowImpl window = new EditUserWindowImpl(this, null);
     window.show();
   }
 
   public void editUser(UserDTO model) {
-    EditUserWindow window = new EditUserWindow(this, model);
+    EditUserWindowImpl window = new EditUserWindowImpl(this, model);
     window.show();
   }
 
-  public void saveEditUserWindow(UserDTO dto, final EditUserWindow window) {
+  public void saveEditUserWindow(UserDTO dto, final EditUserWindowImpl window) {
     factory.getService().setUsers(dto, new AsyncCallback<Void>() {
       public void onFailure(Throwable caught) {
         Info.display("Error", caught.getMessage());

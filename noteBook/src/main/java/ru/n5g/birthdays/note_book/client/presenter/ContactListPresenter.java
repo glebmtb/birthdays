@@ -10,8 +10,8 @@ import ru.n5g.birthdays.note_book.client.view.ContactListViewImpl;
 
 public class ContactListPresenter {
 
- public interface ContactView extends IsWidget {
-    void refresh();
+  public interface ContactView extends IsWidget {
+    void onRefresh();
   }
 
   private ContactListFactory factory;
@@ -40,5 +40,9 @@ public class ContactListPresenter {
     loader = new BasePagingLoader<PagingLoadResult<ContactDTO>>(proxy, new ModelReader());
 
     return new ListStore<ContactDTO>(loader);
+  }
+
+  public void onAddContact() {
+    factory.getContactEditFactory().getPresenter().addContact();
   }
 }

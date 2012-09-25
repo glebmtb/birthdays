@@ -11,4 +11,6 @@ public interface ContactListFactory {
   ContactListPresenter getPresenter();
 
   ContactListServiceAsync getService();
+
+  ContactEditFactory getContactEditFactory();
 }

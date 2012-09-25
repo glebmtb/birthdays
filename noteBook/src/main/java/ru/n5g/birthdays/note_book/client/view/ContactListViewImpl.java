@@ -35,6 +35,7 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   private ToolBar toolBarBottom;
 
   private Button btnRefresh;
+  private Button btnAdd;
 
   public ContactListViewImpl(ContactListPresenter presenter, ContactListLocalization localization) {
     super(new FitLayout());
@@ -55,8 +56,10 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     cp.setBorders(false);
 
     btnRefresh = createButton("btn-refresh-list", localization.btnRefresh(),  "btn_20120925140401", createRefreshSelectionListener());
+    btnAdd = createButton("btn-contact-new", localization.btnAdd(),  "btn_20120925140801", createAddSelectionListener());
 
     toolBarTop = new ToolBar();
+    toolBarTop.add(btnAdd);
     toolBarTop.add(btnRefresh);
 
     gridMain = createGrid();
@@ -67,6 +70,19 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     cp.add(gridMain);
     cp.setBottomComponent(toolBarBottom);
     add(cp);
+  }
+
+  private SelectionListener<ButtonEvent> createAddSelectionListener() {
+    return new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        onAddContact();
+      }
+    };
+  }
+
+  private void onAddContact() {
+    presenter.onAddContact();
   }
 
   private SelectionListener<ButtonEvent> createRefreshSelectionListener() {
