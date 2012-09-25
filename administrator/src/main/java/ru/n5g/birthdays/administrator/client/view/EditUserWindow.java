@@ -14,8 +14,8 @@ import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
 import ru.n5g.birthdays.core.client.util.RequiredFieldsUtil;
 import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
-import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 
 /**
@@ -24,7 +24,7 @@ import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 public class EditUserWindow extends SimpleWindowView {
   private AdministratorLocalization localization;
   private AdministratorPresenter presenter;
-  private UsersDTO dto;
+  private UserDTO dto;
 
   private TrimTextField login;
   private AdvancedComboBox<UserRoleDTO> userRoleCombo;
@@ -32,7 +32,7 @@ public class EditUserWindow extends SimpleWindowView {
   private TrimTextField password;
 
 
-  public EditUserWindow(SimpleWindowPresenter presenter, UsersDTO dto) {
+  public EditUserWindow(SimpleWindowPresenter presenter, UserDTO dto) {
     super(presenter);
     this.dto = dto;
     this.presenter = (AdministratorPresenter) presenter;
@@ -115,7 +115,7 @@ public class EditUserWindow extends SimpleWindowView {
   protected void onSave() {
     if (checkPassword()) return;
     if (dto == null)
-      dto = new UsersDTO();
+      dto = new UserDTO();
     dto.setLogin(login.getValue());
     dto.setPassword(password.getValue());
     dto.setRole(userRoleCombo.getValue());

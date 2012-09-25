@@ -42,5 +42,7 @@ public interface AppPage extends IsWidget {
     void checkPermissions(String permissionCode, Component component, boolean hideIfDenied);
 
     void openAdministrator();
+
+    void openContact();
   }
 }

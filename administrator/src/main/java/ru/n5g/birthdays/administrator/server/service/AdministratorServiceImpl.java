@@ -19,8 +19,8 @@ import ru.n5g.birthdays.core.server.dao.UserRoleDao;
 import ru.n5g.birthdays.core.server.dao.combo_box.UserRoleComboBoxDao;
 import ru.n5g.birthdays.core.server.service.combo_box.UserRoleComboBoxService;
 import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
-import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 @Service("administratorService.rpc")
 public class AdministratorServiceImpl implements AdministratorService {
@@ -39,20 +39,20 @@ public class AdministratorServiceImpl implements AdministratorService {
   private PasswordEncoder passwordEncoder = new MessageDigestPasswordEncoder("MD5");
 
   @Override
-  public BasePagingLoadResult<UsersDTO> loadUserList(BasePagingLoadConfig loadConfig) {
-    List<UsersDTO> agentModelList = getModelList(userDao.loadTableRows());
+  public BasePagingLoadResult<UserDTO> loadUserList(BasePagingLoadConfig loadConfig) {
+    List<UserDTO> agentModelList = getModelList(userDao.loadTableRows());
     int start = 0;
     int limit = userDao.getTableRowsCount();
     int offsetLimit = 0;
 
-    BasePagingLoadResult<UsersDTO> basePagingLoadResult;
-    basePagingLoadResult = new BasePagingLoadResult<UsersDTO>(agentModelList, start, limit);
+    BasePagingLoadResult<UserDTO> basePagingLoadResult;
+    basePagingLoadResult = new BasePagingLoadResult<UserDTO>(agentModelList, start, limit);
     return basePagingLoadResult;
   }
 
   @Override
   @Transactional
-  public void setUsers(UsersDTO dto) {
+  public void setUsers(UserDTO dto) {
     Long id = dto.getId();
     User user;
 
@@ -71,7 +71,7 @@ public class AdministratorServiceImpl implements AdministratorService {
   }
 
   @Override
-  public void delUsers(UsersDTO dto) {
+  public void delUsers(UserDTO dto) {
     if (userDao.isLastAdmin()) {
       throw new RuntimeException("Нельзя удалить последнего администратора!");
     }
@@ -91,7 +91,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     return userRoleComboBoxService.load(loadConfig);
   }
 
-  protected List<UsersDTO> getModelList(List dataList) {
+  protected List<UserDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {
       resultList.add(User.convert((User) o));

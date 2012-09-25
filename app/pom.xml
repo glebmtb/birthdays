@@ -26,6 +26,10 @@
       <groupId>ru.n5g.birthdays</groupId>
       <artifactId>administrator</artifactId>
     </dependency>
+    <dependency>
+      <groupId>ru.n5g.birthdays</groupId>
+      <artifactId>noteBook</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>postgresql</groupId>

@@ -16,4 +16,8 @@ public interface AppLocalization extends Messages {
   String administratorHeader();
 
   String header();
+
+  String btnContact();
+
+  String contactHeader();
 }

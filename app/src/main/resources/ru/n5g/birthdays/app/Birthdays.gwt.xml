@@ -5,6 +5,7 @@
   <inherits name="ru.n5g.birthdays.core.Core"/>
   <inherits name="ru.n5g.birthdays.components.Components"/>
   <inherits name="ru.n5g.birthdays.administrator.Administrator"/>
+  <inherits name="ru.n5g.birthdays.note_book.NoteBook"/>
 
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.extjs.gxt.ui.GXT'/>
