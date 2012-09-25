@@ -2,6 +2,8 @@ package ru.n5g.birthdays.core.server.bean;
 
 import javax.persistence.*;
 
+import ru.n5g.birthdays.core.shared.bean.ContactDTO;
+
 @Entity
 @Table(name = "contact")
 public class Contact {
@@ -11,6 +13,7 @@ public class Contact {
   private String middleName;
   private String nickname;
   private User user;
+  private Long userId;
   private String comment;
 
   @Id
@@ -60,7 +63,7 @@ public class Contact {
     this.comment = comment;
   }
 
-  @Column(name="nickname", length = 255)
+  @Column(name = "nickname", length = 255)
   public String getNickname() {
     return nickname;
   }
@@ -70,12 +73,45 @@ public class Contact {
   }
 
   @ManyToOne
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "user_id", insertable = false, updatable = false)
   public User getUser() {
     return user;
   }
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  @Column(name = "user_id")
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
+  public static Contact convert(ContactDTO dto) {
+    Contact bean = new Contact();
+    bean.setId(dto.getId());
+    bean.setNickname(dto.getNickname());
+    bean.setFirstName(dto.getFirstName());
+    bean.setLastName(dto.getLastName());
+    bean.setMiddleName(dto.getMiddleName());
+    bean.setComment(dto.getComment());
+    bean.setUserId(dto.getUserId());
+    return bean;
+  }
+
+  public static ContactDTO convert(Contact bean) {
+    ContactDTO dto = new ContactDTO();
+    dto.setId(bean.getId());
+    dto.setNickname(bean.getNickname());
+    dto.setFirstName(bean.getFirstName());
+    dto.setLastName(bean.getLastName());
+    dto.setMiddleName(bean.getMiddleName());
+    dto.setComment(bean.getComment());
+    dto.setUserId(bean.getUserId());
+    return dto;
   }
 }

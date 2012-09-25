@@ -26,8 +26,8 @@ import ru.n5g.birthdays.administrator.client.localization.AdministratorLocalizat
 import ru.n5g.birthdays.administrator.client.presenter.AdministratorPresenter;
 import ru.n5g.birthdays.core.client.resources.Resources;
 import ru.n5g.birthdays.core.client.util.IconUtils;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
-import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 public class AdministratorViewImpl extends LayoutContainer implements AdministratorView {
   private AdministratorPresenter presenter;
@@ -70,7 +70,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
 
     private ToolBar toolBarTop;
     private ToolBar toolBarBottom;
-    private Grid<UsersDTO> gridMain;
+    private Grid<UserDTO> gridMain;
 
     private UserPanel(AdministratorLocalization localization, AdministratorPresenter presenter) {
       super(new FitLayout());
@@ -104,18 +104,18 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       toolBarBottom = createToolBarBottom(gridMain);
       new QuickTip(gridMain);
 
-      gridMain.addListener(Events.RowDoubleClick, new Listener<GridEvent<UsersDTO>>() {
+      gridMain.addListener(Events.RowDoubleClick, new Listener<GridEvent<UserDTO>>() {
         @Override
-        public void handleEvent(GridEvent<UsersDTO> be) {
+        public void handleEvent(GridEvent<UserDTO> be) {
           if (btnEdit.isVisible() && btnEdit.isEnabled()) {
             presenter.editUser(be.getModel());
           }
         }
       });
 
-      gridMain.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<UsersDTO>() {
+      gridMain.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<UserDTO>() {
         @Override
-        public void selectionChanged(SelectionChangedEvent<UsersDTO> se) {
+        public void selectionChanged(SelectionChangedEvent<UserDTO> se) {
           if (se.getSelection().size() > 0) {
             btnEdit.enable();
             btnDel.enable();
@@ -145,7 +145,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       return button;
     }
 
-    private ToolBar createToolBarBottom(Grid<UsersDTO> grid) {
+    private ToolBar createToolBarBottom(Grid<UserDTO> grid) {
       ToolBar toolBarBottom;
       toolBarBottom = new ToolBar();
       LiveToolItem item;
@@ -216,11 +216,11 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
     private Grid createGrid() {
       List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-      columns.add(new ColumnConfig(UsersDTO.LOGIN, localization.userLogin(), 50));
-      columns.add(new ColumnConfig(UsersDTO.ROLE.concat(".").concat(UserRoleDTO.NAME), localization.userRole(), 50));
-      columns.add(new ColumnConfig("2", localization.firstName(), 50));
+      columns.add(new ColumnConfig(UserDTO.LOGIN, localization.userLogin(), 50));
+      columns.add(new ColumnConfig((UserDTO.ROLE).concat(".").concat(UserRoleDTO.NAME), localization.userRole(), 50));
+      columns.add(new ColumnConfig("2", localization.firstName(), 50));                //TODO показывать сколько контактов у пользователя
       columns.add(new ColumnConfig("3", localization.lastName(), 50));
-      columns.add(new ColumnConfig("4", localization.smsLimit(), 50));
+      columns.add(new ColumnConfig("4", localization.smsLimit(), 50));                  //TODO показывать сколько смс сообщений он хочет отправить и сколько уже отправил
 
       ColumnModel cm = new ColumnModel(columns);
       ListStore store = presenter.loadUserList();
@@ -229,8 +229,8 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
       liveView = new LiveGridView();
       liveView.setEmptyText(localization.listEmpty());
 
-      Grid<UsersDTO> grid;
-      grid = new Grid<UsersDTO>(store, cm);
+      Grid<UserDTO> grid;
+      grid = new Grid<UserDTO>(store, cm);
       grid.setBorders(false);
       grid.setLoadMask(true);
       grid.setStripeRows(true);

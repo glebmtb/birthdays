@@ -3,7 +3,7 @@ package ru.n5g.birthdays.core.server.bean;
 
 import javax.persistence.*;
 
-import ru.n5g.birthdays.core.shared.bean.UsersDTO;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 
 @Entity
 @Table(name = "\"user\"")
@@ -62,8 +62,8 @@ public class User {
     this.role = role;
   }
 
-  public static UsersDTO convert(User bean) {
-    UsersDTO dto = new UsersDTO();
+  public static UserDTO convert(User bean) {
+    UserDTO dto = new UserDTO();
     dto.setId(bean.getId());
     dto.setLogin(bean.getLogin());
      dto.setRole(UserRole.convert(bean.getRole()));
@@ -71,7 +71,7 @@ public class User {
     return dto;
   }
 
-  public static User convert(UsersDTO dto) {
+  public static User convert(UserDTO dto) {
     User bean = new User();
     bean.setId(dto.getId());
     bean.setLogin(dto.getLogin());

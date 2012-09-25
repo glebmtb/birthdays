@@ -5,16 +5,16 @@ import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
-import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 @RemoteServiceRelativePath("administratorService.rpc")
 public interface AdministratorService extends RemoteService  {
-  BasePagingLoadResult<UsersDTO> loadUserList(BasePagingLoadConfig loadConfig);
+  BasePagingLoadResult<UserDTO> loadUserList(BasePagingLoadConfig loadConfig);
 
-  void setUsers(UsersDTO dto);
+  void setUsers(UserDTO dto);
 
-  void delUsers(UsersDTO dto);
+  void delUsers(UserDTO dto);
 
   BasePagingLoadResult<UserRoleDTO> loadUserRoleList(BasePagingLoadConfig loadConfig);
 

@@ -7,12 +7,14 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 public class RpcWhiteList implements IsSerializable {
   public UserRoleCode userRoleCode;
-  public UsersDTO usersDTO;
+  public UserDTO userDTO;
   public UserRoleDTO userRoleDTO;
+  public ContactDTO contactDTO;
 
   public RpcWhiteList() {
     this.userRoleCode = UserRoleCode.ROLE_ADMIN;
-    this.usersDTO = new UsersDTO();
+    this.userDTO = new UserDTO();
     this.userRoleDTO = new UserRoleDTO();
+    this.contactDTO = new ContactDTO();
   }
 }

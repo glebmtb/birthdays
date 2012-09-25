@@ -7,7 +7,8 @@ import ru.n5g.birthdays.administrator.client.activity.AdministratorActivity;
 import ru.n5g.birthdays.administrator.client.place.AdministratorPlace;
 import ru.n5g.birthdays.app.client.factory.AppClientFactory;
 import ru.n5g.birthdays.core.shared.TabEnum;
-import ru.n5g.birthdays.note_book.client.place.ContactPlace;
+import ru.n5g.birthdays.note_book.client.activity.ContactListActivity;
+import ru.n5g.birthdays.note_book.client.place.ContactListPlace;
 
 public class AppActivityMapper implements ActivityMapper {
 
@@ -25,10 +26,10 @@ public class AppActivityMapper implements ActivityMapper {
       factory.getMainContainer().selectTab(TabEnum.ADMINISTRATOR);
       return new AdministratorActivity(factory, factory.getAdministratorFactory());
     }
-    if(place instanceof ContactPlace){
+    if(place instanceof ContactListPlace){
       factory.getMainContainer().setHeader(null, factory.getLocalization().contactHeader());
       factory.getMainContainer().selectTab(TabEnum.CONTACT);
-//      return new AdministratorActivity(factory, factory.getAdministratorFactory());
+      return new ContactListActivity(factory, factory.getContactListFactory());
     }
     return null;
   }

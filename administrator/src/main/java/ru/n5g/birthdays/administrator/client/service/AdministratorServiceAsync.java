@@ -4,15 +4,15 @@ import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
-import ru.n5g.birthdays.core.shared.bean.UsersDTO;
 
 public interface AdministratorServiceAsync {
-  void loadUserList(BasePagingLoadConfig loadConfig, AsyncCallback<BasePagingLoadResult<UsersDTO>> callback);
+  void loadUserList(BasePagingLoadConfig loadConfig, AsyncCallback<BasePagingLoadResult<UserDTO>> callback);
 
-  void setUsers(UsersDTO dto, AsyncCallback<Void> asyncCallback);
+  void setUsers(UserDTO dto, AsyncCallback<Void> asyncCallback);
 
-  void delUsers(UsersDTO dto, AsyncCallback<Void> asyncCallback);
+  void delUsers(UserDTO dto, AsyncCallback<Void> asyncCallback);
 
   void loadUserRoleList(BasePagingLoadConfig loadConfig, AsyncCallback<BasePagingLoadResult<UserRoleDTO>> callback);
 
