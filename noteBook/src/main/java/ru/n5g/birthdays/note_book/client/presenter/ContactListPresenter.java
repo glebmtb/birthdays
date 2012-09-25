@@ -11,7 +11,7 @@ import ru.n5g.birthdays.note_book.client.view.ContactListViewImpl;
 public class ContactListPresenter {
 
  public interface ContactView extends IsWidget {
-    void refresh();
+    void onRefresh();
   }
 
   private ContactListFactory factory;

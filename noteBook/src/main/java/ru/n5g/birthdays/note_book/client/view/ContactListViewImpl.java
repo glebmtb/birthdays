@@ -108,11 +108,6 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     return grid;
   }
 
-  @Override
-  public void onRefresh() {
-    gridMain.getStore().getLoader().load();
-  }
-
   private Button createButton(String styleName, String btnName, String testId, SelectionListener<ButtonEvent> listener) {
     Button button = new Button();
     button.addStyleName("btn-large");
@@ -133,5 +128,10 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     toolBarBottom.add(new FillToolItem());
     toolBarBottom.add(item);
     return toolBarBottom;
+  }
+
+  @Override
+  public void onRefresh() {
+    gridMain.getStore().getLoader().load();
   }
 }
