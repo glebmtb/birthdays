@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.grid.Grid;
@@ -17,6 +20,7 @@ import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.LiveToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
+import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.client.localization.ContactListLocalization;
 import ru.n5g.birthdays.note_book.client.presenter.ContactListPresenter;
@@ -29,6 +33,8 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   private Grid<ContactDTO> gridMain;
   private ToolBar toolBarTop;
   private ToolBar toolBarBottom;
+
+  private Button btnRefresh;
 
   public ContactListViewImpl(ContactListPresenter presenter, ContactListLocalization localization) {
     super(new FitLayout());
@@ -48,8 +54,10 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     cp.setLayout(new FitLayout());
     cp.setBorders(false);
 
-    toolBarTop= new ToolBar();
-    toolBarTop.setHeight(36);
+    btnRefresh = createButton("btn-refresh-list", localization.btnRefresh(),  "btn_20120925140401", createRefreshSelectionListener());
+
+    toolBarTop = new ToolBar();
+    toolBarTop.add(btnRefresh);
 
     gridMain = createGrid();
     toolBarBottom = createToolBarBottom(gridMain);
@@ -59,6 +67,15 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     cp.add(gridMain);
     cp.setBottomComponent(toolBarBottom);
     add(cp);
+  }
+
+  private SelectionListener<ButtonEvent> createRefreshSelectionListener() {
+   return new SelectionListener<ButtonEvent>() {
+     @Override
+     public void componentSelected(ButtonEvent ce) {
+       onRefresh();
+     }
+   };
   }
 
   private Grid<ContactDTO> createGrid() {
@@ -92,8 +109,19 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   }
 
   @Override
-  public void refresh() {
+  public void onRefresh() {
     gridMain.getStore().getLoader().load();
+  }
+
+  private Button createButton(String styleName, String btnName, String testId, SelectionListener<ButtonEvent> listener) {
+    Button button = new Button();
+    button.addStyleName("btn-large");
+    button.addStyleName(styleName);
+    button.setToolTip(btnName);
+    button.setScale(Style.ButtonScale.LARGE);
+    TestIdSetter.resetTestId(button, testId);
+    button.addSelectionListener(listener);
+    return button;
   }
 
   private ToolBar createToolBarBottom(Grid<ContactDTO> grid) {
