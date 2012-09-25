@@ -18,4 +18,8 @@ public interface ContactEditLocalization extends Constants, SimpleWindowLocaliza
   String middleName();
 
   String comment();
+
+  String information();
+
+  String saveSuccess();
 }

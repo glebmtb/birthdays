@@ -4,6 +4,7 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
+import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.client.localization.ContactEditLocalization;
 import ru.n5g.birthdays.note_book.client.presenter.ContactEditPresenter;
 
@@ -49,6 +50,13 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
 
   @Override
   protected void onSave() {
-    //TODO: implement this method
+    ContactDTO dto = new ContactDTO();
+    dto.setNickname(nickname.getValue());
+    dto.setLastName(lastName.getValue());
+    dto.setFirstName(firstName.getValue());
+    dto.setMiddleName(middleName.getValue());
+    dto.setComment(comment.getValue());
+
+    presenter.save(dto);
   }
 }
