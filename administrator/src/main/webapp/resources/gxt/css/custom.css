@@ -1,0 +1,486 @@
+﻿.log-panel {
+    z-index: 1;
+}
+
+input[readonly] {
+    color: gray;
+    background: #DDDDDD;
+}
+
+.x-edit-grid .editableCell {
+}
+
+.x-edit-grid .nonEditableCell {
+    background: #DDDDDD;
+}
+
+.headerContainer .label,
+.linkedGridContainer .label {
+    font-family: arial;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.headerContainer .value {
+    font-family: arial;
+    font-size: 16px;
+    margin-right: 50px;
+}
+
+.headerContainer .exit {
+    float: right;
+}
+
+.headerContainer .rzdep-tabsNavigator {
+    float: left;
+    margin-top: 0px;
+}
+
+.linkedGridContainer .selectTypePanel {
+    margin: 5px;
+}
+
+.treeNodeNameEditor input {
+    height: 19px !important;
+}
+
+/* --- DTV PARAM TYPE IN COMBOBOX --- */
+.SUMMARY__ {
+    font-weight: bold;
+}
+
+.FIELD__ {
+}
+
+.VALUE__ {
+}
+
+/* --- TABS STYLING --- */
+.page1View .label {
+    font-family: arial, serif;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.page1View .row-label {
+    font-family: arial, serif;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.page1View .value {
+    font-family: arial, serif;
+    margin-right: 30px;
+}
+
+.tabCleaningIndicator .hpanel .label {
+    font-family: sans-serif;
+    font-size: 14px;
+    margin: 10px;
+    margin-right: 5px;
+}
+
+.tabCleaningIndicator .hpanel .value {
+    font-family: sans-serif;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.accDevEquipmentPageParamsComboView.x-view-highlightrow {
+    border: none !important;
+}
+
+/* --- MODIFIED DEFAULT STYLES --- */
+.x-border-layout-ct {
+    background-color: #ffffff;
+}
+
+.x-panel-tl .x-panel-header {
+    font-size: 14px;
+}
+
+.x-tree3-node-text {
+    font-size: 14px;
+}
+
+.ext-strict .x-grid3-cell-inner {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+.ext-strict .x-grid3-hd-inner {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+.x-ftree2-selected {
+    background-color: #bbddff !important;
+}
+
+.x-ftree2-node-over {
+    background-color: #eeeeee !important;
+}
+
+/* --- SLIDER --- */
+.gxt-widgetSlider {
+    /*margin: 5px;*/
+}
+
+.gxt-widgetSlider .x-column-inner {
+}
+
+.gxt-widgetSlider .slideLeft {
+    width: 25px;
+    height: 100px;
+    border: 1px solid black;
+    float: left;
+}
+
+.gxt-widgetSlider .sliderBar {
+    border: 1px solid black;
+    height: 100px;
+    float: left;
+}
+
+.gxt-widgetSlider .sliderBar .slide-element,
+.gxt-widgetSlider .sliderBar img {
+    cursor: pointer;
+}
+
+.gxt-widgetSlider .slideRight {
+    width: 25px;
+    height: 100px;
+    border: 1px solid black;
+    float: left;
+}
+
+.gxt-widgetSlider .selected-widget {
+    border: 6px double #8DB2E3;
+}
+
+.gxt-widgetSlider-window {
+}
+
+.gxt-widgetSlider-window .view-image {
+    /*margin: 5px;*/
+    width: 100%;
+}
+
+/* --- IMAGE VIEWER --- */
+.gxt-imageViewer {
+    width: 550px;
+    text-align: center;
+}
+
+.gxt-imageViewer .image-preview {
+    /*border: 2px groove #8DB2E3;*/
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px; /*padding: 5px; width: 100%;*/
+    max-width: 100%;
+}
+
+/* --- COMBOBOX --- */
+.x-combobox-scroller {
+    z-index: 1;
+    position: absolute;
+    right: 0px;
+    width: 21px;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.x-combobox-scroller-dummycontent {
+    width: 1px;
+    position: absolute;
+}
+
+.x-combo-list-inner {
+    float: left;
+}
+
+.x-combo-list-ft {
+    float: left;
+}
+
+.x-combobox-loading {
+    background: url("../images/default/combobox/loading.gif") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 16px;
+    position: absolute;
+    width: 16px;
+    right: 22px;
+    top: 4px;
+}
+
+/* --- DATEPICKER --- */
+.gwt-DateBox input {
+    width: 8em;
+}
+
+.dateBoxFormatError {
+    background: #ffcccc;
+}
+
+.dateBoxPopup {
+}
+
+.gwt-DatePicker {
+    border: 1px solid #A2BBDD;
+    cursor: default;
+}
+
+.gwt-DatePicker td,
+.datePickerMonthSelector td:focus {
+    outline: none
+}
+
+.datePickerDays {
+    width: 100%;
+    background: white;
+}
+
+.datePickerDay,
+.datePickerWeekdayLabel,
+.datePickerWeekendLabel {
+    font-size: 75%;
+    text-align: center;
+    padding: 4px;
+    outline: none;
+}
+
+.datePickerWeekdayLabel,
+.datePickerWeekendLabel {
+    background: #C3D9FF;
+    padding: 0px 4px 2px;
+    cursor: default;
+}
+
+.datePickerDay {
+    padding: 4px;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.datePickerDayIsToday {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+.datePickerDayIsWeekend {
+    background: #EEEEEE;
+}
+
+.datePickerDayIsFiller {
+    color: #888888;
+}
+
+.datePickerDayIsValue {
+    background: #aaccee;
+}
+
+.datePickerDayIsDisabled {
+    color: #AAAAAA;
+    font-style: italic;
+}
+
+.datePickerDayIsHighlighted {
+    background: #F0E68C;
+}
+
+.datePickerDayIsValueAndHighlighted {
+    background: #bbddd9;
+}
+
+.datePickerMonthSelector {
+    background: #C3D9FF;
+    width: 100%;
+}
+
+td.datePickerMonth {
+    text-align: center;
+    vertical-align: center;
+    white-space: nowrap;
+    font-size: 70%;
+    font-weight: bold;
+    color: blue;
+}
+
+.datePickerPreviousButton,
+.datePickerNextButton {
+    font-size: 120%;
+    line-height: 1em;
+    color: blue;
+    cursor: hand;
+    cursor: pointer;
+    padding: 0px 4px;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+body, td, a, div, .p {
+    font-family: arial, sans-serif
+}
+
+.bg_blue {
+    background-color: #dfe8f6;
+}
+
+.padd_10 {
+    padding: 10px;
+}
+
+.GridHeatSupply {
+    padding: 10px;
+}
+
+.GridTransmission {
+    padding: 10px;
+}
+
+/** TABS */
+.COMMON.x-tab-strip-active .x-tab-left,
+.COMMON.x-tab-strip-active .x-tab-right,
+.COMMON.x-tab-strip-active .x-tab-strip-inner,
+.COMMON .x-tab-strip-top .x-tab-left,
+.COMMON .x-tab-strip-top .x-tab-right,
+.COMMON .x-tab-strip-top .x-tab-strip-inner {
+    background-image: url(../images/gray/tabs/tabs-sprite.gif);
+}
+
+.HEATING.x-tab-strip-active .x-tab-left,
+.HEATING.x-tab-strip-active .x-tab-right,
+.HEATING.x-tab-strip-active .x-tab-strip-inner,
+.HEATING .x-tab-strip-top .x-tab-left,
+.HEATING .x-tab-strip-top .x-tab-right,
+.HEATING .x-tab-strip-top .x-tab-strip-inner {
+    background-image: url(../images/gray/tabs/tabs-sprite-heating.gif);
+}
+
+.WATERIN.x-tab-strip-active .x-tab-left,
+.WATERIN.x-tab-strip-active .x-tab-right,
+.WATERIN.x-tab-strip-active .x-tab-strip-inner,
+.WATERIN .x-tab-strip-top .x-tab-left,
+.WATERIN .x-tab-strip-top .x-tab-right,
+.WATERIN .x-tab-strip-top .x-tab-strip-inner {
+    background-image: url(../images/gray/tabs/tabs-sprite-waterin.gif);
+}
+
+.WATEROUT.x-tab-strip-active .x-tab-left,
+.WATEROUT.x-tab-strip-active .x-tab-right,
+.WATEROUT.x-tab-strip-active .x-tab-strip-inner,
+.WATEROUT .x-tab-strip-top .x-tab-left,
+.WATEROUT .x-tab-strip-top .x-tab-right,
+.WATEROUT .x-tab-strip-top .x-tab-strip-inner {
+    background-image: url(../images/gray/tabs/tabs-sprite-waterout.gif);
+}
+
+.POWER.x-tab-strip-active .x-tab-left,
+.POWER.x-tab-strip-active .x-tab-right,
+.POWER.x-tab-strip-active .x-tab-strip-inner,
+.POWER .x-tab-strip-top .x-tab-left,
+.POWER .x-tab-strip-top .x-tab-right,
+.POWER .x-tab-strip-top .x-tab-strip-inner {
+    background-image: url(../images/gray/tabs/tabs-sprite-power.gif);
+}
+
+.FUEL.x-tab-strip-active .x-tab-left,
+.FUEL.x-tab-strip-active .x-tab-right,
+.FUEL.x-tab-strip-active .x-tab-strip-inner,
+.FUEL .x-tab-strip-top .x-tab-left,
+.FUEL .x-tab-strip-top .x-tab-right,
+.FUEL .x-tab-strip-top .x-tab-strip-inner {
+    background-image: url(../images/gray/tabs/tabs-sprite-fuel.gif);
+}
+
+.noImagesLabel {
+    font-size: 48px;
+    left: 20%;
+    width: 60%;
+    position: absolute;
+    top: 40%;
+    font-weight: bold;
+    color: rgb(204, 204, 204);
+}
+
+.embededMessageBox {
+    background: #DFE8F6;
+}
+
+/* Класс поля (комбо или текстовое) с кнопкой добавления */
+div.add-field > table > tbody > tr > td > img {
+    margin-left: 25px;
+}
+
+.rzdep-tabsNavigator input[readonly] {
+    color: black;
+    background: white;
+}
+
+.gwt-grid-row-white,
+.gwt-grid-row-white-auto,
+.gwt-tree-row-white,
+.gwt-tree-row-white-auto {
+    background: #FFFFFF;
+}
+
+.gwt-grid-row-red,
+.gwt-grid-row-red-auto,
+.gwt-tree-row-red,
+.gwt-tree-row-red-auto {
+    background: #FF0000;
+}
+
+.gwt-grid-row-yellow,
+.gwt-grid-row-yellow-auto,
+.gwt-tree-row-yellow,
+.gwt-tree-row-yellow-auto {
+    background: #FFFF00;
+}
+
+.gwt-grid-row-green,
+.gwt-grid-row-green-auto,
+.gwt-tree-row-green,
+.gwt-tree-row-green-auto {
+    background: #00AA00;
+}
+
+.gwt-grid-row-lgrey,
+.gwt-grid-row-lgrey-auto,
+.gwt-tree-row-lgrey,
+.gwt-tree-row-lgrey-auto {
+    background: #CCCCCC;
+}
+
+.gwt-grid-row-grey,
+.gwt-grid-row-grey-auto,
+.gwt-tree-row-grey,
+.gwt-tree-row-grey-auto {
+    background: #999999;
+}
+
+.gwt-grid-row-green,
+.gwt-grid-row-green-auto,
+.gwt-tree-row-green,
+.gwt-tree-row-green-auto {
+    /*background: #00AA00;*/
+    background: #CCCCCC;
+}
+
+.admin-simple-role-edit .x-grid3-row-selected {
+    background-color: #999999 !important;
+    background-image: none !important;
+    border-color: transparent;
+}
+
+.tree-little-font .x-tree3-node-text{
+    font-size:11px !important;
+}

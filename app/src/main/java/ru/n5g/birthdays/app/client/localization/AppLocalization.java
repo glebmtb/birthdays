@@ -9,11 +9,7 @@ public interface AppLocalization extends Messages {
 
   String logoutConfirm();
 
-  String btnAdmin();
-
   String hello();
-
-  String administratorHeader();
 
   String header();
 

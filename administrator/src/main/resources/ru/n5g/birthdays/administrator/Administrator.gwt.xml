@@ -12,5 +12,12 @@
   <inherits name="ru.n5g.birthdays.core.Core"/>
   <inherits name="ru.n5g.birthdays.components.Components"/>
 
+  <entry-point class='ru.n5g.birthdays.administrator.client.MainEntryPoint'/>
+
+  <replace-with class="ru.n5g.birthdays.administrator.client.factory.AdministratorFactoryImpl">
+    <when-type-is class="ru.n5g.birthdays.administrator.client.factory.AdministratorFactory"/>
+  </replace-with>
+
+
   <source path="client"/>
 </module>

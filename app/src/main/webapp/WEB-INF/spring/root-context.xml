@@ -11,7 +11,6 @@
 
   <!--Определяем папки, в которых будем автоматически искать бины-компоненты (@Component, @Service)-->
   <context:component-scan base-package="ru.n5g.birthdays.app.server"/>
-  <context:component-scan base-package="ru.n5g.birthdays.administrator.server"/>
   <context:component-scan base-package="ru.n5g.birthdays.core.server"/>
   <context:component-scan base-package="ru.n5g.birthdays.note_book.server"/>
 

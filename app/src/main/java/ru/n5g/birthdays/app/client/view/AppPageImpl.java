@@ -27,7 +27,6 @@ public class AppPageImpl extends ContentPanel implements AppPage {
   private Label lblHello;
   private Label lblEmployeeName;
 
-  private TabItem btnAdmin;
   private TabItem btnContact;
   private TabItem btnLogout;
 
@@ -86,7 +85,7 @@ public class AppPageImpl extends ContentPanel implements AppPage {
   }
 
   public void initToolbar() {
-    selectedTab = TabEnum.ADMINISTRATOR;
+    selectedTab = TabEnum.CONTACT;
     toolBar = new TabPanel();
     toolBar.setBorders(false);
     toolBar.setBodyBorder(false);
@@ -107,18 +106,6 @@ public class AppPageImpl extends ContentPanel implements AppPage {
       }
     });
 
-    btnAdmin = new TabItem();
-    btnAdmin.addStyleName("btn-menu");
-    btnAdmin.setToolTip(localization.btnAdmin());
-    btnAdmin.setText(localization.btnAdmin());
-    btnAdmin.setBorders(true);
-    btnAdmin.addListener(Events.Select, new Listener<ComponentEvent>() {
-      public void handleEvent(ComponentEvent be) {
-        presenter.openAdministrator();
-      }
-    });
-    btnAdmin.addStyleName("btn-tab");
-
     btnContact = new TabItem();
     btnContact.addStyleName("btn-menu");
     btnContact.setToolTip(localization.btnContact());
@@ -133,16 +120,13 @@ public class AppPageImpl extends ContentPanel implements AppPage {
 
 
     btnLogout.setHeight(0);
-    btnAdmin.setHeight(0);
     btnContact.setHeight(0);
 
 
     btnLogout.setBorders(false);
-    btnAdmin.setBorders(false);
     btnContact.setBorders(false);
 
 
-    toolBar.add(btnAdmin);
     toolBar.add(btnContact);
     toolBar.add(btnLogout);
   }
@@ -202,14 +186,11 @@ public class AppPageImpl extends ContentPanel implements AppPage {
 
   protected void chooseTab() {
     switch (selectedTab) {
-      case ADMINISTRATOR:
-        toolBar.setSelection(btnAdmin);
-        break;
       case CONTACT:
         toolBar.setSelection(btnContact);
         break;
       default:
-        toolBar.setSelection(btnAdmin);
+        toolBar.setSelection(btnContact);
         break;
     }
   }

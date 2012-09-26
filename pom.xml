@@ -49,11 +49,6 @@
       </dependency>
       <dependency>
         <groupId>ru.n5g.birthdays</groupId>
-        <artifactId>administrator</artifactId>
-        <version>0.2-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>ru.n5g.birthdays</groupId>
         <artifactId>noteBook</artifactId>
         <version>0.2-SNAPSHOT</version>
       </dependency>
