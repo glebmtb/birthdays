@@ -14,13 +14,14 @@ import ru.n5g.birthdays.note_book.client.view.ContactEditWindowImplImpl;
 public class ContactEditPresenter extends SimpleWindowPresenter{
   private ContactEditFactory factory;
   private ContactEditWindow window;
+  private IsSave isSave;
 
   public ContactEditPresenter(ContactEditFactory factory) {
     super(factory.getLocalization());
     this.factory = factory;
   }
 
-  public void addContact() {
+  public void addContact(IsSave isSave) {
     window = new ContactEditWindowImplImpl(this, factory.getLocalization());
     window.show();
 
@@ -35,6 +36,7 @@ public class ContactEditPresenter extends SimpleWindowPresenter{
       public void onSuccess(Void result) {
         window.hide();
         Info.display(factory.getLocalization().information(), factory.getLocalization().saveSuccess());
+        isSave.onSuccess();
       }
     });
   }
@@ -42,5 +44,9 @@ public class ContactEditPresenter extends SimpleWindowPresenter{
   public interface ContactEditWindow extends SimpleWindowView {
 
     void hide();
+  }
+
+  public interface IsSave {
+    void onSuccess();
   }
 }

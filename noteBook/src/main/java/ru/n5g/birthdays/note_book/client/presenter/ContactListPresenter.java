@@ -43,6 +43,11 @@ public class ContactListPresenter {
   }
 
   public void onAddContact() {
-    factory.getContactEditFactory().getPresenter().addContact();
+    factory.getContactEditFactory().getPresenter().addContact(new ContactEditPresenter.IsSave() {
+      @Override
+      public void onSuccess() {
+        view.onRefresh();
+      }
+    });
   }
 }
