@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.n5g.birthdays.core.server.bean.AppUserDetails;
 import ru.n5g.birthdays.core.server.bean.Contact;
 import ru.n5g.birthdays.core.server.bean.User;
-import ru.n5g.birthdays.core.server.dao.PeopleDao;
+import ru.n5g.birthdays.core.server.dao.ContactDao;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.client.service.ContactEditService;
 
@@ -18,7 +18,7 @@ import ru.n5g.birthdays.note_book.client.service.ContactEditService;
 public class ContactEditServiceImpl implements ContactEditService {
 
   @Autowired
-  private PeopleDao peopleDAO;
+  private ContactDao contactDAO;
 
   @Override
   public void saveContact(ContactDTO dto) {
@@ -27,6 +27,6 @@ public class ContactEditServiceImpl implements ContactEditService {
     User user = appUserDetails.getUser();
     Contact bean = Contact.convert(dto);
     bean.setUserId(user.getId());
-    peopleDAO.saveOrUpdate(bean);
+    contactDAO.saveOrUpdate(bean);
   }
 }
