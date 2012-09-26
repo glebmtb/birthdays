@@ -20,7 +20,7 @@ public class ContactListFactoryImpl implements ContactListFactory {
   }
 
   @Override
-  public ContactListLocalization getListLocalization() {
+  public ContactListLocalization getLocalization() {
     return listLocalization;
   }
 

@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.core.server.bean.Contact;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.client.service.ContactListService;
@@ -27,6 +28,16 @@ public class ContactListServiceImpl implements ContactListService {
     BasePagingLoadResult<ContactDTO> basePagingLoadResult;
     basePagingLoadResult = new BasePagingLoadResult<ContactDTO>(agentModelList, start, limit);
     return basePagingLoadResult;
+  }
+
+  @Override
+  @Transactional
+  public void deleteContact(List<ContactDTO> dtoList) {
+    Contact contact;
+    for (ContactDTO dto : dtoList) {
+      contact = contactListDao.get(dto.getId());
+      contactListDao.deleteNonTransactional(contact);
+    }
   }
 
   protected List<ContactDTO> getModelList(List dataList) {

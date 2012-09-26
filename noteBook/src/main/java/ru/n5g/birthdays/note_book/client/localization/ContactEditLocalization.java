@@ -22,4 +22,12 @@ public interface ContactEditLocalization extends Constants, SimpleWindowLocaliza
   String information();
 
   String saveSuccess();
+
+  String emptyContact();
+
+  String titleError();
+
+  String getEditTitle();
+
+  String getLabelEdit();
 }

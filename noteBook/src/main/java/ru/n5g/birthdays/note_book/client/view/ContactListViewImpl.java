@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style;
-import com.extjs.gxt.ui.client.event.ButtonEvent;
-import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Dialog;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
@@ -20,6 +20,7 @@ import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.LiveToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
+import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
 import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.client.localization.ContactListLocalization;
@@ -36,6 +37,8 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
 
   private Button btnRefresh;
   private Button btnAdd;
+  private Button btnEdit;
+  private Button btnDel;
 
   public ContactListViewImpl(ContactListPresenter presenter, ContactListLocalization localization) {
     super(new FitLayout());
@@ -55,11 +58,17 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     cp.setLayout(new FitLayout());
     cp.setBorders(false);
 
-    btnRefresh = createButton("btn-refresh-list", localization.btnRefresh(),  "btn_20120925140401", createRefreshSelectionListener());
-    btnAdd = createButton("btn-contact-new", localization.btnAdd(),  "btn_20120925140801", createAddSelectionListener());
+    btnAdd = createButton("btn-contact-new", localization.btnAdd(), "btn_20120925140802", createAddSelectionListener());
+    btnEdit = createButton("btn-contact-edit", localization.btnEdit(), "btn_20120925140803", createEditSelectionListener());
+    btnDel = createButton("btn-contact-delete", localization.btnEdit(), "btn_20120925140804", createDeleteSelectionListener());
+    btnRefresh = createButton("btn-refresh-list", localization.btnRefresh(), "btn_20120925140401", createRefreshSelectionListener());
+    btnEdit.setEnabled(false);
+    btnDel.setEnabled(false);
 
     toolBarTop = new ToolBar();
     toolBarTop.add(btnAdd);
+    toolBarTop.add(btnEdit);
+    toolBarTop.add(btnDel);
     toolBarTop.add(btnRefresh);
 
     gridMain = createGrid();
@@ -70,6 +79,44 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     cp.add(gridMain);
     cp.setBottomComponent(toolBarBottom);
     add(cp);
+  }
+
+  private SelectionListener<ButtonEvent> createDeleteSelectionListener() {
+    return new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        onDeleteContact();
+      }
+    };
+  }
+
+  private void onDeleteContact() {
+    btnDel.disable();
+    MyMessageBox.confirm(localization.dialogConfirm(), localization.confirmationDeleting(),
+        new Listener<MessageBoxEvent>() {
+          @Override
+          public void handleEvent(MessageBoxEvent ce) {
+            Button btn = ce.getButtonClicked();
+            if (btn.getItemId().equals(Dialog.YES)) {
+              presenter.onDeleteContact(gridMain.getSelectionModel().getSelectedItems());
+            }
+            else
+              btnDel.enable();
+          }
+        });
+  }
+
+  private SelectionListener<ButtonEvent> createEditSelectionListener() {
+    return new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        onEditContact();
+      }
+    };
+  }
+
+  private void onEditContact() {
+    presenter.onEditContact(gridMain.getSelectionModel().getSelectedItem());
   }
 
   private SelectionListener<ButtonEvent> createAddSelectionListener() {
@@ -86,12 +133,12 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   }
 
   private SelectionListener<ButtonEvent> createRefreshSelectionListener() {
-   return new SelectionListener<ButtonEvent>() {
-     @Override
-     public void componentSelected(ButtonEvent ce) {
-       onRefresh();
-     }
-   };
+    return new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        onRefresh();
+      }
+    };
   }
 
   private Grid<ContactDTO> createGrid() {
@@ -120,8 +167,21 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     grid.getView().setAutoFill(true);
     grid.getView().setForceFit(true);
     grid.getView().setShowDirtyCells(false);
-    grid.getSelectionModel().setSelectionMode(Style.SelectionMode.SINGLE);
+    grid.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<ContactDTO>() {
+      @Override
+      public void selectionChanged(SelectionChangedEvent<ContactDTO> se) {
+        int selSize = se.getSelection().size();
+        boolean itemSelected = selSize > 0;
+        boolean singleItemSelected = selSize == 1;
+        enableButtons(itemSelected, singleItemSelected, se.getSelection());
+      }
+    });
     return grid;
+  }
+
+  private void enableButtons(boolean itemSelected, boolean singleItemSelected, List<ContactDTO> selection) {
+    btnEdit.setEnabled(singleItemSelected);
+    btnDel.setEnabled(itemSelected);
   }
 
   @Override

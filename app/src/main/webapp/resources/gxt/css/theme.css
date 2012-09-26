@@ -201,3 +201,15 @@ btn-chart-large button {
     height: 32px;
     width: 32px;
 }
+
+.btn-contact-edit button {
+    background: url("../icons/contact_edit.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}
+
+.btn-contact-delete button {
+    background: url("../icons/contact_delete.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}

@@ -4,6 +4,7 @@ import com.extjs.gxt.ui.client.widget.Info;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.components.client.view.SimpleWindowView;
+import ru.n5g.birthdays.core.shared.bean.ActionEnum;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.client.factory.ContactEditFactory;
 import ru.n5g.birthdays.note_book.client.view.ContactEditWindowImplImpl;
@@ -11,7 +12,7 @@ import ru.n5g.birthdays.note_book.client.view.ContactEditWindowImplImpl;
 /**
  * @author belyaev
  */
-public class ContactEditPresenter extends SimpleWindowPresenter{
+public class ContactEditPresenter extends SimpleWindowPresenter {
   private ContactEditFactory factory;
   private ContactEditWindow window;
   private IsSave isSave;
@@ -22,9 +23,21 @@ public class ContactEditPresenter extends SimpleWindowPresenter{
   }
 
   public void addContact(IsSave isSave) {
-    window = new ContactEditWindowImplImpl(this, factory.getLocalization());
-    window.show();
+    this.isSave = isSave;
+    openWindow(ActionEnum.ADD, new ContactDTO());
+  }
 
+  public void editContact(ContactDTO dto, IsSave isSave) {
+    this.isSave = isSave;
+    openWindow(ActionEnum.EDIT, dto);
+  }
+
+  private void openWindow(ActionEnum action, ContactDTO dto) {
+    if (action == null || dto == null) {
+      Info.display(factory.getLocalization().titleError(), factory.getLocalization().emptyContact());
+    }
+    window = new ContactEditWindowImplImpl(this, factory.getLocalization(), action, dto);
+    window.show();
   }
 
   public void save(ContactDTO dto) {

@@ -10,13 +10,13 @@ import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 import ru.n5g.birthdays.core.server.bean.Contact;
-import ru.n5g.birthdays.core.server.dao.ContactDaoImpl;
+import ru.n5g.birthdays.core.server.dao.BaseDaoImpl;
 
 /**
  * @author belyaev
  */
 @Repository
-public class ContactListDaoImpl extends ContactDaoImpl implements ContactListDao {
+public class ContactListDaoImpl extends BaseDaoImpl<Contact> implements ContactListDao {
   @Override
   public List<Contact> loadTableRows() {
     return hibernateTemplate.executeFind(new HibernateCallback<List<Contact>>() {

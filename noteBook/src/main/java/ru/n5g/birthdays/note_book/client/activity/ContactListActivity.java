@@ -18,7 +18,7 @@ public class ContactListActivity extends AbstractActivity {
 
   @Override
   public void start(AcceptsOneWidget panel, EventBus eventBus) {
-    Window.setTitle(factory.getListLocalization().title());
+    Window.setTitle(factory.getLocalization().title());
     panel.setWidget(factory.getPresenter().start());
   }
 }

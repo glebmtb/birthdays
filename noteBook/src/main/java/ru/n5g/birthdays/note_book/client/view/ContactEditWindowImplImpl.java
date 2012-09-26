@@ -4,6 +4,7 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
+import ru.n5g.birthdays.core.shared.bean.ActionEnum;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.client.localization.ContactEditLocalization;
 import ru.n5g.birthdays.note_book.client.presenter.ContactEditPresenter;
@@ -15,6 +16,9 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
   private ContactEditPresenter presenter;
   private ContactEditLocalization localization;
 
+  private ActionEnum action;
+  private ContactDTO dto;
+
   private TrimTextField nickname;
   private TrimTextField lastName;
   private TrimTextField firstName;
@@ -22,15 +26,23 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
   private TrimTextField comment;
 
 
-  public ContactEditWindowImplImpl(ContactEditPresenter presenter, ContactEditLocalization localization) {
+  public ContactEditWindowImplImpl(ContactEditPresenter presenter, ContactEditLocalization localization, ActionEnum action, ContactDTO dto) {
     super(presenter);
     this.presenter = presenter;
     this.localization = localization;
+    this.action = action;
+    this.dto = dto;
   }
 
   @Override
   protected String getTitleWindow() {
-    return localization.getAddTitle();
+    if (action == ActionEnum.ADD) {
+      return localization.getAddTitle();
+    }
+    else if (action == ActionEnum.EDIT) {
+      return localization.getEditTitle();
+    }
+    return "";
   }
 
   @Override
@@ -46,17 +58,34 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
     panel.add(firstName, formData);
     panel.add(middleName, formData);
     panel.add(comment, formData);
+
+    if (action == ActionEnum.EDIT)
+      onWrittenFields();
+  }
+
+  private void onWrittenFields() {
+    nickname.setValue(dto.getNickname());
+    lastName.setValue(dto.getLastName());
+    firstName.setValue(dto.getFirstName());
+    middleName.setValue(dto.getMiddleName());
+    comment.setValue(dto.getComment());
   }
 
   @Override
   protected void onSave() {
-    ContactDTO dto = new ContactDTO();
     dto.setNickname(nickname.getValue());
     dto.setLastName(lastName.getValue());
     dto.setFirstName(firstName.getValue());
     dto.setMiddleName(middleName.getValue());
     dto.setComment(comment.getValue());
-
     presenter.save(dto);
+  }
+
+  @Override
+  protected String getLabelBtnApply() {
+    if (action == ActionEnum.EDIT)
+      return localization.getLabelEdit();
+
+    return super.getLabelBtnApply();
   }
 }
