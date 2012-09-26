@@ -116,6 +116,7 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   }
 
   private void onEditContact() {
+    btnEdit.disable();
     presenter.onEditContact(gridMain.getSelectionModel().getSelectedItem());
   }
 
@@ -176,7 +177,17 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
         enableButtons(itemSelected, singleItemSelected, se.getSelection());
       }
     });
+    grid.addListener(Events.RowDoubleClick, new Listener<GridEvent<ContactDTO>>() {
+      @Override
+      public void handleEvent(GridEvent<ContactDTO> be) {
+        onGridDoubleClick(be);
+      }
+    });
     return grid;
+  }
+
+  private void onGridDoubleClick(GridEvent<ContactDTO> be) {
+    onEditContact();
   }
 
   private void enableButtons(boolean itemSelected, boolean singleItemSelected, List<ContactDTO> selection) {
