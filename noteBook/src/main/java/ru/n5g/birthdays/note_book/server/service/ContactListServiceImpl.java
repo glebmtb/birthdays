@@ -3,12 +3,14 @@ package ru.n5g.birthdays.note_book.server.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.core.server.bean.Contact;
+import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.client.service.ContactListService;
 import ru.n5g.birthdays.note_book.server.dao.ContactListDao;
@@ -20,9 +22,11 @@ public class ContactListServiceImpl implements ContactListService {
 
   @Override
   public BasePagingLoadResult<ContactDTO> loadContactList(BasePagingLoadConfig loadConfig) {
-    List<ContactDTO> agentModelList = getModelList(contactListDao.loadTableRows());
+    BaseModelData filter = new BaseModelData();
+    filter.set("userId", User.getAuthenticationUserId());
+    List<ContactDTO> agentModelList = getModelList(contactListDao.loadTableRows(filter));
     int start = 0;
-    int limit = contactListDao.getTableRowsCount();
+    int limit = contactListDao.getTableRowsCount(filter);
     int offsetLimit = 0;
 
     BasePagingLoadResult<ContactDTO> basePagingLoadResult;

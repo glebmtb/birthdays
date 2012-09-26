@@ -3,6 +3,8 @@ package ru.n5g.birthdays.core.server.bean;
 
 import javax.persistence.*;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import ru.n5g.birthdays.core.shared.bean.UserDTO;
 
 @Entity
@@ -66,7 +68,7 @@ public class User {
     UserDTO dto = new UserDTO();
     dto.setId(bean.getId());
     dto.setLogin(bean.getLogin());
-     dto.setRole(UserRole.convert(bean.getRole()));
+    dto.setRole(UserRole.convert(bean.getRole()));
     dto.setComment(bean.getComment());
     return dto;
   }
@@ -79,5 +81,12 @@ public class User {
     bean.setPassword(dto.getPassword());
     bean.setComment(dto.getComment());
     return bean;
+  }
+
+  public static Long getAuthenticationUserId() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    AppUserDetails appUserDetails = (AppUserDetails) auth.getPrincipal();
+    User user = appUserDetails.getUser();
+    return user.getId();
   }
 }
