@@ -80,4 +80,11 @@
                              baseTableName="contact" baseColumnNames="user_id"
                              referencedTableName="user" referencedColumnNames="user_id"/>
   </changeSet>
+
+  <changeSet id="006" author="belyaev">
+    <insert tableName="user_role">
+      <column name="name" value="Пользователь"/>
+      <column name="code" value="ROLE_USER"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>

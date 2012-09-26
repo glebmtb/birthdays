@@ -11,5 +11,10 @@ public enum UserRoleCode implements Serializable, IsSerializable {
   /**
    * Администратор
    */
-  ROLE_ADMIN
+  ROLE_ADMIN,
+
+  /**
+   * Пользователь
+   */
+  ROLE_USER
 }
