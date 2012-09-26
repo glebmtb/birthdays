@@ -10,11 +10,13 @@ public class RpcWhiteList implements IsSerializable {
   public UserDTO userDTO;
   public UserRoleDTO userRoleDTO;
   public ContactDTO contactDTO;
+  public ActionEnum actionEnum;
 
   public RpcWhiteList() {
     this.userRoleCode = UserRoleCode.ROLE_ADMIN;
     this.userDTO = new UserDTO();
     this.userRoleDTO = new UserRoleDTO();
     this.contactDTO = new ContactDTO();
+    this.actionEnum = ActionEnum.ADD;
   }
 }

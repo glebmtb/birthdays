@@ -72,17 +72,6 @@
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>administratorService</servlet-name>
-    <servlet-class>ru.n5g.birthdays.administrator.server.service.AdministratorServiceImpl</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>administratorService</servlet-name>
-    <url-pattern>/birthdays/administratorService</url-pattern>
-  </servlet-mapping>
-  <!-- Servlets -->
 
   <welcome-file-list>
     <welcome-file>/WEB-INF/views/main.jsp</welcome-file>

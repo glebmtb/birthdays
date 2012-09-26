@@ -6,9 +6,11 @@ import ru.n5g.birthdays.note_book.client.service.ContactListServiceAsync;
 
 public interface ContactListFactory {
 
-  ContactListLocalization getListLocalization();
+  ContactListLocalization getLocalization();
 
   ContactListPresenter getPresenter();
 
   ContactListServiceAsync getService();
+
+  ContactEditFactory getContactEditFactory();
 }

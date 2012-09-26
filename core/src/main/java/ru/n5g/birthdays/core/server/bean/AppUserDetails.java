@@ -36,6 +36,10 @@ public class AppUserDetails implements UserDetails {
     return user.getLogin();
   }
 
+  public User getUser() {
+    return user;
+  }
+
   @Override
   public boolean isAccountNonExpired() {
     return true;  //TODO: implement this method

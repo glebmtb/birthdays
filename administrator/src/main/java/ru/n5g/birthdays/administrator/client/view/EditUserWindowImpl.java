@@ -8,7 +8,7 @@ import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.administrator.client.localization.AdministratorLocalization;
 import ru.n5g.birthdays.administrator.client.presenter.AdministratorPresenter;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
-import ru.n5g.birthdays.components.client.view.SimpleWindowView;
+import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
 import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
 import ru.n5g.birthdays.core.client.util.RequiredFieldsUtil;
@@ -21,7 +21,7 @@ import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 /**
  * @author belyaev
  */
-public class EditUserWindow extends SimpleWindowView {
+public class EditUserWindowImpl extends SimpleWindowViewImpl {
   private AdministratorLocalization localization;
   private AdministratorPresenter presenter;
   private UserDTO dto;
@@ -32,7 +32,7 @@ public class EditUserWindow extends SimpleWindowView {
   private TrimTextField password;
 
 
-  public EditUserWindow(SimpleWindowPresenter presenter, UserDTO dto) {
+  public EditUserWindowImpl(SimpleWindowPresenter presenter, UserDTO dto) {
     super(presenter);
     this.dto = dto;
     this.presenter = (AdministratorPresenter) presenter;

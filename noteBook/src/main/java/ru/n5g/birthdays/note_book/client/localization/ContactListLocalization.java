@@ -19,4 +19,16 @@ public interface ContactListLocalization extends Constants {
   String listEmpty();
 
   String btnRefresh();
+
+  String btnAdd();
+
+  String btnEdit();
+
+  String information();
+
+  String deleteSuccess();
+
+  String dialogConfirm();
+
+  String confirmationDeleting();
 }

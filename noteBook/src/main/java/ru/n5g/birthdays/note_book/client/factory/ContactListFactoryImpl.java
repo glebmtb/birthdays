@@ -11,6 +11,7 @@ public class ContactListFactoryImpl implements ContactListFactory {
   private final ContactListLocalization listLocalization = GWT.create(ContactListLocalization.class);
   private final ContactListServiceAsync service = GWT.create(ContactListService.class);
   private ContactListPresenter presenter;
+  private ContactEditFactory contactEditFactory;
 
   private ClientFactory clientFactory;
 
@@ -19,7 +20,7 @@ public class ContactListFactoryImpl implements ContactListFactory {
   }
 
   @Override
-  public ContactListLocalization getListLocalization() {
+  public ContactListLocalization getLocalization() {
     return listLocalization;
   }
 
@@ -32,5 +33,12 @@ public class ContactListFactoryImpl implements ContactListFactory {
   @Override
   public ContactListServiceAsync getService() {
     return service;
+  }
+
+  @Override
+  public ContactEditFactory getContactEditFactory() {
+    if (contactEditFactory == null)
+      contactEditFactory = new ContactEditFactoryImpl();
+    return contactEditFactory;
   }
 }
