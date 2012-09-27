@@ -9,11 +9,11 @@ import ru.n5g.birthdays.administrator.client.factory.AdministratorFactory;
 import ru.n5g.birthdays.administrator.client.view.AdministratorView;
 import ru.n5g.birthdays.administrator.client.view.AdministratorViewImpl;
 import ru.n5g.birthdays.administrator.client.view.EditUserWindowImpl;
-import ru.n5g.birthdays.administrator.shared.bean.AdministratorListDTO;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 
-public class AdministratorPresenter<M extends AdministratorListDTO> extends SimpleWindowPresenter {
+public class AdministratorPresenter extends SimpleWindowPresenter {
   private AdministratorView view;
   private AdministratorFactory factory;
 
@@ -28,17 +28,17 @@ public class AdministratorPresenter<M extends AdministratorListDTO> extends Simp
     return view;
   }
 
-  public ListStore<M> loadUserList() {
-    RpcProxy<BasePagingLoadResult<M>> proxy = new RpcProxy<BasePagingLoadResult<M>>() {
+  public ListStore<UserDTO> loadUserList() {
+    RpcProxy<BasePagingLoadResult<UserDTO>> proxy = new RpcProxy<BasePagingLoadResult<UserDTO>>() {
       @Override
-      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<M>> listAsyncCallback) {
+      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<UserDTO>> listAsyncCallback) {
         factory.getService().loadUserList((BasePagingLoadConfig) loadConfig, listAsyncCallback);
       }
     };
-    PagingLoader<PagingLoadResult<M>> loader;
-    loader = new BasePagingLoader<PagingLoadResult<M>>(proxy, new ModelReader());
+    PagingLoader<PagingLoadResult<UserDTO>> loader;
+    loader = new BasePagingLoader<PagingLoadResult<UserDTO>>(proxy, new ModelReader());
 
-    return new ListStore<M>(loader);
+    return new ListStore<UserDTO>(loader);
   }
 
   public void addUser() {
@@ -46,12 +46,12 @@ public class AdministratorPresenter<M extends AdministratorListDTO> extends Simp
     window.show();
   }
 
-  public void editUser(M model) {
+  public void editUser(UserDTO model) {
     EditUserWindowImpl window = new EditUserWindowImpl(this, model);
     window.show();
   }
 
-  public void saveEditUserWindow(M dto, final EditUserWindowImpl window) {
+  public void saveEditUserWindow(UserDTO dto, final EditUserWindowImpl window) {
     factory.getService().setUsers(dto, new AsyncCallback<Void>() {
       public void onFailure(Throwable caught) {
         Info.display("Error", caught.getMessage());
@@ -65,7 +65,7 @@ public class AdministratorPresenter<M extends AdministratorListDTO> extends Simp
     });
   }
 
-  public void delUser(M dto) {
+  public void delUser(UserDTO dto) {
     factory.getService().delUsers(dto, new AsyncCallback<Void>() {
       public void onFailure(Throwable caught) {
         Info.display("Error", caught.getMessage());

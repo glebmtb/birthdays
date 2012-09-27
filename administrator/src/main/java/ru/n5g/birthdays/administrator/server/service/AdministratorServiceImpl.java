@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.administrator.client.service.AdministratorService;
 import ru.n5g.birthdays.administrator.server.dao.AdministratorListDao;
-import ru.n5g.birthdays.administrator.shared.bean.AdministratorListDTO;
 import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.server.bean.UserRole;
 import ru.n5g.birthdays.core.server.dao.combo_box.UserRoleComboBoxDao;
 import ru.n5g.birthdays.core.server.service.combo_box.UserRoleComboBoxService;
 import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 
 @Service("administratorService.rpc")
-public class AdministratorServiceImpl<M extends AdministratorListDTO> implements AdministratorService<M> {
+public class AdministratorServiceImpl implements AdministratorService {
   @Autowired
   private AdministratorListDao administratorListDao;
 
@@ -35,20 +35,20 @@ public class AdministratorServiceImpl<M extends AdministratorListDTO> implements
   private PasswordEncoder passwordEncoder = new MessageDigestPasswordEncoder("MD5");
 
   @Override
-  public BasePagingLoadResult<M> loadUserList(BasePagingLoadConfig loadConfig) {
-    List<M> agentModelList = getModelList(administratorListDao.loadTableRows());
+  public BasePagingLoadResult<UserDTO> loadUserList(BasePagingLoadConfig loadConfig) {
+    List<UserDTO> agentModelList = getModelList(administratorListDao.loadTableRows());
     int start = 0;
     int limit = administratorListDao.getTableRowsCount();
     int offsetLimit = 0;
 
-    BasePagingLoadResult<M> basePagingLoadResult;
-    basePagingLoadResult = new BasePagingLoadResult<M>(agentModelList, start, limit);
+    BasePagingLoadResult<UserDTO> basePagingLoadResult;
+    basePagingLoadResult = new BasePagingLoadResult<UserDTO>(agentModelList, start, limit);
     return basePagingLoadResult;
   }
 
   @Override
   @Transactional
-  public void setUsers(M dto) {
+  public void setUsers(UserDTO dto) {
     Long id = dto.getId();
     User user;
 
@@ -67,7 +67,7 @@ public class AdministratorServiceImpl<M extends AdministratorListDTO> implements
   }
 
   @Override
-  public void delUsers(M dto) {
+  public void delUsers(UserDTO dto) {
     if (administratorListDao.isLastAdmin()) {
       throw new RuntimeException("Нельзя удалить последнего администратора!");
     }
@@ -87,10 +87,10 @@ public class AdministratorServiceImpl<M extends AdministratorListDTO> implements
     return userRoleComboBoxService.load(loadConfig);
   }
 
-  protected List<M> getModelList(List dataList) {
+  protected List<UserDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {
-      M dto = (M) User.convert((User) o);
+      UserDTO dto = User.convert((User) o);
       dto.setCountContact(((User) o).getContactCount().getCount());
       resultList.add(dto);
     }

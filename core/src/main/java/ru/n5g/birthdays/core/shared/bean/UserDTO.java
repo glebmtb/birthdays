@@ -8,6 +8,7 @@ public class UserDTO extends BaseModelData {
   public static final String PASSWORD = "password";
   public static final String COMMENT = "comment";
   public static final String ROLE = "role";
+  public static final String COUNT_CONTACT = "countContact";
 
   public Long getId() {
     return get(ID);
@@ -47,5 +48,13 @@ public class UserDTO extends BaseModelData {
 
   public void setRole(UserRoleDTO role) {
     set(ROLE, role);
+  }
+
+  public Integer getCountContact() {
+    return get(COUNT_CONTACT);
+  }
+
+  public void setCountContact(Integer countContact) {
+    set(COUNT_CONTACT, countContact);
   }
 }

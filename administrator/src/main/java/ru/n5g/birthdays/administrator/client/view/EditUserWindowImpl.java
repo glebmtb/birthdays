@@ -7,7 +7,6 @@ import com.extjs.gxt.ui.client.widget.form.Validator;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.administrator.client.localization.AdministratorLocalization;
 import ru.n5g.birthdays.administrator.client.presenter.AdministratorPresenter;
-import ru.n5g.birthdays.administrator.shared.bean.AdministratorListDTO;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
@@ -15,6 +14,7 @@ import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
 import ru.n5g.birthdays.core.client.util.RequiredFieldsUtil;
 import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
+import ru.n5g.birthdays.core.shared.bean.UserDTO;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 
@@ -24,7 +24,7 @@ import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 public class EditUserWindowImpl extends SimpleWindowViewImpl {
   private AdministratorLocalization localization;
   private AdministratorPresenter presenter;
-  private AdministratorListDTO dto;
+  private UserDTO dto;
 
   private TrimTextField login;
   private AdvancedComboBox<UserRoleDTO> userRoleCombo;
@@ -32,7 +32,7 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
   private TrimTextField password;
 
 
-  public EditUserWindowImpl(SimpleWindowPresenter presenter, AdministratorListDTO dto) {
+  public EditUserWindowImpl(SimpleWindowPresenter presenter, UserDTO dto) {
     super(presenter);
     this.dto = dto;
     this.presenter = (AdministratorPresenter) presenter;
@@ -115,7 +115,7 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
   protected void onSave() {
     if (checkPassword()) return;
     if (dto == null)
-      dto = new AdministratorListDTO();
+      dto = new UserDTO();
     dto.setLogin(login.getValue());
     dto.setPassword(password.getValue());
     dto.setRole(userRoleCombo.getValue());
