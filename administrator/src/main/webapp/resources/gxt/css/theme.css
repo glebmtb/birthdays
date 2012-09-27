@@ -213,3 +213,9 @@ btn-chart-large button {
     height: 32px;
     width: 32px;
 }
+
+.btn-logout-admin button {
+    background: url("../icons/btn_logout.png") no-repeat center;
+    height: 32px !important;
+    width: 32px;
+}

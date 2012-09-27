@@ -6,10 +6,7 @@ import java.util.List;
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
-import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.Dialog;
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
-import com.extjs.gxt.ui.client.widget.MessageBox;
+import com.extjs.gxt.ui.client.widget.*;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
@@ -21,6 +18,7 @@ import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.LiveToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Element;
 import ru.n5g.birthdays.administrator.client.localization.AdministratorLocalization;
 import ru.n5g.birthdays.administrator.client.presenter.AdministratorPresenter;
@@ -37,6 +35,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
   private Button btnDel;
   private Button btnEdit;
   private Button btnRefresh;
+  private Button btnLogout;
 
   private ToolBar toolBarTop;
   private ToolBar toolBarBottom;
@@ -71,6 +70,26 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
     toolBarTop.add(new SeparatorToolItem());
     toolBarTop.add(btnRefresh);
 
+    btnLogout = new Button();
+    btnLogout.setToolTip(localization.logoutDlgTitle());
+    btnLogout.addStyleName("btn-large");
+    btnLogout.addStyleName("btn-logout-admin");
+    btnLogout.addSelectionListener(new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent buttonEvent) {
+        MessageBox.confirm(localization.logoutDlgTitle(), localization.logoutConfirm(), new Listener<MessageBoxEvent>() {
+          @Override
+          public void handleEvent(MessageBoxEvent be) {
+            if (Dialog.YES.equals(be.getButtonClicked().getItemId())) {
+              logout();
+            }
+          }
+        });
+      }
+    });
+
+    toolBarTop.add(btnLogout);
+
     gridMain = createGrid();
     toolBarBottom = createToolBarBottom(gridMain);
     new QuickTip(gridMain);
@@ -102,6 +121,15 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
     cp.add(gridMain);
     cp.setBottomComponent(toolBarBottom);
     add(cp);
+  }
+
+  private void logout() {
+    String url = GWT.getHostPageBaseURL();
+    if (url.endsWith("/")) {
+      url = url.substring(0, url.length() - 1);
+    }
+    url += "/logout";
+    com.google.gwt.user.client.Window.Location.assign(url);
   }
 
   @Override

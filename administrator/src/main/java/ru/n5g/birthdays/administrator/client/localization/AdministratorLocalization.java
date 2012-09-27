@@ -66,4 +66,8 @@ public interface AdministratorLocalization extends SimpleWindowLocalization {
   String userRole();
 
   String countContact();
+
+  String logoutDlgTitle();
+
+  String logoutConfirm();
 }
