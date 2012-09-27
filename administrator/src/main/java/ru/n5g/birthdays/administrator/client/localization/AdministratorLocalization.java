@@ -64,4 +64,6 @@ public interface AdministratorLocalization extends SimpleWindowLocalization {
   String comboBoxInitialization();
 
   String userRole();
+
+  String countContact();
 }

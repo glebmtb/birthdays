@@ -12,11 +12,10 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.administrator.client.service.AdministratorService;
+import ru.n5g.birthdays.administrator.server.dao.AdministratorListDao;
 import ru.n5g.birthdays.administrator.shared.bean.AdministratorListDTO;
 import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.server.bean.UserRole;
-import ru.n5g.birthdays.core.server.dao.UserDao;
-import ru.n5g.birthdays.core.server.dao.UserRoleDao;
 import ru.n5g.birthdays.core.server.dao.combo_box.UserRoleComboBoxDao;
 import ru.n5g.birthdays.core.server.service.combo_box.UserRoleComboBoxService;
 import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
@@ -25,10 +24,7 @@ import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 @Service("administratorService.rpc")
 public class AdministratorServiceImpl<M extends AdministratorListDTO> implements AdministratorService<M> {
   @Autowired
-  private UserDao userDao;
-
-  @Autowired
-  private UserRoleDao userRoleDao;
+  private AdministratorListDao administratorListDao;
 
   @Autowired
   private UserRoleComboBoxService userRoleComboBoxService;
@@ -40,9 +36,9 @@ public class AdministratorServiceImpl<M extends AdministratorListDTO> implements
 
   @Override
   public BasePagingLoadResult<M> loadUserList(BasePagingLoadConfig loadConfig) {
-    List<M> agentModelList = getModelList(userDao.loadTableRows());
+    List<M> agentModelList = getModelList(administratorListDao.loadTableRows());
     int start = 0;
-    int limit = userDao.getTableRowsCount();
+    int limit = administratorListDao.getTableRowsCount();
     int offsetLimit = 0;
 
     BasePagingLoadResult<M> basePagingLoadResult;
@@ -59,7 +55,7 @@ public class AdministratorServiceImpl<M extends AdministratorListDTO> implements
     if (id == null)
       user = new User();
     else
-      user = userDao.get(id);
+      user = administratorListDao.get(id);
 
     user.setLogin(dto.getLogin());
     if (dto.getPassword() != null) {
@@ -67,16 +63,16 @@ public class AdministratorServiceImpl<M extends AdministratorListDTO> implements
     }
     user.setRole(UserRole.convert(dto.getRole()));
     user.setComment(dto.getPassword());
-    userDao.saveOrUpdateNonTransactional(user);
+    administratorListDao.saveOrUpdateNonTransactional(user);
   }
 
   @Override
   public void delUsers(M dto) {
-    if (userDao.isLastAdmin()) {
+    if (administratorListDao.isLastAdmin()) {
       throw new RuntimeException("Нельзя удалить последнего администратора!");
     }
-    User user = userDao.get(dto.getId());
-    userDao.delete(user);
+    User user = administratorListDao.get(dto.getId());
+    administratorListDao.delete(user);
   }
 
   @Override
@@ -94,7 +90,8 @@ public class AdministratorServiceImpl<M extends AdministratorListDTO> implements
   protected List<M> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {
-      resultList.add(User.convert((User) o));
+      M dto = (M) User.convert((User) o);
+      resultList.add(dto);
     }
     return resultList;
   }
