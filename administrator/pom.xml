@@ -162,7 +162,7 @@
         <artifactId>gwt-maven-plugin</artifactId>
         <version>${gwt-maven-plugin.version}</version>
         <configuration>
-          <module>${project.build.module}</module>
+          <module>ru.n5g.birthdays.administrator.Administrator</module>
           <hostedWebapp>${project.build.directory}/${project.artifactId}</hostedWebapp>
         </configuration>
         <executions>
@@ -202,6 +202,22 @@
             <groupId>org.jboss.as.plugins</groupId>
             <artifactId>jboss-as-maven-plugin</artifactId>
             <version>7.2.Final</version>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>openshift</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.1.1</version>
+            <configuration>
+              <outputDirectory>../../birthdays-redhad/deployments</outputDirectory>
+              <warName>administrator</warName>
+            </configuration>
           </plugin>
         </plugins>
       </build>
