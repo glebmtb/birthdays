@@ -51,7 +51,7 @@
             <artifactId>maven-war-plugin</artifactId>
             <version>2.1.1</version>
             <configuration>
-              <outputDirectory>../../birthdays-redhad/deployments</outputDirectory>
+              <outputDirectory>../birthdays-redhad/deployments</outputDirectory>
               <warName>database</warName>
             </configuration>
           </plugin>
