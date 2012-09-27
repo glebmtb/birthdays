@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormButtonBinding;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -44,9 +45,6 @@ public abstract class SimpleWindowViewImpl extends Window implements SimpleWindo
     setModal(true);
     setMinimizable(false);
     setMaximizable(false);
-    setSize(windowWidth, windowHeight);
-    setMinWidth(windowHeight);
-    setMinHeight(getWindowMinHeight());
     setLayout(new FitLayout());
   }
 
@@ -66,6 +64,9 @@ public abstract class SimpleWindowViewImpl extends Window implements SimpleWindo
     super.onRender(parent, pos);
 
     setHeading(getTitleWindow());
+    setSize(windowWidth, windowHeight);
+    setMinWidth(windowWidth);
+    setMinHeight(windowHeight);
 
     FormData formData = new FormData("95%");
     panel = new FormPanel();
@@ -212,6 +213,18 @@ public abstract class SimpleWindowViewImpl extends Window implements SimpleWindo
     trimTextField.setMaxLength(maxLength);
     trimTextField.setFieldLabel(fieldLabel);
     trimTextField.setLabelStyle(LABEL_STYLE);
+    TestIdSetter.resetTestId(trimTextField, testId);
+    RequiredFieldsUtil.setRequired(trimTextField, isRequired);
+    return trimTextField;
+  }
+
+  public static TextArea createTextAreaField(int maxLength, String fieldLabel, String testId, boolean isRequired, int height) {
+    TextArea trimTextField;
+    trimTextField = new TextArea();
+    trimTextField.setMaxLength(maxLength);
+    trimTextField.setFieldLabel(fieldLabel);
+    trimTextField.setLabelStyle(LABEL_STYLE);
+    trimTextField.setHeight(height);
     TestIdSetter.resetTestId(trimTextField, testId);
     RequiredFieldsUtil.setRequired(trimTextField, isRequired);
     return trimTextField;

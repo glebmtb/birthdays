@@ -1,6 +1,7 @@
 package ru.n5g.birthdays.note_book.client.view;
 
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
@@ -23,15 +24,17 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
   private TrimTextField lastName;
   private TrimTextField firstName;
   private TrimTextField middleName;
-  private TrimTextField comment;
+  private TextArea comment;
 
 
   public ContactEditWindowImplImpl(ContactEditPresenter presenter, ContactEditLocalization localization, ActionEnum action, ContactDTO dto) {
     super(presenter);
+    this.setResizable(false);
     this.presenter = presenter;
     this.localization = localization;
     this.action = action;
     this.dto = dto;
+    setWindowHeight(320);
   }
 
   @Override
@@ -51,7 +54,7 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
     lastName = createTextField(255, localization.lastName(), "text_20120925145002", false);
     firstName = createTextField(255, localization.firstName(), "text_20120925145003", false);
     middleName = createTextField(255, localization.middleName(), "text_2012092514504", false);
-    comment = createTextField(255, localization.comment(), "text_20120925145005", false);
+    comment = createTextAreaField(255, localization.comment(), "text_20120925145005", false, 100);
 
     panel.add(nickname, formData);
     panel.add(lastName, formData);
