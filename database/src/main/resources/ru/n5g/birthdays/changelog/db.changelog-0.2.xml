@@ -87,4 +87,16 @@
       <column name="code" value="ROLE_USER"/>
     </insert>
   </changeSet>
+
+  <changeSet id="007" author="belyaev">
+    <sql>
+      create view
+        contact_count
+      as
+        select s.user_id, count(d.contact_id) as contact_count
+        from "user" s
+        left join contact d on d.user_id=s.user_id
+        GROUP BY s.user_id
+    </sql>
+  </changeSet>
 </databaseChangeLog>

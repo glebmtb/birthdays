@@ -15,6 +15,7 @@ public class User {
   private String password;
   private String comment;
   private UserRole role;
+  private ContactCount contactCount;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,5 +89,15 @@ public class User {
     AppUserDetails appUserDetails = (AppUserDetails) auth.getPrincipal();
     User user = appUserDetails.getUser();
     return user.getId();
+  }
+
+  @OneToOne
+  @JoinColumn(name = "user_id", insertable = false, updatable = false)
+  public ContactCount getContactCount() {
+    return contactCount;
+  }
+
+  public void setContactCount(ContactCount contactCount) {
+    this.contactCount = contactCount;
   }
 }

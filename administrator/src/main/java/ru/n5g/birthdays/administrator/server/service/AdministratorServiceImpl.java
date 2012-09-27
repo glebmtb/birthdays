@@ -91,6 +91,7 @@ public class AdministratorServiceImpl<M extends AdministratorListDTO> implements
     List resultList = new ArrayList();
     for (Object o : dataList) {
       M dto = (M) User.convert((User) o);
+      dto.setCountContact(((User) o).getContactCount().getCount());
       resultList.add(dto);
     }
     return resultList;
