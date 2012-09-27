@@ -19,6 +19,7 @@ import ru.n5g.birthdays.core.server.dao.combo_box.UserRoleComboBoxDao;
 import ru.n5g.birthdays.core.server.service.combo_box.UserRoleComboBoxService;
 import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
 import ru.n5g.birthdays.core.shared.bean.UserDTO;
+import ru.n5g.birthdays.core.shared.bean.UserRoleCode;
 import ru.n5g.birthdays.core.shared.bean.UserRoleDTO;
 
 @Service("administratorService.rpc")
@@ -54,8 +55,14 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     if (id == null)
       user = new User();
-    else
+    else {
       user = administratorListDao.get(id);
+      if (user.getRole().getCode() == UserRoleCode.ROLE_ADMIN
+          && dto.getRole().getCode() != UserRoleCode.ROLE_ADMIN
+          && administratorListDao.isLastAdmin()) {
+        throw new RuntimeException("Нельзя удалить последнего администратора!");
+      }
+    }
 
     user.setLogin(dto.getLogin());
     if (dto.getPassword() != null) {
