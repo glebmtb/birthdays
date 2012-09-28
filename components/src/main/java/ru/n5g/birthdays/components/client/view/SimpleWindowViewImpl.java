@@ -7,7 +7,6 @@ import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormButtonBinding;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
-import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -16,6 +15,7 @@ import ru.n5g.birthdays.components.client.localization.SimpleWindowLocalization;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.core.client.util.RequiredFieldsUtil;
 import ru.n5g.birthdays.core.client.util.TestIdSetter;
+import ru.n5g.birthdays.core.client.widget.form.TrimTextAreaField;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
 
 /**
@@ -218,9 +218,9 @@ public abstract class SimpleWindowViewImpl extends Window implements SimpleWindo
     return trimTextField;
   }
 
-  public static TextArea createTextAreaField(int maxLength, String fieldLabel, String testId, boolean isRequired, int height) {
-    TextArea trimTextField;
-    trimTextField = new TextArea();
+  public static TrimTextAreaField createTextAreaField(int maxLength, String fieldLabel, String testId, boolean isRequired, int height) {
+    TrimTextAreaField trimTextField;
+    trimTextField = new TrimTextAreaField();
     trimTextField.setMaxLength(maxLength);
     trimTextField.setFieldLabel(fieldLabel);
     trimTextField.setLabelStyle(LABEL_STYLE);

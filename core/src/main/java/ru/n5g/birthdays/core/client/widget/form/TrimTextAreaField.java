@@ -1,12 +1,12 @@
 package ru.n5g.birthdays.core.client.widget.form;
 
-import com.extjs.gxt.ui.client.widget.form.TextField;
+import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 
 /**
  * @author belyaev
  */
-public class TrimTextField extends TextField<String> {
+public class TrimTextAreaField extends TextArea {
 
   @Override
   public String getValue() {
@@ -30,5 +30,4 @@ public class TrimTextField extends TextField<String> {
       return null;
     }
   }
-
 }
