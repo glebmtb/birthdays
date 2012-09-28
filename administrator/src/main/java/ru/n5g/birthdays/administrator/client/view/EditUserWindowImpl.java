@@ -38,6 +38,8 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
     this.dto = dto;
     this.presenter = (AdministratorPresenter) presenter;
     this.localization = (AdministratorLocalization) presenter.getLocalization();
+    setWindowHeight(260);
+    setResizable(false);
   }
 
   @Override
@@ -111,6 +113,7 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
     if (dto != null) {
       login.setValue(dto.getLogin());
       userRoleCombo.setValue(dto.getRole());
+      userName.setValue(dto.getUserName());
     }
   }
 
