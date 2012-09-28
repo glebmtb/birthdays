@@ -27,7 +27,7 @@ public class Contact {
     this.id = id;
   }
 
-  @Column(name = "first_name", nullable = false, length = 255)
+  @Column(name = "first_name", length = 255)
   public String getFirstName() {
     return firstName;
   }
@@ -36,7 +36,7 @@ public class Contact {
     this.firstName = firstName;
   }
 
-  @Column(name = "last_name", nullable = false, length = 255)
+  @Column(name = "last_name", length = 255)
   public String getLastName() {
     return lastName;
   }
@@ -45,7 +45,7 @@ public class Contact {
     this.lastName = lastName;
   }
 
-  @Column(name = "middle_name", nullable = true, length = 255)
+  @Column(name = "middle_name", length = 255)
   public String getMiddleName() {
     return middleName;
   }
