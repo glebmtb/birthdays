@@ -1,7 +1,7 @@
 package ru.n5g.birthdays.core.client.widget.form;
 
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
+import com.google.gwt.safehtml.shared.SimpleHtmlSanitizer;
 
 /**
  * @author belyaev
@@ -13,7 +13,7 @@ public class TrimTextField extends TextField<String> {
     String value = super.getValue();
     String trimmedValue;
     if (value != null && !(trimmedValue = value.trim()).isEmpty()) {
-      return SafeHtmlUtils.fromString(trimmedValue).asString();
+      return SimpleHtmlSanitizer.sanitizeHtml(trimmedValue).asString();
     }
     else {
       return null;
@@ -30,5 +30,4 @@ public class TrimTextField extends TextField<String> {
       return null;
     }
   }
-
 }
