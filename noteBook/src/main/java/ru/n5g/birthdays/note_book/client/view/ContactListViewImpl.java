@@ -145,11 +145,11 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   private Grid<ContactDTO> createGrid() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-    columns.add(new ColumnConfig(ContactDTO.NICKNAME, localization.nickname(), 50));
-    columns.add(new ColumnConfig((ContactDTO.LAST_NAME), localization.lastName(), 50));
-    columns.add(new ColumnConfig(ContactDTO.FIRST_NAME, localization.firstName(), 50));
-    columns.add(new ColumnConfig((ContactDTO.MIDDLE_NAME), localization.middleName(), 50));
-    columns.add(new ColumnConfig((ContactDTO.COMMENT), localization.comment(), 100));
+    columns.add(new ColumnConfig(ContactDTO.NICKNAME, localization.nickname(), 30));
+    columns.add(new ColumnConfig((ContactDTO.LAST_NAME), localization.lastName(), 100));
+    columns.add(new ColumnConfig(ContactDTO.FIRST_NAME, localization.firstName(), 100));
+    columns.add(new ColumnConfig((ContactDTO.MIDDLE_NAME), localization.middleName(), 100));
+    columns.add(new ColumnConfig((ContactDTO.COMMENT), localization.comment(), 200));
 
 
     ColumnModel cm = new ColumnModel(columns);
