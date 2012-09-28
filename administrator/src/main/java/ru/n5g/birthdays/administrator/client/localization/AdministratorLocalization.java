@@ -70,4 +70,6 @@ public interface AdministratorLocalization extends SimpleWindowLocalization {
   String logoutDlgTitle();
 
   String logoutConfirm();
+
+  String userName();
 }

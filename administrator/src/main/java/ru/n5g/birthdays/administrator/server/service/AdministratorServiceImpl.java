@@ -70,6 +70,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
     user.setRole(UserRole.convert(dto.getRole()));
     user.setComment(dto.getPassword());
+    user.setUserName(dto.getUserName());
     administratorListDao.saveOrUpdateNonTransactional(user);
   }
 
@@ -97,9 +98,7 @@ public class AdministratorServiceImpl implements AdministratorService {
   protected List<UserDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {
-      UserDTO dto = User.convert((User) o);
-      dto.setCountContact(((User) o).getContactCount().getCount());
-      resultList.add(dto);
+      resultList.add(User.convert((User) o));
     }
     return resultList;
   }

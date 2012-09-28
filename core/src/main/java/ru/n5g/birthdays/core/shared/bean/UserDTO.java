@@ -9,6 +9,7 @@ public class UserDTO extends BaseModelData {
   public static final String COMMENT = "comment";
   public static final String ROLE = "role";
   public static final String COUNT_CONTACT = "countContact";
+  public static final String USER_NAME = "userName";
 
   public Long getId() {
     return get(ID);
@@ -56,5 +57,13 @@ public class UserDTO extends BaseModelData {
 
   public void setCountContact(Integer countContact) {
     set(COUNT_CONTACT, countContact);
+  }
+
+  public String getUserName() {
+    return get(USER_NAME);
+  }
+
+  public void setUserName(String userName) {
+    set(USER_NAME, userName);
   }
 }

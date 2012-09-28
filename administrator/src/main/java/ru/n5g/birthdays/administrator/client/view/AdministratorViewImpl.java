@@ -223,8 +223,7 @@ public class AdministratorViewImpl extends LayoutContainer implements Administra
     columns.add(new ColumnConfig(UserDTO.LOGIN, localization.userLogin(), 50));
     columns.add(new ColumnConfig((UserDTO.ROLE).concat(".").concat(UserRoleDTO.NAME), localization.userRole(), 50));
     columns.add(new ColumnConfig(UserDTO.COUNT_CONTACT, localization.countContact(), 50));
-    columns.add(new ColumnConfig("2", localization.firstName(), 50));                //TODO показывать сколько контактов у пользователя
-    columns.add(new ColumnConfig("3", localization.lastName(), 50));
+    columns.add(new ColumnConfig(UserDTO.USER_NAME, localization.userName(), 50));
     columns.add(new ColumnConfig("4", localization.smsLimit(), 50));                  //TODO показывать сколько смс сообщений он хочет отправить и сколько уже отправил
 
     ColumnModel cm = new ColumnModel(columns);

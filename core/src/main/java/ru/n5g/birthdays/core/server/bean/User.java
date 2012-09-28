@@ -16,6 +16,7 @@ public class User {
   private String comment;
   private UserRole role;
   private ContactCount contactCount;
+  private String userName;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,12 +66,33 @@ public class User {
     this.role = role;
   }
 
+  @OneToOne
+  @JoinColumn(name = "user_id", insertable = false, updatable = false)
+  public ContactCount getContactCount() {
+    return contactCount;
+  }
+
+  public void setContactCount(ContactCount contactCount) {
+    this.contactCount = contactCount;
+  }
+
+  @Column(name = "user_name")
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
   public static UserDTO convert(User bean) {
     UserDTO dto = new UserDTO();
     dto.setId(bean.getId());
     dto.setLogin(bean.getLogin());
     dto.setRole(UserRole.convert(bean.getRole()));
     dto.setComment(bean.getComment());
+    dto.setCountContact(bean.getContactCount().getCount());
+    dto.setUserName(bean.getUserName());
     return dto;
   }
 
@@ -81,6 +103,7 @@ public class User {
     bean.setRole(UserRole.convert(dto.getRole()));
     bean.setPassword(dto.getPassword());
     bean.setComment(dto.getComment());
+    bean.setUserName(dto.getUserName());
     return bean;
   }
 
@@ -89,15 +112,5 @@ public class User {
     AppUserDetails appUserDetails = (AppUserDetails) auth.getPrincipal();
     User user = appUserDetails.getUser();
     return user.getId();
-  }
-
-  @OneToOne
-  @JoinColumn(name = "user_id", insertable = false, updatable = false)
-  public ContactCount getContactCount() {
-    return contactCount;
-  }
-
-  public void setContactCount(ContactCount contactCount) {
-    this.contactCount = contactCount;
   }
 }

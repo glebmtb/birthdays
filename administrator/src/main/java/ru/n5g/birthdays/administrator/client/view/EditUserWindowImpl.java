@@ -27,6 +27,7 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
   private UserDTO dto;
 
   private TrimTextField login;
+  private TrimTextField userName;
   private AdvancedComboBox<UserRoleDTO> userRoleCombo;
   private TrimTextField passwordRepetition;
   private TrimTextField password;
@@ -66,6 +67,8 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
     TestIdSetter.resetTestId(login, "form_201208251452");
     RequiredFieldsUtil.setRequired(login, true);
 
+    userName = createTextField(50, localization.userName(), "text_201209281548", true);
+
     userRoleCombo = new AdvancedComboBox<UserRoleDTO>();
     userRoleCombo.setRemoteFilterType(ComboBoxFilterType.ILIKE);
     userRoleCombo.setTriggerAction(ComboBox.TriggerAction.ALL);
@@ -100,6 +103,7 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
     }
 
     panel.add(login, formData);
+    panel.add(userName, formData);
     panel.add(userRoleCombo, formData);
     panel.add(password, formData);
     panel.add(passwordRepetition, formData);
@@ -117,6 +121,7 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
     if (dto == null)
       dto = new UserDTO();
     dto.setLogin(login.getValue());
+    dto.setUserName(userName.getValue());
     dto.setPassword(password.getValue());
     dto.setRole(userRoleCombo.getValue());
     presenter.saveEditUserWindow(dto, this);

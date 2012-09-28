@@ -99,4 +99,10 @@
         GROUP BY s.user_id
     </sql>
   </changeSet>
+
+  <changeSet id="008" author="belyaev">
+    <addColumn tableName="user">
+      <column name="user_name" type="varchar(50)" remarks="Имя пользователя"/>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

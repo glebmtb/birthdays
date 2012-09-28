@@ -6,6 +6,8 @@ import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import ru.n5g.birthdays.app.client.localization.AppLocalization;
+import ru.n5g.birthdays.app.client.service.AppService;
+import ru.n5g.birthdays.app.client.service.AppServiceAsync;
 import ru.n5g.birthdays.app.client.view.AppPage;
 import ru.n5g.birthdays.app.client.view.AppPageImpl;
 import ru.n5g.birthdays.note_book.client.factory.ContactListFactory;
@@ -16,6 +18,7 @@ public class AppClientFactoryImpl implements AppClientFactory {
   private static final EventBus eventBus = new SimpleEventBus();
   private AppPage view;
   private AppLocalization localization = GWT.create(AppLocalization.class);
+  private AppServiceAsync service = GWT.create(AppService.class);
   private static final PlaceController placeController = new PlaceController(eventBus);
 
   private ContactListFactory contactListFactory;
@@ -49,5 +52,10 @@ public class AppClientFactoryImpl implements AppClientFactory {
     if (contactListFactory == null)
       contactListFactory = new ContactListFactoryImpl(this);
     return contactListFactory;
+  }
+
+  @Override
+  public AppServiceAsync getService() {
+    return service;
   }
 }

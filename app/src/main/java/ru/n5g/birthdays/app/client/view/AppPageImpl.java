@@ -194,4 +194,9 @@ public class AppPageImpl extends ContentPanel implements AppPage {
         break;
     }
   }
+
+  @Override
+  public void setEmployeeName(String employeeName) {
+    lblEmployeeName.setText("&nbsp;" + employeeName);
+  }
 }
