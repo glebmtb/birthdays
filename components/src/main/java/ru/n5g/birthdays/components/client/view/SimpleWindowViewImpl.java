@@ -200,6 +200,7 @@ public abstract class SimpleWindowViewImpl extends Window implements SimpleWindo
 
   /**
    * задать высоту окна
+   * по умолчанию 250
    *
    * @param windowHeight - высота окна
    */
