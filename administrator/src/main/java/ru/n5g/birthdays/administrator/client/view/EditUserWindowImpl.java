@@ -56,7 +56,7 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
     login.setMaxLength(255);
     login.setFieldLabel(localization.login());
     login.setLabelStyle(LABEL_STYLE);
-    login.setRegex("([a-zA-Z0-9]+)");
+    login.setRegex("([a-zA-Z0-9.]+)");
     login.getMessages().setRegexText(localization.errorOnlyLatinDigital());
     login.setValidator(new Validator() {
       @Override
