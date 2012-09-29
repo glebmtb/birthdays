@@ -3,7 +3,10 @@ package ru.n5g.birthdays.administrator.app_admin.client.mvp;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
+import ru.n5g.birthdays.administrator.app_admin.client.bean.AppAdminTabEnum;
 import ru.n5g.birthdays.administrator.app_admin.client.factory.AppAdminClientFactory;
+import ru.n5g.birthdays.administrator.user.client.activity.UserListActivity;
+import ru.n5g.birthdays.administrator.user.client.place.UserListPlace;
 
 public class AppActivityMapper implements ActivityMapper {
 
@@ -16,11 +19,11 @@ public class AppActivityMapper implements ActivityMapper {
 
   @Override
   public Activity getActivity(Place place) {
-//    if(place instanceof UserListPlace){
-//      factory.getMainContainer().setHeader(null, factory.getLocalization().contactHeader());
-//      factory.getMainContainer().selectTab(AppAdminTabEnum.USER);
-//      return new AppAdminActivity(factory, factory.getContactListFactory());
-//    }
+    if(place instanceof UserListPlace){
+      factory.getMainContainer().setHeader(null, factory.getLocalization().contactHeader());
+      factory.getMainContainer().selectTab(AppAdminTabEnum.USER);
+      return new UserListActivity(factory, factory.getContactListFactory());
+    }
     return null;
   }
 }

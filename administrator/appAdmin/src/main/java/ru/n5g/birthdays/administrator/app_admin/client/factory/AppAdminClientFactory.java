@@ -20,7 +20,7 @@ public interface AppAdminClientFactory extends ClientFactory {
 
   AppAdminLocalization getLocalization();
 
-//  UserListFactory getContactListFactory();
+  UserListFactory getContactListFactory();
 
   AppAdminServiceAsync getService();
 }

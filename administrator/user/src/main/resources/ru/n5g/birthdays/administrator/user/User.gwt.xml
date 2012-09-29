@@ -12,5 +12,5 @@
   <inherits name="ru.n5g.birthdays.core.Core"/>
   <inherits name="ru.n5g.birthdays.components.Components"/>
 
-  <source path="ru.n5g.birthdays.administrator.user.client"/>
+  <source path="client"/>
 </module>

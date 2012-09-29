@@ -10,6 +10,9 @@ import ru.n5g.birthdays.administrator.app_admin.client.service.AppAdminService;
 import ru.n5g.birthdays.administrator.app_admin.client.service.AppAdminServiceAsync;
 import ru.n5g.birthdays.administrator.app_admin.client.view.AppAdminPage;
 import ru.n5g.birthdays.administrator.app_admin.client.view.AppAdminPageImpl;
+import ru.n5g.birthdays.administrator.user.client.factory.UserListFactory;
+import ru.n5g.birthdays.administrator.user.client.factory.UserListFactoryImpl;
+import ru.n5g.birthdays.administrator.user.client.place.UserListPlace;
 
 public class AppAdminClientFactoryImpl implements AppAdminClientFactory {
   private static final EventBus eventBus = new SimpleEventBus();
@@ -18,7 +21,7 @@ public class AppAdminClientFactoryImpl implements AppAdminClientFactory {
   private AppAdminServiceAsync service = GWT.create(AppAdminService.class);
   private static final PlaceController placeController = new PlaceController(eventBus);
 
-//  private UserListFactory userListFactory;
+  private UserListFactory userListFactory;
 
   public EventBus getEventBus() {
     return eventBus;
@@ -36,8 +39,7 @@ public class AppAdminClientFactoryImpl implements AppAdminClientFactory {
 
   @Override
   public Place getDefaultPlace() {
-    return null;
-//    return new UserListPlace();
+    return new UserListPlace();
   }
 
   @Override
@@ -45,12 +47,12 @@ public class AppAdminClientFactoryImpl implements AppAdminClientFactory {
     return localization;
   }
 
-//  @Override
-//  public UserListFactory getContactListFactory() {
-//    if (userListFactory == null)
-//      userListFactory = new UserListFactoryImpl(this);
-//    return userListFactory;
-//  }
+  @Override
+  public UserListFactory getContactListFactory() {
+    if (userListFactory == null)
+      userListFactory = new UserListFactoryImpl(this);
+    return userListFactory;
+  }
 
   @Override
   public AppAdminServiceAsync getService() {
