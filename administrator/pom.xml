@@ -12,11 +12,11 @@
   <artifactId>administrator</artifactId>
   <packaging>pom</packaging>
   <modules>
-
     <module>appAdmin</module>
     <module>audit</module>
     <module>feedBack</module>
     <module>event</module>
     <module>user</module>
   </modules>
+
 </project>

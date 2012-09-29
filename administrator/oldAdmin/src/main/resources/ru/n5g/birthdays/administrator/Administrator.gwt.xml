@@ -12,12 +12,12 @@
   <inherits name="ru.n5g.birthdays.core.Core"/>
   <inherits name="ru.n5g.birthdays.components.Components"/>
 
-  <entry-point class='ru.n5g.birthdays.administrator.client.MainEntryPoint'/>
+  <entry-point class='ru.n5g.birthdays.administrator.ru.n5g.birthdays.administrator.user.ru.n5g.birthdays.administrator.user.client.MainEntryPoint'/>
 
-  <replace-with class="ru.n5g.birthdays.administrator.client.factory.AdministratorFactoryImpl">
-    <when-type-is class="ru.n5g.birthdays.administrator.client.factory.AdministratorFactory"/>
+  <replace-with class="ru.n5g.birthdays.administrator.ru.n5g.birthdays.administrator.user.ru.n5g.birthdays.administrator.user.client.factory.AdministratorFactoryImpl">
+    <when-type-is class="ru.n5g.birthdays.administrator.ru.n5g.birthdays.administrator.user.ru.n5g.birthdays.administrator.user.client.factory.AdministratorFactory"/>
   </replace-with>
 
 
-  <source path="client"/>
+  <source path="ru.n5g.birthdays.administrator.user.client"/>
 </module>
