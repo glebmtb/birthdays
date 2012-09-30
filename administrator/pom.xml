@@ -15,7 +15,7 @@
     <module>appAdmin</module>
     <module>audit</module>
     <module>feedBack</module>
-    <module>event</module>
+    <module>eventType</module>
     <module>user</module>
   </modules>
 
