@@ -4,6 +4,7 @@
 <module rename-to='administrator'>
   <inherits name="ru.n5g.birthdays.core.Core"/>
   <inherits name="ru.n5g.birthdays.administrator.user.User"/>
+  <inherits name="ru.n5g.birthdays.administrator.event_type.EventType"/>
 
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.extjs.gxt.ui.GXT'/>

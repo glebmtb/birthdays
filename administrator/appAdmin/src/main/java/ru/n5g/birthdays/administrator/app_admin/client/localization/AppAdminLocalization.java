@@ -18,4 +18,6 @@ public interface AppAdminLocalization extends Messages {
   String contactHeader();
 
   String btnUser();
+
+  String btnEventType();
 }

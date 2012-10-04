@@ -28,6 +28,7 @@ public class AppAdminPageImpl extends ContentPanel implements AppAdminPage {
   private Label lblEmployeeName;
 
   private TabItem btnUser;
+  private TabItem btnEventType;
   private TabItem btnLogout;
 
   private AppAdminTabEnum selectedTab;
@@ -118,17 +119,32 @@ public class AppAdminPageImpl extends ContentPanel implements AppAdminPage {
     });
     btnUser.addStyleName("btn-tab");
 
+    btnEventType = new TabItem();
+    btnEventType.addStyleName("btn-menu");
+    btnEventType.setToolTip(localization.btnEventType());
+    btnEventType.setText(localization.btnEventType());
+    btnEventType.setBorders(true);
+    btnEventType.addListener(Events.Select, new Listener<ComponentEvent>() {
+      public void handleEvent(ComponentEvent be) {
+        presenter.openEventType();
+      }
+    });
+    btnEventType.addStyleName("btn-tab");
+
 
     btnLogout.setHeight(0);
     btnUser.setHeight(0);
+    btnEventType.setHeight(0);
 
 
     btnLogout.setBorders(false);
     btnUser.setBorders(false);
+    btnEventType.setBorders(false);
 
 
     toolBar.add(btnUser);
     toolBar.add(btnLogout);
+    toolBar.add(btnEventType);
   }
 
   private void onLogoutClick(final TabItem selected) {
@@ -188,6 +204,9 @@ public class AppAdminPageImpl extends ContentPanel implements AppAdminPage {
     switch (selectedTab) {
       case USER:
         toolBar.setSelection(btnUser);
+        break;
+      case EVENT_TYPE:
+        toolBar.setSelection(btnEventType);
         break;
       default:
         toolBar.setSelection(btnUser);

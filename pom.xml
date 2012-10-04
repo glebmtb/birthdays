@@ -55,6 +55,11 @@
         <artifactId>user</artifactId>
         <version>0.2-SNAPSHOT</version>
       </dependency>
+      <dependency>
+        <groupId>ru.n5g.birthdays.administrator</groupId>
+        <artifactId>eventType</artifactId>
+        <version>0.2-SNAPSHOT</version>
+      </dependency>
 
       <dependency>
         <groupId>postgresql</groupId>

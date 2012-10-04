@@ -2,6 +2,8 @@ package ru.n5g.birthdays.core.server.bean;
 
 import javax.persistence.*;
 
+import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
+
 /**
  * @author home
  */
@@ -29,5 +31,19 @@ public class EventType {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public static EventType convert(EventTypeDTO dto){
+    EventType bean = new EventType();
+    bean.setId(dto.getId());
+    bean.setName(dto.getName());
+    return bean;
+  }
+
+  public static EventTypeDTO convert(EventType bean){
+    EventTypeDTO dto = new EventTypeDTO();
+    dto.setId(bean.getId());
+    dto.setName(bean.getName());
+    return dto;
   }
 }

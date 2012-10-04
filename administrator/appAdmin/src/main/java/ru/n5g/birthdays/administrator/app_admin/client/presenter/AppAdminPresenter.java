@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.administrator.app_admin.client.factory.AppAdminClientFactory;
 import ru.n5g.birthdays.administrator.app_admin.client.view.AppAdminPage;
+import ru.n5g.birthdays.administrator.event_type.client.place.EventTypeListPlace;
 import ru.n5g.birthdays.administrator.user.client.place.UserListPlace;
 
 public class AppAdminPresenter implements AppAdminPage.Presenter {
@@ -49,5 +50,10 @@ public class AppAdminPresenter implements AppAdminPage.Presenter {
   @Override
   public void openUser() {
     factory.getPlaceController().goTo(new UserListPlace());
+  }
+
+  @Override
+  public void openEventType() {
+    factory.getPlaceController().goTo(new EventTypeListPlace());
   }
 }
