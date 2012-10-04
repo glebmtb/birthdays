@@ -10,6 +10,8 @@ import ru.n5g.birthdays.administrator.app_admin.client.service.AppAdminService;
 import ru.n5g.birthdays.administrator.app_admin.client.service.AppAdminServiceAsync;
 import ru.n5g.birthdays.administrator.app_admin.client.view.AppAdminPage;
 import ru.n5g.birthdays.administrator.app_admin.client.view.AppAdminPageImpl;
+import ru.n5g.birthdays.administrator.event_type.client.factory.EventTypeListFactory;
+import ru.n5g.birthdays.administrator.event_type.client.factory.EventTypeListFactoryImpl;
 import ru.n5g.birthdays.administrator.user.client.factory.UserListFactory;
 import ru.n5g.birthdays.administrator.user.client.factory.UserListFactoryImpl;
 import ru.n5g.birthdays.administrator.user.client.place.UserListPlace;
@@ -22,6 +24,7 @@ public class AppAdminClientFactoryImpl implements AppAdminClientFactory {
   private static final PlaceController placeController = new PlaceController(eventBus);
 
   private UserListFactory userListFactory;
+  private EventTypeListFactory eventTypeListFactory;
 
   public EventBus getEventBus() {
     return eventBus;
@@ -57,5 +60,13 @@ public class AppAdminClientFactoryImpl implements AppAdminClientFactory {
   @Override
   public AppAdminServiceAsync getService() {
     return service;
+  }
+
+  @Override
+  public EventTypeListFactory getEventTypeListFactory() {
+    if(eventTypeListFactory==null){
+      eventTypeListFactory= new EventTypeListFactoryImpl(this);
+    }
+    return eventTypeListFactory;
   }
 }

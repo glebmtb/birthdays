@@ -44,5 +44,7 @@ public interface AppAdminPage extends IsWidget {
     void checkPermissions(String permissionCode, Component component, boolean hideIfDenied);
 
     void openUser();
+
+    void openEventType();
   }
 }

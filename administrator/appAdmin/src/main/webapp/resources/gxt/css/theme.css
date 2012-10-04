@@ -214,8 +214,14 @@ btn-chart-large button {
     width: 32px;
 }
 
-.btn-logout-admin button {
-    background: url("../icons/btn_logout.png") no-repeat center;
+.btn-delete button {
+    background: url("../icons/delete.png") no-repeat center;
+    height: 32px !important;
+    width: 32px;
+}
+
+.btn-add button {
+    background: url("../icons/add.png") no-repeat center;
     height: 32px !important;
     width: 32px;
 }
