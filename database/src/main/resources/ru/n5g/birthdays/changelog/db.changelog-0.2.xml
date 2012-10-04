@@ -105,4 +105,16 @@
       <column name="user_name" type="varchar(50)" remarks="Имя пользователя"/>
     </addColumn>
   </changeSet>
+
+  <changeSet id="009" author="belyaev">
+    <comment>Добавил таблицу event_type - тип события</comment>
+    <createTable tableName="event_type" remarks="Тип событий">
+      <column name="event_type_id" autoIncrement="true" type="bigint" remarks="П.К.">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_event_type"/>
+      </column>
+      <column name="event_name" type="varchar(100)" remarks="Название события">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>
