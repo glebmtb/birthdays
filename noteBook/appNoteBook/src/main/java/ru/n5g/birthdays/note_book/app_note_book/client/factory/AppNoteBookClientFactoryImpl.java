@@ -13,8 +13,8 @@ import ru.n5g.birthdays.note_book.app_note_book.client.view.AppNoteBookPageImpl;
 import ru.n5g.birthdays.note_book.contact.client.factory.ContactListFactory;
 import ru.n5g.birthdays.note_book.contact.client.factory.ContactListFactoryImpl;
 import ru.n5g.birthdays.note_book.contact.client.place.ContactListPlace;
-import ru.n5g.birthdays.note_book.event.client.factory.EventTypeListFactory;
-import ru.n5g.birthdays.note_book.event.client.factory.EventTypeListFactoryImpl;
+import ru.n5g.birthdays.note_book.event.client.factory.EventListFactory;
+import ru.n5g.birthdays.note_book.event.client.factory.EventListFactoryImpl;
 
 public class AppNoteBookClientFactoryImpl implements AppNoteBookClientFactory {
   private static final EventBus eventBus = new SimpleEventBus();
@@ -24,7 +24,7 @@ public class AppNoteBookClientFactoryImpl implements AppNoteBookClientFactory {
   private static final PlaceController placeController = new PlaceController(eventBus);
 
   private ContactListFactory contactListFactory;
-  private EventTypeListFactory eventTypeListFactory;
+  private EventListFactory eventTypeListFactory;
 
   public EventBus getEventBus() {
     return eventBus;
@@ -63,9 +63,9 @@ public class AppNoteBookClientFactoryImpl implements AppNoteBookClientFactory {
   }
 
   @Override
-  public EventTypeListFactory getEventTypeListFactory() {
+  public EventListFactory getEventTypeListFactory() {
     if (eventTypeListFactory == null)
-      eventTypeListFactory = new EventTypeListFactoryImpl();
+      eventTypeListFactory = new EventListFactoryImpl();
     return eventTypeListFactory;
   }
 }

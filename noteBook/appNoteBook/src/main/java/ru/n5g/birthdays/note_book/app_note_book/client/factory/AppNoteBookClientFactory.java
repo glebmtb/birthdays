@@ -8,7 +8,7 @@ import ru.n5g.birthdays.note_book.app_note_book.client.service.AppNoteBookServic
 import ru.n5g.birthdays.note_book.app_note_book.client.view.AppNoteBookPage;
 import ru.n5g.birthdays.core.client.factory.ClientFactory;
 import ru.n5g.birthdays.note_book.contact.client.factory.ContactListFactory;
-import ru.n5g.birthdays.note_book.event.client.factory.EventTypeListFactory;
+import ru.n5g.birthdays.note_book.event.client.factory.EventListFactory;
 
 public interface AppNoteBookClientFactory extends ClientFactory {
   EventBus getEventBus();
@@ -25,5 +25,5 @@ public interface AppNoteBookClientFactory extends ClientFactory {
 
   AppNoteBookServiceAsync getService();
 
-  EventTypeListFactory getEventTypeListFactory();
+  EventListFactory getEventTypeListFactory();
 }

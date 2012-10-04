@@ -7,8 +7,8 @@ import ru.n5g.birthdays.note_book.app_note_book.client.bean.TabEnum;
 import ru.n5g.birthdays.note_book.app_note_book.client.factory.AppNoteBookClientFactory;
 import ru.n5g.birthdays.note_book.contact.client.activity.ContactListActivity;
 import ru.n5g.birthdays.note_book.contact.client.place.ContactListPlace;
-import ru.n5g.birthdays.note_book.event.client.activity.EventTypeListActivity;
-import ru.n5g.birthdays.note_book.event.client.place.EventTypeListPlace;
+import ru.n5g.birthdays.note_book.event.client.activity.EventListActivity;
+import ru.n5g.birthdays.note_book.event.client.place.EventListPlace;
 
 public class AppNoteBookActivityMapper implements ActivityMapper {
 
@@ -26,10 +26,10 @@ public class AppNoteBookActivityMapper implements ActivityMapper {
       factory.getMainContainer().selectTab(TabEnum.CONTACT);
       return new ContactListActivity(factory, factory.getContactListFactory());
     }
-    if(place instanceof EventTypeListPlace){
+    if(place instanceof EventListPlace){
       factory.getMainContainer().setHeader(null, factory.getLocalization().contactHeader());
       factory.getMainContainer().selectTab(TabEnum.EVENT);
-      return new EventTypeListActivity(factory, factory.getEventTypeListFactory());
+      return new EventListActivity(factory, factory.getEventTypeListFactory());
     }
     return null;
   }

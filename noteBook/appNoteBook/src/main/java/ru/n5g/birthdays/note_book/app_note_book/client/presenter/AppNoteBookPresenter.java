@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.note_book.app_note_book.client.factory.AppNoteBookClientFactory;
 import ru.n5g.birthdays.note_book.app_note_book.client.view.AppNoteBookPage;
 import ru.n5g.birthdays.note_book.contact.client.place.ContactListPlace;
-import ru.n5g.birthdays.note_book.event.client.place.EventTypeListPlace;
+import ru.n5g.birthdays.note_book.event.client.place.EventListPlace;
 
 public class AppNoteBookPresenter implements AppNoteBookPage.Presenter {
   AppNoteBookClientFactory factory;
@@ -54,6 +54,6 @@ public class AppNoteBookPresenter implements AppNoteBookPage.Presenter {
 
   @Override
   public void openEventType() {
-    factory.getPlaceController().goTo(new EventTypeListPlace());
+    factory.getPlaceController().goTo(new EventListPlace());
   }
 }

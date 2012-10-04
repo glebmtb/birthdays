@@ -2,6 +2,8 @@ package ru.n5g.birthdays.core.server.bean;
 
 import javax.persistence.*;
 
+import ru.n5g.birthdays.core.shared.bean.EventDTO;
+
 /**
  * @author belyaev
  */
@@ -112,5 +114,17 @@ public class Event {
 
   public void setContactId(Long contactId) {
     this.contactId = contactId;
+  }
+
+  public static EventDTO convert(Event bean){
+    EventDTO dto = new EventDTO();
+    dto.setId(bean.getId());
+    return dto;
+  }
+
+  public static Event convert(EventDTO dto){
+    Event bean = new Event();
+    bean.setId(dto.getId());
+    return bean;
   }
 }

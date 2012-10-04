@@ -205,7 +205,7 @@ public class AppNoteBookPageImpl extends ContentPanel implements AppNoteBookPage
       case CONTACT:
         toolBar.setSelection(btnContact);
         break;
-      case EVENT_TYPE:
+      case EVENT:
         toolBar.setSelection(btnEventType);
         break;
       default:
