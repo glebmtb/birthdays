@@ -1,7 +1,6 @@
 package ru.n5g.birthdays.note_book.contact.client.factory;
 
 import com.google.gwt.core.client.GWT;
-import ru.n5g.birthdays.core.client.factory.ClientFactory;
 import ru.n5g.birthdays.note_book.contact.client.localization.ContactListLocalization;
 import ru.n5g.birthdays.note_book.contact.client.presenter.ContactListPresenter;
 import ru.n5g.birthdays.note_book.contact.client.service.ContactListService;
@@ -12,12 +11,6 @@ public class ContactListFactoryImpl implements ContactListFactory {
   private final ContactListServiceAsync service = GWT.create(ContactListService.class);
   private ContactListPresenter presenter;
   private ContactEditFactory contactEditFactory;
-
-  private ClientFactory clientFactory;
-
-  public ContactListFactoryImpl(ClientFactory clientFactory) {
-    this.clientFactory = clientFactory;
-  }
 
   @Override
   public ContactListLocalization getLocalization() {

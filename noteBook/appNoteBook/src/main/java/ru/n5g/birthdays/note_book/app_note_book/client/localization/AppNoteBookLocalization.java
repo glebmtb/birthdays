@@ -16,4 +16,6 @@ public interface AppNoteBookLocalization extends Messages {
   String btnContact();
 
   String contactHeader();
+
+  String btnEventType();
 }
