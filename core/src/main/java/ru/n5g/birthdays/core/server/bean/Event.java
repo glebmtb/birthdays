@@ -16,6 +16,8 @@ public class Event {
   private Integer day;
   private Integer month;
   private Integer year;
+  private Contact contact;
+  private Long contactId;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,5 +93,24 @@ public class Event {
 
   public void setYear(Integer year) {
     this.year = year;
+  }
+
+  @ManyToOne
+  @JoinColumn(name = "contact_id", insertable = false, updatable = false)
+  public Contact getContact() {
+    return contact;
+  }
+
+  public void setContact(Contact contact) {
+    this.contact = contact;
+  }
+
+  @Column(name = "contact_id")
+  public Long getContactId() {
+    return contactId;
+  }
+
+  public void setContactId(Long contactId) {
+    this.contactId = contactId;
   }
 }
