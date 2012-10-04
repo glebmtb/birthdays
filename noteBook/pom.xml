@@ -14,5 +14,6 @@
   <modules>
     <module>appNoteBook</module>
     <module>contact</module>
+    <module>event</module>
   </modules>
 </project>
