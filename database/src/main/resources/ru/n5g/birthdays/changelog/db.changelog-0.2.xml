@@ -117,4 +117,22 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="010" author="belyaev">
+    <comment>Добавил таблицу event - события</comment>
+    <createTable tableName="event" remarks="Событий">
+      <column name="event_id" autoIncrement="true" type="bigint" remarks="П.К.">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_event"/>
+      </column>
+      <column name="user_id" type="bigint" remarks="ид пользователя">
+        <constraints nullable="false" foreignKeyName="fk_event1" references="&quot;user&quot;(user_id)"/>
+      </column>
+      <column name="event_type_id" type="bigint" remarks="ид типа события">
+        <constraints nullable="false" foreignKeyName="fk_event2" references="event_type(event_type_id)"/>
+      </column>
+      <column name="day" type="int" remarks="день события"/>
+      <column name="month" type="int" remarks="месяц события"/>
+      <column name="year" type="int" remarks="год события"/>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>
