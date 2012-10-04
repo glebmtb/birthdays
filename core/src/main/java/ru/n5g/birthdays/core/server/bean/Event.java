@@ -116,15 +116,23 @@ public class Event {
     this.contactId = contactId;
   }
 
-  public static EventDTO convert(Event bean){
+  public static EventDTO convert(Event bean) {
     EventDTO dto = new EventDTO();
     dto.setId(bean.getId());
+    dto.setDay(bean.getDay());
+    dto.setMonth(bean.getMonth());
+    dto.setYear(bean.getMonth());
+    if (bean.getDay() != null && bean.getMonth() != null)
+      dto.setEventDay(bean.getDay().toString().concat(bean.getMonth().toString()));
     return dto;
   }
 
-  public static Event convert(EventDTO dto){
+  public static Event convert(EventDTO dto) {
     Event bean = new Event();
     bean.setId(dto.getId());
+    bean.setDay(dto.getDay());
+    bean.setMonth(dto.getMonth());
+    bean.setYear(dto.getYear());
     return bean;
   }
 }

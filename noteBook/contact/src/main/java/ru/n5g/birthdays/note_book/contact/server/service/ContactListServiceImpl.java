@@ -47,6 +47,7 @@ public class ContactListServiceImpl implements ContactListService {
   protected List<ContactDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {
+
       resultList.add(Contact.convert((Contact) o));
     }
     return resultList;

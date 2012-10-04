@@ -13,6 +13,7 @@ public class ContactDTO extends BaseModelData {
   public static final String NICKNAME = "nickname";
   public static final String USER_ID = "userId";
   public static final String COMMENT = "comment";
+  public static final String EVENT = "event";
 
   public Long getId() {
     return get(ID);
@@ -68,5 +69,13 @@ public class ContactDTO extends BaseModelData {
 
   public void setComment(String comment) {
     set(COMMENT, comment);
+  }
+
+  public EventDTO getEvent() {
+    return get(EVENT);
+  }
+
+  public void setEvent(EventDTO event) {
+    set(EVENT, event);
   }
 }
