@@ -10,4 +10,6 @@ import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 @RemoteServiceRelativePath("contactEditService.rpc")
 public interface ContactEditService extends RemoteService {
   void saveContact(ContactDTO dto);
+
+  ContactDTO getContact(Long id);
 }

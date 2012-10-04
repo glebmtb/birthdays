@@ -1,5 +1,7 @@
 package ru.n5g.birthdays.core.server.bean;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
@@ -15,6 +17,7 @@ public class Contact {
   private User user;
   private Long userId;
   private String comment;
+  private List<Event> event = new ArrayList<Event>(0);
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,5 +116,14 @@ public class Contact {
     dto.setComment(bean.getComment());
     dto.setUserId(bean.getUserId());
     return dto;
+  }
+
+  @OneToMany(mappedBy = "contact")
+  public List<Event> getEvent() {
+    return event;
+  }
+
+  public void setEvent(List<Event> event) {
+    this.event = event;
   }
 }

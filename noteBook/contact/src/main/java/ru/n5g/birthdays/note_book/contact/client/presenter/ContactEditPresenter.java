@@ -29,7 +29,15 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
 
   public void editContact(ContactDTO dto, IsSave isSave) {
     this.isSave = isSave;
-    openWindow(ActionEnum.EDIT, dto);
+    factory.getService().getContact(dto.getId(), new AsyncCallback<ContactDTO>() {
+      public void onFailure(Throwable caught) {
+        Info.display("Error", caught.getMessage());
+      }
+
+      public void onSuccess(ContactDTO result) {
+        openWindow(ActionEnum.EDIT, result);
+      }
+    });
   }
 
   private void openWindow(ActionEnum action, ContactDTO dto) {

@@ -8,4 +8,6 @@ import ru.n5g.birthdays.core.shared.bean.ContactDTO;
  */
 public interface ContactEditServiceAsync {
   void saveContact(ContactDTO dto, AsyncCallback<Void> callback);
+
+  void getContact(Long id, AsyncCallback<ContactDTO> callback);
 }

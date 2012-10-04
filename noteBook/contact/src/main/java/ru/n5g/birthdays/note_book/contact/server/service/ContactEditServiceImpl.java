@@ -23,4 +23,17 @@ public class ContactEditServiceImpl implements ContactEditService {
     bean.setUserId(User.getAuthenticationUserId());
     contactDAO.saveOrUpdate(bean);
   }
+
+  @Override
+  public ContactDTO getContact(Long id) {
+    Contact contact = contactDAO.get(id);
+    ContactDTO dto = Contact.convert(contact);
+    if (contact.getEvent() != null) {
+
+//      EventDTO eventDTO = Event.convert(contact.getEvent());
+//      eventDTO.setEventType(EventType.convert(contact.getEvent().getEventType()));
+//      dto.setEvent(eventDTO);
+    }
+    return dto;
+  }
 }
