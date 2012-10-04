@@ -135,4 +135,13 @@
       <column name="year" type="int" remarks="год события"/>
     </createTable>
   </changeSet>
+
+  <changeSet id="011" author="belyaev">
+    <comment>Добавление колонки в таблицу event</comment>
+    <addColumn tableName="event">
+      <column name="contact_id" type="bigint" remarks="Ид контакта">
+        <constraints nullable="false" foreignKeyName="fk_event3" references="contact(contact_id)"/>
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
