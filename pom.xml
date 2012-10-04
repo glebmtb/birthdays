@@ -51,6 +51,11 @@
         <version>0.2-SNAPSHOT</version>
       </dependency>
       <dependency>
+        <groupId>ru.n5g.birthdays.noteBook</groupId>
+        <artifactId>event</artifactId>
+        <version>0.2-SNAPSHOT</version>
+      </dependency>
+      <dependency>
         <groupId>ru.n5g.birthdays.administrator</groupId>
         <artifactId>user</artifactId>
         <version>0.2-SNAPSHOT</version>
