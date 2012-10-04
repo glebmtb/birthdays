@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import ru.n5g.birthdays.note_book.app_note_book.client.localization.AppNoteBookLocalization;
 import ru.n5g.birthdays.note_book.app_note_book.client.presenter.AppNoteBookPresenter;
-import ru.n5g.birthdays.core.shared.TabEnum;
+import ru.n5g.birthdays.note_book.app_note_book.client.bean.TabEnum;
 
 
 public class AppNoteBookPageImpl extends ContentPanel implements AppNoteBookPage {
@@ -28,6 +28,7 @@ public class AppNoteBookPageImpl extends ContentPanel implements AppNoteBookPage
   private Label lblEmployeeName;
 
   private TabItem btnContact;
+  private TabItem btnEventType;
   private TabItem btnLogout;
 
   private TabEnum selectedTab;
@@ -118,16 +119,31 @@ public class AppNoteBookPageImpl extends ContentPanel implements AppNoteBookPage
     });
     btnContact.addStyleName("btn-tab");
 
+    btnEventType = new TabItem();
+    btnEventType.addStyleName("btn-menu");
+    btnEventType.setToolTip(localization.btnEventType());
+    btnEventType.setText(localization.btnEventType());
+    btnEventType.setBorders(true);
+    btnEventType.addListener(Events.Select, new Listener<ComponentEvent>() {
+      public void handleEvent(ComponentEvent be) {
+        presenter.openEventType();
+      }
+    });
+    btnEventType.addStyleName("btn-tab");
+
 
     btnLogout.setHeight(0);
     btnContact.setHeight(0);
+    btnEventType.setHeight(0);
 
 
     btnLogout.setBorders(false);
     btnContact.setBorders(false);
+    btnEventType.setBorders(false);
 
 
     toolBar.add(btnContact);
+    toolBar.add(btnEventType);
     toolBar.add(btnLogout);
   }
 
@@ -188,6 +204,9 @@ public class AppNoteBookPageImpl extends ContentPanel implements AppNoteBookPage
     switch (selectedTab) {
       case CONTACT:
         toolBar.setSelection(btnContact);
+        break;
+      case EVENT_TYPE:
+        toolBar.setSelection(btnEventType);
         break;
       default:
         toolBar.setSelection(btnContact);

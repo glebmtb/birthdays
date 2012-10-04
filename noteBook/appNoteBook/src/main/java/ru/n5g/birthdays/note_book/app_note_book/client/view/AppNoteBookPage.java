@@ -6,7 +6,7 @@ import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import ru.n5g.birthdays.note_book.app_note_book.client.presenter.AppNoteBookPresenter;
-import ru.n5g.birthdays.core.shared.TabEnum;
+import ru.n5g.birthdays.note_book.app_note_book.client.bean.TabEnum;
 
 /**
  * @author home
@@ -44,5 +44,7 @@ public interface AppNoteBookPage extends IsWidget {
     void checkPermissions(String permissionCode, Component component, boolean hideIfDenied);
 
     void openContact();
+
+    void openEventType();
   }
 }
