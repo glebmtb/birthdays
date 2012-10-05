@@ -10,23 +10,28 @@ import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.NumberField;
 import com.extjs.gxt.ui.client.widget.grid.*;
-import com.extjs.gxt.ui.client.widget.layout.FitLayout;
-import com.extjs.gxt.ui.client.widget.layout.FormData;
-import com.extjs.gxt.ui.client.widget.layout.RowData;
-import com.extjs.gxt.ui.client.widget.layout.RowLayout;
+import com.extjs.gxt.ui.client.widget.grid.ColumnData;
+import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
+import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
+import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextAreaField;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
 import ru.n5g.birthdays.core.shared.bean.ActionEnum;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
+import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
+import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 import ru.n5g.birthdays.note_book.contact.client.localization.ContactEditLocalization;
 import ru.n5g.birthdays.note_book.contact.client.presenter.ContactEditPresenter;
 
@@ -49,6 +54,8 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private TrimTextField firstName;
   private TrimTextField middleName;
   private TrimTextAreaField comment;
+
+  private AdvancedComboBox<EventTypeDTO> eventTypeComboBox;
 
   protected static final String MIN_DATE_STR = "01.01.1000";
   protected static final String MAX_DATE_STR = "31.12.9999";
@@ -128,7 +135,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     FieldSet eventFieldSet  = new FieldSet();
     eventFieldSet.setHeading(localization.eventFieldSet());
     eventFieldSet.setLayout(new FitLayout());
-    eventFieldSet.add(test());
+    eventFieldSet.add(createEventPanel());
 
     RowData data = new RowData(.5, 1);
     data.setMargins(new Margins(5));
@@ -184,9 +191,29 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     presenter.save(dto);
   }
 
+  private LayoutContainer createEventPanel(){
+    LayoutContainer eventPanel = new LayoutContainer();
+    eventPanel.setLayout(new FormLayout());
+
+
+    eventTypeComboBox = new AdvancedComboBox<EventTypeDTO>();
+    eventTypeComboBox.setRemoteFilterType(ComboBoxFilterType.ILIKE);
+    eventTypeComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
+    eventTypeComboBox.setForceSelection(true);
+    eventTypeComboBox.setLoadingText(localization.comboBoxLoading());
+    eventTypeComboBox.setInitializingText(localization.comboBoxInitialization());
+    eventTypeComboBox.setStore(presenter.getEventTypeComboBoxStore());
+    eventTypeComboBox.setDisplayField(EventTypeDTO.NAME);
+    TestIdSetter.resetTestId(eventTypeComboBox, "form_2012082514453");
+
+    NumberField b = new NumberField();
+    b.setFieldLabel("sjdfhgjdsfhj");
+    eventPanel.add(eventTypeComboBox);
+    eventPanel.add(b);
+    eventPanel.add(test());
+    return eventPanel;
+  }
   private Widget test() {
-
-
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
     ColumnConfig column = new ColumnConfig("name", 200);
     column.setRowHeader(false);
