@@ -1,11 +1,15 @@
 package ru.n5g.birthdays.note_book.contact.client.presenter;
 
+import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.data.*;
+import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.Info;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.components.client.view.SimpleWindowView;
 import ru.n5g.birthdays.core.shared.bean.ActionEnum;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
+import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 import ru.n5g.birthdays.note_book.contact.client.factory.ContactEditFactory;
 import ru.n5g.birthdays.note_book.contact.client.view.ContactEditWindowImplImpl;
 
@@ -59,6 +63,20 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
         isSave.onSuccess();
       }
     });
+  }
+
+  public ListStore<EventTypeDTO> getEventTypeComboBoxStore() {
+    RpcProxy<BasePagingLoadResult<EventTypeDTO>> proxy = new RpcProxy<BasePagingLoadResult<EventTypeDTO>>() {
+      @Override
+      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<EventTypeDTO>> callback) {
+        factory.getService().loadEventTypeList((BasePagingLoadConfig) loadConfig, callback);
+      }
+    };
+    PagingLoader<PagingLoadResult<EventTypeDTO>> loader = new BasePagingLoader<PagingLoadResult<EventTypeDTO>>(proxy, new ModelReader());
+    loader.setSortDir(Style.SortDir.ASC);
+    loader.setSortField(EventTypeDTO.NAME);
+    loader.setRemoteSort(true);
+    return new ListStore<EventTypeDTO>(loader);
   }
 
   public interface ContactEditWindow extends SimpleWindowView {

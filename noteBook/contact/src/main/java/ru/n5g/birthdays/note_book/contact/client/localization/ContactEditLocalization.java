@@ -36,4 +36,8 @@ public interface ContactEditLocalization extends Constants, SimpleWindowLocaliza
   String contactFiledSet();
 
   String eventFieldSet();
+
+  String comboBoxLoading();
+
+  String comboBoxInitialization();
 }
