@@ -12,6 +12,7 @@ import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 public class EventType {
   private Long id;
   private String name;
+  private Boolean isSingle;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +34,20 @@ public class EventType {
     this.name = name;
   }
 
+  @Column(name = "single_event")
+  public Boolean getSingle() {
+    return isSingle;
+  }
+
+  public void setSingle(Boolean single) {
+    isSingle = single;
+  }
+
   public static EventType convert(EventTypeDTO dto){
     EventType bean = new EventType();
     bean.setId(dto.getId());
     bean.setName(dto.getName());
+    bean.setSingle(dto.getSingle());
     return bean;
   }
 
@@ -44,6 +55,8 @@ public class EventType {
     EventTypeDTO dto = new EventTypeDTO();
     dto.setId(bean.getId());
     dto.setName(bean.getName());
+    dto.setSingle(bean.getSingle());
     return dto;
   }
+
 }

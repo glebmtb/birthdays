@@ -27,10 +27,10 @@ public interface Icons extends ClientBundle {
 
   @Source("x16/refresh.png")
   ImageResource refresh16();
-  
+
   @Source("x32/refresh.png")
   ImageResource refresh32();
-  
+
   @Source("note.png")
   ImageResource note();
 
@@ -48,4 +48,10 @@ public interface Icons extends ClientBundle {
 
   @Source("x32/download.png")
   ImageResource download();
+
+  @Source("x32/button_ok.png")
+  ImageResource buttonOk();
+
+  @Source("x32/button_cancel.png")
+  ImageResource buttonCancel();
 }

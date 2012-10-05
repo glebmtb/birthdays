@@ -1,5 +1,6 @@
 package ru.n5g.birthdays.administrator.event_type.client.view;
 
+import com.extjs.gxt.ui.client.widget.form.CheckBox;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.administrator.event_type.client.localization.EventTypeEditLocalization;
@@ -20,6 +21,7 @@ public class EventTypeEditWindow extends SimpleWindowViewImpl implements EventTy
   private EventTypeDTO dto;
 
   private TrimTextField eventTypeName;
+  private CheckBox singleCheckBox;
 
 
   public EventTypeEditWindow(EventTypeEditPresenter presenter, EventTypeEditLocalization localization, ActionEnum action, EventTypeDTO dto) {
@@ -29,8 +31,8 @@ public class EventTypeEditWindow extends SimpleWindowViewImpl implements EventTy
     this.localization = localization;
     this.action = action;
     this.dto = dto;
-    setWindowHeight(130);
-    setLabelWidth(210);
+    setWindowHeight(160);
+    setLabelWidth(240);
   }
 
   @Override
@@ -47,18 +49,24 @@ public class EventTypeEditWindow extends SimpleWindowViewImpl implements EventTy
   @Override
   protected void createFields(FormPanel panel, FormData formData) {
     eventTypeName = createTextField(255, localization.eventTypeName(), "text_20120925144901", true);
+    singleCheckBox = new CheckBox();
+    singleCheckBox.setFieldLabel(localization.singleCheckBox());
+
     panel.add(eventTypeName, formData);
+    panel.add(singleCheckBox);
     if (action == ActionEnum.EDIT)
       onWrittenFields();
   }
 
   private void onWrittenFields() {
     eventTypeName.setValue(dto.getName());
+    singleCheckBox.setValue(dto.getSingle());
   }
 
   @Override
   protected void onSave() {
     dto.setName(eventTypeName.getValue());
+    dto.setSingle(singleCheckBox.getValue());
     presenter.save(dto);
   }
 

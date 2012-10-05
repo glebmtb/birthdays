@@ -10,19 +10,18 @@ import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Dialog;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
-import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
-import com.extjs.gxt.ui.client.widget.grid.Grid;
-import com.extjs.gxt.ui.client.widget.grid.LiveGridView;
+import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.tips.QuickTip;
 import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.LiveToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.Image;
 import ru.n5g.birthdays.administrator.event_type.client.localization.EventTypeListLocalization;
 import ru.n5g.birthdays.administrator.event_type.client.presenter.EventTypeListPresenter;
 import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
+import ru.n5g.birthdays.core.client.resources.Resources;
 import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 
@@ -145,8 +144,28 @@ public class EventTypeListViewImpl extends LayoutContainer implements EventTypeL
   private Grid<EventTypeDTO> createGrid() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-    columns.add(new ColumnConfig(EventTypeDTO.NAME, localization.eventTypeName(), 30));
 
+    columns.add(new ColumnConfig(EventTypeDTO.NAME, localization.eventTypeName(), 30));
+    ColumnConfig column = new ColumnConfig(EventTypeDTO.IS_SINGLE, localization.isSingle(), 50);
+    column.setRenderer(new GridCellRenderer<EventTypeDTO>() {
+      @Override
+      public Object render(EventTypeDTO model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventTypeDTO> store, Grid<EventTypeDTO> grid) {
+        Image image;
+        if ((Boolean) model.get(property)) {
+          image = new Image(Resources.ICONS.buttonOk());
+          image.setAltText(localization.isSingleYes());
+          image.setTitle(localization.isSingleYes());
+        }
+        else {
+          image = new Image(Resources.ICONS.buttonCancel());
+          image.setAltText(localization.isSingleNo());
+          image.setTitle(localization.isSingleNo());
+        }
+
+        return image == null ? "" : image;
+      }
+    });
+    columns.add(column);
 
     ColumnModel cm = new ColumnModel(columns);
     ListStore store = presenter.loadContactList();

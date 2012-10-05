@@ -144,4 +144,13 @@
       </column>
     </addColumn>
   </changeSet>
+
+  <changeSet id="012" author="belyaev">
+    <comment>Добавление новой колонки в event_type</comment>
+    <addColumn tableName="event_type">
+      <column name="single_event" type="boolean" defaultValue="true" remarks="тип праздника может быть только один">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

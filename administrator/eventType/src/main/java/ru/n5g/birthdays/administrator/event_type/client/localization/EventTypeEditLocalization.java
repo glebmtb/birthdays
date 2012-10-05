@@ -22,4 +22,6 @@ public interface EventTypeEditLocalization extends Constants, SimpleWindowLocali
   String getLabelEdit();
 
   String eventTypeName();
+
+  String singleCheckBox();
 }

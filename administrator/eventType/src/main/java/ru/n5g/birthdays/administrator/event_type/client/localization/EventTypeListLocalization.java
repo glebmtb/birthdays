@@ -25,4 +25,10 @@ public interface EventTypeListLocalization extends Constants {
   String btnDelete();
 
   String eventTypeName();
+
+  String isSingle();
+
+  String isSingleYes();
+
+  String isSingleNo();
 }
