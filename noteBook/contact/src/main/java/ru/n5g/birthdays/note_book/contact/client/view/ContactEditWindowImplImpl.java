@@ -12,6 +12,7 @@ import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
@@ -67,7 +68,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     setMinimizable(false);
     setMaximizable(false);
     setLayout(new FitLayout());
-    setSize(600, 370);
+    setSize(700, 400);
     addButton();
   }
 
@@ -119,11 +120,21 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     panel.setLabelWidth(100);
     createFields(panel, formData);
 
+    FieldSet contactFieldSet  = new FieldSet();
+    contactFieldSet.setHeading(localization.contactFiledSet());
+    contactFieldSet.setLayout(new FitLayout());
+    contactFieldSet.add(panel);
+
+    FieldSet eventFieldSet  = new FieldSet();
+    eventFieldSet.setHeading(localization.eventFieldSet());
+    eventFieldSet.setLayout(new FitLayout());
+    eventFieldSet.add(test());
+
     RowData data = new RowData(.5, 1);
     data.setMargins(new Margins(5));
 
-    cp.add(panel, data);
-    cp.add(test(), data);
+    cp.add(contactFieldSet, data);
+    cp.add(eventFieldSet, data);
     add(cp);
   }
 

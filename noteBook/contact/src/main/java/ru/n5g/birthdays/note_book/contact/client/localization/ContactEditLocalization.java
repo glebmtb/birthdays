@@ -32,4 +32,8 @@ public interface ContactEditLocalization extends Constants, SimpleWindowLocaliza
   String getLabelEdit();
 
   String getLabelEditAndClose();
+
+  String contactFiledSet();
+
+  String eventFieldSet();
 }
