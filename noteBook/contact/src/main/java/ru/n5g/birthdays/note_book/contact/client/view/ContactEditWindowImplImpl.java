@@ -1,7 +1,19 @@
 package ru.n5g.birthdays.note_book.contact.client.view;
 
+import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.util.Margins;
+import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Window;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
+import com.extjs.gxt.ui.client.widget.layout.RowData;
+import com.extjs.gxt.ui.client.widget.layout.RowLayout;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Element;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextAreaField;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
@@ -13,12 +25,16 @@ import ru.n5g.birthdays.note_book.contact.client.presenter.ContactEditPresenter;
 /**
  * @author belyaev
  */
-public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements ContactEditPresenter.ContactEditWindow {
+public class ContactEditWindowImplImpl extends Window implements ContactEditPresenter.ContactEditWindow {
   private ContactEditPresenter presenter;
   private ContactEditLocalization localization;
 
   private ActionEnum action;
   private ContactDTO dto;
+
+  private Button btnApply;
+  private Button btnApplyAndClose;
+  private Button btnCancel;
 
   private TrimTextField nickname;
   private TrimTextField lastName;
@@ -26,19 +42,87 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
   private TrimTextField middleName;
   private TrimTextAreaField comment;
 
+  protected static final String MIN_DATE_STR = "01.01.1000";
+  protected static final String MAX_DATE_STR = "31.12.9999";
+  protected static final String DATE_PARSING_PATTERN = "dd.MM.yyyy";
+  protected static final DateTimeFormat dateParsingFormat = DateTimeFormat.getFormat(DATE_PARSING_PATTERN);
+  protected static final String LABEL_STYLE = "margin-top:4px";
 
   public ContactEditWindowImplImpl(ContactEditPresenter presenter, ContactEditLocalization localization, ActionEnum action, ContactDTO dto) {
-    super(presenter);
+    super();
     this.setResizable(false);
     this.presenter = presenter;
     this.localization = localization;
     this.action = action;
     this.dto = dto;
-    setWindowHeight(320);
+    this.presenter = presenter;
+    setModal(true);
+    setMinimizable(false);
+    setMaximizable(false);
+    setLayout(new FitLayout());
+
+    addButton();
+  }
+
+  private void addButton() {
+    btnApply = new Button(localization.getLabelEdit());
+    btnApply.addSelectionListener(new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        onSave();
+      }
+    });
+
+    btnApplyAndClose = new Button(localization.getLabelEditAndClose());
+    btnApplyAndClose.addSelectionListener(new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        onSave();
+        hide();
+      }
+    });
+
+    btnCancel = new Button(localization.btnCancel());
+    btnCancel.addSelectionListener(new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        hide();
+      }
+    });
+
+    setButtonAlign(Style.HorizontalAlignment.CENTER);
+
+    addButton(btnApply);
+    addButton(btnApplyAndClose);
+    addButton(btnCancel);
   }
 
   @Override
-  protected String getTitleWindow() {
+  protected void onRender(Element parent, int pos) {
+    super.onRender(parent, pos);
+
+    setHeading(getTitleWindow());
+    setSize(600, 350);
+
+    ContentPanel cp = new ContentPanel();
+    cp.setHeaderVisible(false);
+    cp.setFrame(true);
+    cp.setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
+
+    FormData formData = new FormData("95%");
+    FormPanel panel = new FormPanel();
+    panel.setHeaderVisible(false);
+    panel.setLabelWidth(100);
+    createFields(panel, formData);
+
+    RowData data = new RowData(.5, 1);
+    data.setMargins(new Margins(5));
+
+    cp.add(panel, data);
+    add(cp);
+  }
+
+  private String getTitleWindow() {
     if (action == ActionEnum.ADD) {
       return localization.getAddTitle();
     }
@@ -48,13 +132,13 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
     return "";
   }
 
-  @Override
+
   protected void createFields(FormPanel panel, FormData formData) {
-    nickname = createTextField(255, localization.nickname(), "text_20120925144901", false);
-    lastName = createTextField(255, localization.lastName(), "text_20120925145002", false);
-    firstName = createTextField(255, localization.firstName(), "text_20120925145003", false);
-    middleName = createTextField(255, localization.middleName(), "text_2012092514504", false);
-    comment = createTextAreaField(1000, localization.comment(), "text_20120925145005", false, 100);
+    nickname = SimpleWindowViewImpl.createTextField(255, localization.nickname(), "text_20120925144901", false);
+    lastName = SimpleWindowViewImpl.createTextField(255, localization.lastName(), "text_20120925145002", false);
+    firstName = SimpleWindowViewImpl.createTextField(255, localization.firstName(), "text_20120925145003", false);
+    middleName = SimpleWindowViewImpl.createTextField(255, localization.middleName(), "text_2012092514504", false);
+    comment = SimpleWindowViewImpl.createTextAreaField(1000, localization.comment(), "text_20120925145005", false, 100);
 
     panel.add(nickname, formData);
     panel.add(lastName, formData);
@@ -74,7 +158,7 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
     comment.setValue(dto.getComment());
   }
 
-  @Override
+
   protected void onSave() {
     dto.setNickname(nickname.getValue());
     dto.setLastName(lastName.getValue());
@@ -82,13 +166,5 @@ public class ContactEditWindowImplImpl extends SimpleWindowViewImpl implements C
     dto.setMiddleName(middleName.getValue());
     dto.setComment(comment.getValue());
     presenter.save(dto);
-  }
-
-  @Override
-  protected String getLabelBtnApply() {
-    if (action == ActionEnum.EDIT)
-      return localization.getLabelEdit();
-
-    return super.getLabelBtnApply();
   }
 }

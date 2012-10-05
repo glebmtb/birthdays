@@ -55,7 +55,6 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
       }
 
       public void onSuccess(Void result) {
-        window.hide();
         Info.display(factory.getLocalization().information(), factory.getLocalization().saveSuccess());
         isSave.onSuccess();
       }
