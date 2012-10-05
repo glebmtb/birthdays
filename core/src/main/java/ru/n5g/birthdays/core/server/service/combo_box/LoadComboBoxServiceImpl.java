@@ -9,7 +9,6 @@ import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.extjs.gxt.ui.client.data.ModelData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ru.n5g.birthdays.core.server.dao.combo_box.ComboBoxDao;
 import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilter;
 import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
@@ -17,7 +16,6 @@ import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 /**
  * @author belyaev
  */
-@Service
 public class LoadComboBoxServiceImpl<T extends ModelData> implements LoadComboBoxService {
   private static final long serialVersionUID = 3668731396641477868L;
   protected ComboBoxDao comboBoxDao;
