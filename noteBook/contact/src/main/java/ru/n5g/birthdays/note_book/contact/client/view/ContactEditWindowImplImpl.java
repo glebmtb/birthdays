@@ -1,19 +1,26 @@
 package ru.n5g.birthdays.note_book.contact.client.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import com.extjs.gxt.ui.client.widget.layout.RowData;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.Widget;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextAreaField;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
@@ -60,7 +67,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     setMinimizable(false);
     setMaximizable(false);
     setLayout(new FitLayout());
-
+    setSize(600, 370);
     addButton();
   }
 
@@ -101,15 +108,12 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   protected void onRender(Element parent, int pos) {
     super.onRender(parent, pos);
 
-    setHeading(getTitleWindow());
-    setSize(600, 350);
-
     ContentPanel cp = new ContentPanel();
-    cp.setHeaderVisible(false);
+    cp.setHeading(getTitleWindow());
     cp.setFrame(true);
     cp.setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
 
-    FormData formData = new FormData("95%");
+    FormData formData = new FormData("100%");
     FormPanel panel = new FormPanel();
     panel.setHeaderVisible(false);
     panel.setLabelWidth(100);
@@ -119,6 +123,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     data.setMargins(new Margins(5));
 
     cp.add(panel, data);
+    cp.add(test(), data);
     add(cp);
   }
 
@@ -167,4 +172,37 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     dto.setComment(comment.getValue());
     presenter.save(dto);
   }
+
+  private Widget test() {
+
+
+    List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
+    ColumnConfig column = new ColumnConfig("name", 200);
+    column.setRowHeader(false);
+    column.setMenuDisabled(true);
+    columns.add(column);
+
+    GridCellRenderer<BaseModelData> editButton = new GridCellRenderer<BaseModelData>() {
+      @Override
+      public Object render(BaseModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<BaseModelData> store, Grid<BaseModelData> grid) {
+        return new Button((String) model.get(property));
+      }
+    };
+
+    column = new ColumnConfig("day", 50);
+    column.setRenderer(editButton);
+    columns.add(column);
+    ColumnModel cm = new ColumnModel(columns);
+    ListStore<BaseModelData> store = new ListStore<BaseModelData>();
+    BaseModelData baseModelData = new BaseModelData();
+    baseModelData.set("name", "День рождение");
+    baseModelData.set("day", "22.05.1988");
+    store.add(baseModelData);
+    Grid<BaseModelData> grid = new Grid<BaseModelData>(store, cm);
+
+
+    return grid;
+  }
+
+
 }
