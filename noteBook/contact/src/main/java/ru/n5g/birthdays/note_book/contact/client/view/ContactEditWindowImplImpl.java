@@ -1,12 +1,12 @@
 package ru.n5g.birthdays.note_book.contact.client.view;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.BaseModelData;
-import com.extjs.gxt.ui.client.event.ButtonEvent;
-import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
@@ -74,6 +74,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     setMaximizable(false);
     setLayout(new FitLayout());
     setSize(700, 400);
+    setHeading(getTitleWindow());
     addButton();
   }
 
@@ -115,7 +116,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     super.onRender(parent, pos);
 
     ContentPanel cp = new ContentPanel();
-    cp.setHeading(getTitleWindow());
+    cp.setHeaderVisible(false);
     cp.setFrame(true);
     cp.setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
 
@@ -199,6 +200,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     eventTypeComboBox.setInitializingText(localization.comboBoxInitialization());
     eventTypeComboBox.setStore(presenter.getEventTypeComboBoxStore());
     eventTypeComboBox.setDisplayField(EventTypeDTO.NAME);
+    eventTypeComboBox.setWidth(282);
     TestIdSetter.resetTestId(eventTypeComboBox, "form_2012082514453");
 
     Button addEventTypeButton = new Button();
@@ -220,38 +222,89 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private Widget test() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-    CheckColumnConfig checkColumn = new CheckColumnConfig("indoor",null, 30);
-    CellEditor checkBoxEditor = new CellEditor(new CheckBox());
-    checkColumn.setEditor(checkBoxEditor);
-    columns.add(checkColumn);
-
-    ColumnConfig column = new ColumnConfig("name", 200);
-    column.setRowHeader(false);
+    GridCellRenderer<BaseModelData> remindCheckBox = new GridCellRenderer<BaseModelData>() {
+      @Override
+      public Object render(final BaseModelData model, final String property, ColumnData config, final int rowIndex, int colIndex, ListStore<BaseModelData> store, final Grid<BaseModelData> grid) {
+        final CheckBox checkBox = new CheckBox();
+        checkBox.setToolTip("Напомить");
+        checkBox.setValue((Boolean)model.get(property));
+        checkBox.addListener(Events.Change, new Listener<BaseEvent>() {
+          @Override
+          public void handleEvent(BaseEvent be) {
+            model.set(property, ((FieldEvent) be).getField().getValue());
+          }
+        });
+        return checkBox;
+      }
+    };
+    ColumnConfig column = new ColumnConfig("remindCheckBox", 25);
+    column.setRenderer(remindCheckBox);
+    column.setFixed(true);
     column.setMenuDisabled(true);
     columns.add(column);
 
-    GridCellRenderer<BaseModelData> editButton = new GridCellRenderer<BaseModelData>() {
+     column = new ColumnConfig("name", 110);
+    column.setMenuDisabled(true);
+    column.setFixed(true);
+    columns.add(column);
+
+    DateField dateField = new DateField();
+    dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("MM.dd.yyyy"));
+    column = new ColumnConfig("day", 80);
+    column.setDateTimeFormat(DateTimeFormat.getFormat("dd MMM yyyy"));
+    column.setMenuDisabled(true);
+    column.setFixed(true);
+    column.setEditor(new CellEditor(dateField));
+    columns.add(column);
+
+    GridCellRenderer<BaseModelData> editEventButton = new GridCellRenderer<BaseModelData>() {
       @Override
-      public Object render(BaseModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<BaseModelData> store, Grid<BaseModelData> grid) {
-        return new Button((String) model.get(property));
+      public Object render(BaseModelData model, String property, ColumnData config, final int rowIndex, int colIndex, ListStore<BaseModelData> store, final Grid<BaseModelData> grid) {
+        Button button = new Button();
+        button.addStyleName("btn-kontact-date-16");
+        button.setToolTip("Редактировать напоминание");
+        button.addSelectionListener(new SelectionListener<ButtonEvent>() {
+          @Override
+          public void componentSelected(ButtonEvent ce) {
+
+          }
+        });
+        return button;
       }
     };
-
-    column = new ColumnConfig("day", 50);
-//    column.setRenderer(editButton);
+    column = new ColumnConfig("editEventButton", 35);
+    column.setRenderer(editEventButton);
+    column.setFixed(true);
+    column.setMenuDisabled(true);
     columns.add(column);
+
+    GridCellRenderer<BaseModelData> deleteEventButton = new GridCellRenderer<BaseModelData>() {
+      @Override
+      public Object render(BaseModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<BaseModelData> store, Grid<BaseModelData> grid) {
+        Button button = new Button();
+        button.setBorders(false);
+        button.addStyleName("btn-cancel-16");
+        button.setToolTip("Удалить событие");
+        return button;
+      }
+    };
+    column = new ColumnConfig("deleteEventButton", 35);
+    column.setRenderer(deleteEventButton);
+    column.setFixed(true);
+    column.setMenuDisabled(true);
+    columns.add(column);
+
     ColumnModel cm = new ColumnModel(columns);
     ListStore<BaseModelData> store = new ListStore<BaseModelData>();
     BaseModelData baseModelData = new BaseModelData();
     baseModelData.set("name", "День рождение");
-    baseModelData.set("day", "22.05.1988");
+    baseModelData.set("remindCheckBox", true);
+    baseModelData.set("day", new Date(88, 05, 22));
     store.add(baseModelData);
     EditorGrid<BaseModelData> grid = new EditorGrid<BaseModelData>(store, cm);
-    grid.addPlugin(checkColumn);
-
+    grid.setHeight(245);
+    grid.setBorders(true);
 
     return grid;
   }
-
-
 }

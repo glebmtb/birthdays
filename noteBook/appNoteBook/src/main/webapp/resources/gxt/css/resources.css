@@ -27,3 +27,15 @@
     height: 16px !important;
     width: 16px;
 }
+
+.btn-kontact-date-16 button {
+    background: url("../icons/kontact_date_16.png") no-repeat center;
+    height: 14px !important;
+    width: 16px;
+}
+
+.btn-cancel-16 button {
+    background: url("../icons/cancel_16.png") no-repeat center;
+    height: 14px !important;
+    width: 16px;
+}
