@@ -54,6 +54,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private TrimTextAreaField comment;
 
   private AdvancedComboBox<EventTypeDTO> eventTypeComboBox;
+  private EditorGrid<BaseModelData> eventGrid;
 
   protected static final String MIN_DATE_STR = "01.01.1000";
   protected static final String MAX_DATE_STR = "31.12.9999";
@@ -234,6 +235,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
             model.set(property, ((FieldEvent) be).getField().getValue());
           }
         });
+        checkBox.disable();
         return checkBox;
       }
     };
@@ -243,7 +245,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     column.setMenuDisabled(true);
     columns.add(column);
 
-    column = new ColumnConfig("name", 110);
+    column = new ColumnConfig("name", 117);
     column.setMenuDisabled(true);
     column.setFixed(true);
     columns.add(column);
@@ -269,6 +271,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
 
           }
         });
+        button.disable();
         return button;
       }
     };
@@ -285,6 +288,12 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         button.setBorders(false);
         button.addStyleName("btn-cancel-16");
         button.setToolTip("Удалить событие");
+        button.addSelectionListener(new SelectionListener<ButtonEvent>() {
+          @Override
+          public void componentSelected(ButtonEvent ce) {
+                   String st = "df";
+          }
+        });
         return button;
       }
     };
@@ -301,10 +310,16 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     baseModelData.set("remindCheckBox", true);
     baseModelData.set("day", new Date(88, 05, 22));
     store.add(baseModelData);
-    EditorGrid<BaseModelData> grid = new EditorGrid<BaseModelData>(store, cm);
-    grid.setHeight(245);
-    grid.setBorders(true);
+
+    baseModelData = new BaseModelData();
+    baseModelData.set("name", "День ангела");
+    baseModelData.set("remindCheckBox", false);
+    baseModelData.set("day", new Date(83, 01, 12));
+    store.add(baseModelData);
+    eventGrid = new EditorGrid<BaseModelData>(store, cm);
+    eventGrid.setHeight(245);
+    eventGrid.setBorders(true);
 //    yourButton.setDisabled(yourGrid.store.getModifiedRecords().length === 0);
-    return grid;
+    return eventGrid;
   }
 }
