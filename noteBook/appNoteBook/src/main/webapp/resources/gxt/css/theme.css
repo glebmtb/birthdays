@@ -1,23 +1,11 @@
 .btn-large {
-    /*height: 90px;
-    margin: 3px 10px;
-    min-width: 60px;*/
     height: 32px;
     width: 32px;
-
-}
-
-.btn-large .x-btn-text {
-    /*padding-top:  40px;*/
 }
 
 .btn-large button {
-    /*height: 90px !important;*/
     background-position: center 0px !important;
     background-repeat: no-repeat !important;
-    /*min-width: 60px;
-    white-space: normal;
-    max-width: 110px;*/
     width: 32px;
     height: 32px;
 }
@@ -212,4 +200,10 @@ btn-chart-large button {
     background: url("../icons/contact_delete.png") no-repeat center;
     height: 32px;
     width: 32px;
+}
+
+.btn-add-16 button {
+    background: url("../icons/add_16.png") no-repeat center;
+    height: 16px !important;
+    width: 16px;
 }

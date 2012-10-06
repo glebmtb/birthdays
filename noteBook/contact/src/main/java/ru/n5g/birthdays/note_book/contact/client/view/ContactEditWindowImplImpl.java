@@ -10,13 +10,13 @@ import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.HorizontalPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
-import com.extjs.gxt.ui.client.widget.form.NumberField;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.layout.*;
@@ -127,12 +127,12 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     panel.setLabelWidth(100);
     createFields(panel, formData);
 
-    FieldSet contactFieldSet  = new FieldSet();
+    FieldSet contactFieldSet = new FieldSet();
     contactFieldSet.setHeading(localization.contactFiledSet());
     contactFieldSet.setLayout(new FitLayout());
     contactFieldSet.add(panel);
 
-    FieldSet eventFieldSet  = new FieldSet();
+    FieldSet eventFieldSet = new FieldSet();
     eventFieldSet.setHeading(localization.eventFieldSet());
     eventFieldSet.setLayout(new FitLayout());
     eventFieldSet.add(createEventPanel());
@@ -191,10 +191,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     presenter.save(dto);
   }
 
-  private LayoutContainer createEventPanel(){
-    LayoutContainer eventPanel = new LayoutContainer();
-    eventPanel.setLayout(new FormLayout());
-
+  private LayoutContainer createEventPanel() {
 
     eventTypeComboBox = new AdvancedComboBox<EventTypeDTO>();
     eventTypeComboBox.setRemoteFilterType(ComboBoxFilterType.ILIKE);
@@ -206,13 +203,22 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     eventTypeComboBox.setDisplayField(EventTypeDTO.NAME);
     TestIdSetter.resetTestId(eventTypeComboBox, "form_2012082514453");
 
-    NumberField b = new NumberField();
-    b.setFieldLabel("sjdfhgjdsfhj");
-    eventPanel.add(eventTypeComboBox);
-    eventPanel.add(b);
+    Button addEventTypeButton = new Button();
+    addEventTypeButton.setTitle(localization.addEventType());
+    addEventTypeButton.addStyleName("btn-add-16");
+
+
+    HorizontalPanel addEventPanel = new HorizontalPanel();
+    addEventPanel.add(eventTypeComboBox);
+    addEventPanel.add(addEventTypeButton);
+
+    LayoutContainer eventPanel = new LayoutContainer();
+    eventPanel.setLayout(new FormLayout());
+    eventPanel.add(addEventPanel);
     eventPanel.add(test());
     return eventPanel;
   }
+
   private Widget test() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
     ColumnConfig column = new ColumnConfig("name", 200);

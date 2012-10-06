@@ -40,4 +40,6 @@ public interface ContactEditLocalization extends Constants, SimpleWindowLocaliza
   String comboBoxLoading();
 
   String comboBoxInitialization();
+
+  String addEventType();
 }
