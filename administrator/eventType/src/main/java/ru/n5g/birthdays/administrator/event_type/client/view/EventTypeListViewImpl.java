@@ -212,7 +212,6 @@ public class EventTypeListViewImpl extends LayoutContainer implements EventTypeL
 
   private Button createButton(String styleName, String btnName, String testId, SelectionListener<ButtonEvent> listener) {
     Button button = new Button();
-    button.addStyleName("btn-large");
     button.addStyleName(styleName);
     button.setToolTip(btnName);
     button.setScale(Style.ButtonScale.LARGE);

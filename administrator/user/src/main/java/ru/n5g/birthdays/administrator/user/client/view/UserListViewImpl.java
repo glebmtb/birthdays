@@ -75,8 +75,6 @@ public class UserListViewImpl extends LayoutContainer implements UserListView {
 
     btnLogout = new Button();
     btnLogout.setToolTip(localization.logoutDlgTitle());
-    btnLogout.addStyleName("btn-large");
-    btnLogout.addStyleName("btn-logout-admin");
     btnLogout.addSelectionListener(new SelectionListener<ButtonEvent>() {
       @Override
       public void componentSelected(ButtonEvent buttonEvent) {

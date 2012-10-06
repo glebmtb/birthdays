@@ -14,9 +14,7 @@ import com.extjs.gxt.ui.client.widget.HorizontalPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.form.ComboBox;
-import com.extjs.gxt.ui.client.widget.form.FieldSet;
-import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.*;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.layout.*;
@@ -221,6 +219,12 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
 
   private Widget test() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
+
+    CheckColumnConfig checkColumn = new CheckColumnConfig("indoor",null, 30);
+    CellEditor checkBoxEditor = new CellEditor(new CheckBox());
+    checkColumn.setEditor(checkBoxEditor);
+    columns.add(checkColumn);
+
     ColumnConfig column = new ColumnConfig("name", 200);
     column.setRowHeader(false);
     column.setMenuDisabled(true);
@@ -234,7 +238,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     };
 
     column = new ColumnConfig("day", 50);
-    column.setRenderer(editButton);
+//    column.setRenderer(editButton);
     columns.add(column);
     ColumnModel cm = new ColumnModel(columns);
     ListStore<BaseModelData> store = new ListStore<BaseModelData>();
@@ -242,7 +246,8 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     baseModelData.set("name", "День рождение");
     baseModelData.set("day", "22.05.1988");
     store.add(baseModelData);
-    Grid<BaseModelData> grid = new Grid<BaseModelData>(store, cm);
+    EditorGrid<BaseModelData> grid = new EditorGrid<BaseModelData>(store, cm);
+    grid.addPlugin(checkColumn);
 
 
     return grid;

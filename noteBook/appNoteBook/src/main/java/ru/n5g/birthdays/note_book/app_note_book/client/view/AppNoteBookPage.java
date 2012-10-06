@@ -20,8 +20,6 @@ public interface AppNoteBookPage extends IsWidget {
 
   void setHeader(String heading1, String heading2);
 
-  void setEmployeeName(String employeeName);
-
   interface Presenter {
     AppNoteBookPage start();
 
