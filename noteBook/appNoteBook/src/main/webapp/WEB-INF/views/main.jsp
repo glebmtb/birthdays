@@ -10,7 +10,7 @@
     <title><spring:message code="label.title"/></title>
 
     <link rel="stylesheet" type="text/css" href="resources/gxt/css/gxt-all.css"/>
-    <link rel="stylesheet" type="text/css" href="resources/gxt/css/gxt-gray.css"/>
+    <%--<link rel="stylesheet" type="text/css" href="resources/gxt/css/gxt-gray.css"/>--%>
     <link rel="stylesheet" type="text/css" href="resources/gxt/css/resources.css"/>
     <link rel="stylesheet" type="text/css" href="resources/gxt/css/note-book.css"/>
     <script type="text/javascript" charset="UTF-8" src="resources/gxt/flash/swfobject.js"></script>
