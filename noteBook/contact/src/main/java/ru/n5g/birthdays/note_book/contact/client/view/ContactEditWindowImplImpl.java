@@ -227,7 +227,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       public Object render(final BaseModelData model, final String property, ColumnData config, final int rowIndex, int colIndex, ListStore<BaseModelData> store, final Grid<BaseModelData> grid) {
         final CheckBox checkBox = new CheckBox();
         checkBox.setToolTip("Напомить");
-        checkBox.setValue((Boolean)model.get(property));
+        checkBox.setValue((Boolean) model.get(property));
         checkBox.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
@@ -243,7 +243,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     column.setMenuDisabled(true);
     columns.add(column);
 
-     column = new ColumnConfig("name", 110);
+    column = new ColumnConfig("name", 110);
     column.setMenuDisabled(true);
     column.setFixed(true);
     columns.add(column);
@@ -304,7 +304,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     EditorGrid<BaseModelData> grid = new EditorGrid<BaseModelData>(store, cm);
     grid.setHeight(245);
     grid.setBorders(true);
-
+//    yourButton.setDisabled(yourGrid.store.getModifiedRecords().length === 0);
     return grid;
   }
 }
