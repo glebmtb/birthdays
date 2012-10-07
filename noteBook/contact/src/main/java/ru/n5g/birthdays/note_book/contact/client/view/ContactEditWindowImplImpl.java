@@ -44,8 +44,6 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private ContactDTO dto;
 
   private Button btnApply;
-  private Button btnApplyAndClose;
-  private Button btnCancel;
 
   private TrimTextField nickname;
   private TrimTextField lastName;
@@ -56,11 +54,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private AdvancedComboBox<EventTypeDTO> eventTypeComboBox;
   private EditorGrid<BaseModelData> eventGrid;
 
-  protected static final String MIN_DATE_STR = "01.01.1000";
-  protected static final String MAX_DATE_STR = "31.12.9999";
   protected static final String DATE_PARSING_PATTERN = "dd.MM.yyyy";
-  protected static final DateTimeFormat dateParsingFormat = DateTimeFormat.getFormat(DATE_PARSING_PATTERN);
-  protected static final String LABEL_STYLE = "margin-top:4px";
 
   public ContactEditWindowImplImpl(ContactEditPresenter presenter, ContactEditLocalization localization, ActionEnum action, ContactDTO dto) {
     super();
@@ -88,16 +82,9 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       }
     });
 
-    btnApplyAndClose = new Button(localization.getLabelEditAndClose());
-    btnApplyAndClose.addSelectionListener(new SelectionListener<ButtonEvent>() {
-      @Override
-      public void componentSelected(ButtonEvent ce) {
-        onSave();
-        hide();
-      }
-    });
 
-    btnCancel = new Button(localization.btnCancel());
+    Button btnCancel;
+    btnCancel = new Button(localization.btnClose());
     btnCancel.addSelectionListener(new SelectionListener<ButtonEvent>() {
       @Override
       public void componentSelected(ButtonEvent ce) {
@@ -108,7 +95,6 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     setButtonAlign(Style.HorizontalAlignment.CENTER);
 
     addButton(btnApply);
-    addButton(btnApplyAndClose);
     addButton(btnCancel);
   }
 
@@ -319,6 +305,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     eventGrid = new EditorGrid<BaseModelData>(store, cm);
     eventGrid.setHeight(245);
     eventGrid.setBorders(true);
+    eventGrid.setHideHeaders(true);
 //    yourButton.setDisabled(yourGrid.store.getModifiedRecords().length === 0);
     return eventGrid;
   }
