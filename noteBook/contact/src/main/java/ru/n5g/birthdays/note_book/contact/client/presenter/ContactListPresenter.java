@@ -54,7 +54,7 @@ public class ContactListPresenter {
   }
 
   public void onEditContact(ContactDTO dto) {
-    factory.getContactEditFactory().getPresenter().editContact(dto, new ContactEditPresenter.IsSave() {
+    factory.getContactEditFactory().getPresenter().editContact(dto.getId(), new ContactEditPresenter.IsSave() {
       @Override
       public void onSuccess() {
         view.onRefresh();

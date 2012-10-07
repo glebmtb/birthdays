@@ -1,7 +1,6 @@
 package ru.n5g.birthdays.note_book.contact.client.view;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style;
@@ -14,10 +13,7 @@ import com.extjs.gxt.ui.client.widget.HorizontalPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.form.CheckBox;
-import com.extjs.gxt.ui.client.widget.form.DateField;
-import com.extjs.gxt.ui.client.widget.form.FieldSet;
-import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.*;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.layout.*;
@@ -29,10 +25,11 @@ import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextAreaField;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
 import ru.n5g.birthdays.core.shared.bean.ActionEnum;
-import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 import ru.n5g.birthdays.note_book.contact.client.localization.ContactEditLocalization;
 import ru.n5g.birthdays.note_book.contact.client.presenter.ContactEditPresenter;
+import ru.n5g.birthdays.note_book.contact.shared.bean.ContactEditDTO;
+import ru.n5g.birthdays.note_book.contact.shared.bean.EventListDTO;
 
 /**
  * @author belyaev
@@ -41,7 +38,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private ContactEditPresenter presenter;
   private ContactEditLocalization localization;
   private ActionEnum action;
-  private ContactDTO dto;
+  private ContactEditDTO dto;
 
   private Button btnApply;
 
@@ -56,7 +53,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
 
   private static final FormData FORM_DATE = new FormData("100%");
 
-  public ContactEditWindowImplImpl(ContactEditPresenter presenter, ContactEditLocalization localization, ActionEnum action, ContactDTO dto) {
+  public ContactEditWindowImplImpl(ContactEditPresenter presenter, ContactEditLocalization localization, ActionEnum action, ContactEditDTO dto) {
     super();
     this.setResizable(false);
     this.presenter = presenter;
@@ -167,18 +164,25 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     column.setMenuDisabled(true);
     columns.add(column);
 
-    column = new ColumnConfig("name", 117);
+    column = new ColumnConfig(EventListDTO.EVENT_TYPE.concat(".").concat(EventTypeDTO.NAME), 110);
     column.setMenuDisabled(true);
     column.setFixed(true);
     columns.add(column);
 
     DateField dateField = new DateField();
-    dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("MM.dd.yyyy"));
-    column = new ColumnConfig("day", 80);
-    column.setDateTimeFormat(DateTimeFormat.getFormat("dd MMM yyyy"));
+    dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("MM.dd"));
+    column = new ColumnConfig(EventListDTO.DATE_EVENT, 50);
+    column.setDateTimeFormat(DateTimeFormat.getFormat("dd MMM"));
     column.setMenuDisabled(true);
     column.setFixed(true);
     column.setEditor(new CellEditor(dateField));
+    columns.add(column);
+
+    NumberField year = new NumberField();
+    column = new ColumnConfig(EventListDTO.YEAR, 35);
+    column.setMenuDisabled(true);
+    column.setFixed(true);
+    column.setEditor(new CellEditor(year));
     columns.add(column);
 
     GridCellRenderer<BaseModelData> editEventButton = new GridCellRenderer<BaseModelData>() {
@@ -227,17 +231,8 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
 
     ColumnModel cm = new ColumnModel(columns);
     ListStore<BaseModelData> store = new ListStore<BaseModelData>();
-
-    BaseModelData baseModelData = new BaseModelData();
-    baseModelData.set("name", "День рождение");
-    baseModelData.set("remindCheckBox", true);
-    baseModelData.set("day", new Date(88, 05, 22));
-    store.add(baseModelData);
-    baseModelData = new BaseModelData();
-    baseModelData.set("name", "День ангела");
-    baseModelData.set("remindCheckBox", false);
-    baseModelData.set("day", new Date(83, 01, 12));
-    store.add(baseModelData);
+    if (dto.getEventList() != null)
+      store.add(dto.getEventList());
     eventGrid = new EditorGrid<BaseModelData>(store, cm);
     eventGrid.setHeight(245);
     eventGrid.setBorders(true);

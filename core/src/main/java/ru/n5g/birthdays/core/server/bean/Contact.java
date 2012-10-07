@@ -94,6 +94,15 @@ public class Contact {
     this.userId = userId;
   }
 
+  @OneToMany(mappedBy = "contact")
+  public List<Event> getEvent() {
+    return event;
+  }
+
+  public void setEvent(List<Event> event) {
+    this.event = event;
+  }
+
   public static Contact convert(ContactDTO dto) {
     Contact bean = new Contact();
     bean.setId(dto.getId());
@@ -116,14 +125,5 @@ public class Contact {
     dto.setComment(bean.getComment());
     dto.setUserId(bean.getUserId());
     return dto;
-  }
-
-  @OneToMany(mappedBy = "contact")
-  public List<Event> getEvent() {
-    return event;
-  }
-
-  public void setEvent(List<Event> event) {
-    this.event = event;
   }
 }

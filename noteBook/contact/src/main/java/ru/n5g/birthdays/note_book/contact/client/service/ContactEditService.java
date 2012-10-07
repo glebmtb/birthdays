@@ -6,6 +6,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
+import ru.n5g.birthdays.note_book.contact.shared.bean.ContactEditDTO;
+import ru.n5g.birthdays.note_book.contact.shared.bean.RpcWhiteListContact;
 
 /**
  * @author belyaev
@@ -14,7 +16,9 @@ import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 public interface ContactEditService extends RemoteService {
   void saveContact(ContactDTO dto);
 
-  ContactDTO getContact(Long id);
+  ContactEditDTO getContact(Long id);
 
   BasePagingLoadResult<EventTypeDTO> loadEventTypeList(BasePagingLoadConfig loadConfig);
+
+  RpcWhiteListContact registerClasses(RpcWhiteListContact whiteList);
 }

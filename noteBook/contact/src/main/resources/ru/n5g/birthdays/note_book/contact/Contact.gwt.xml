@@ -13,4 +13,5 @@
   <inherits name="ru.n5g.birthdays.components.Components"/>
 
   <source path="client"/>
+  <source path="shared"/>
 </module>

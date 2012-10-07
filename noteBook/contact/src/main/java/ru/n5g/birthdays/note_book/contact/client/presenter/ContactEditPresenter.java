@@ -12,6 +12,7 @@ import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 import ru.n5g.birthdays.note_book.contact.client.factory.ContactEditFactory;
 import ru.n5g.birthdays.note_book.contact.client.view.ContactEditWindowImplImpl;
+import ru.n5g.birthdays.note_book.contact.shared.bean.ContactEditDTO;
 
 /**
  * @author belyaev
@@ -28,23 +29,23 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
 
   public void addContact(IsSave isSave) {
     this.isSave = isSave;
-    openWindow(ActionEnum.ADD, new ContactDTO());
+    openWindow(ActionEnum.ADD, new ContactEditDTO());
   }
 
-  public void editContact(ContactDTO dto, IsSave isSave) {
+  public void editContact(Long idContact, IsSave isSave) {
     this.isSave = isSave;
-    factory.getService().getContact(dto.getId(), new AsyncCallback<ContactDTO>() {
+    factory.getService().getContact(idContact, new AsyncCallback<ContactEditDTO>() {
       public void onFailure(Throwable caught) {
         Info.display("Error", caught.getMessage());
       }
 
-      public void onSuccess(ContactDTO result) {
+      public void onSuccess(ContactEditDTO result) {
         openWindow(ActionEnum.EDIT, result);
       }
     });
   }
 
-  private void openWindow(ActionEnum action, ContactDTO dto) {
+  private void openWindow(ActionEnum action, ContactEditDTO dto) {
     if (action == null || dto == null) {
       Info.display(factory.getLocalization().titleError(), factory.getLocalization().emptyContact());
     }
