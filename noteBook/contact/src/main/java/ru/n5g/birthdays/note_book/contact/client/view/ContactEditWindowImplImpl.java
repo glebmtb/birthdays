@@ -49,6 +49,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private TrimTextAreaField comment;
 
   private AdvancedComboBox eventTypeComboBox;
+  private Button addEventTypeButton;
   private EditorGrid<BaseModelData> eventGrid;
 
   private static final FormData FORM_DATE = new FormData("100%");
@@ -102,10 +103,17 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         , localization.comboBoxInitialization(), presenter.getEventTypeComboBoxStore()
         , EventTypeDTO.NAME, "combobox_2012082514453", false);
     eventTypeComboBox.setWidth(282);
+    eventTypeComboBox.addListener(Events.Change, new Listener<BaseEvent>() {
+      @Override
+      public void handleEvent(BaseEvent be) {
+        addEventTypeButton.setEnabled(eventTypeComboBox.getValue() != null);
+      }
+    });
 
-    Button addEventTypeButton;
+
     addEventTypeButton = SimpleCreateField.createButtonWithIcon("btn-add-16", localization.addEventType()
-        , "button_201210071212", null);
+        , "button_201210071212", createSelectionListenerAddEventTypeButton());
+    addEventTypeButton.disable();
 
     HorizontalPanel addEventPanel;
     addEventPanel = new HorizontalPanel();
@@ -284,6 +292,21 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       @Override
       public void componentSelected(ButtonEvent ce) {
         onSave();
+      }
+    };
+  }
+
+  private SelectionListener<ButtonEvent> createSelectionListenerAddEventTypeButton() {
+    return new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        EventListDTO dto = new EventListDTO();
+        dto.setEventType((EventTypeDTO) eventTypeComboBox.getValue());
+        eventGrid.stopEditing();
+        eventGrid.getStore().insert(dto, 0);
+        eventGrid.startEditing(eventGrid.getStore().indexOf(dto), 0);
+        eventTypeComboBox.clear();
+        addEventTypeButton.disable();
       }
     };
   }
