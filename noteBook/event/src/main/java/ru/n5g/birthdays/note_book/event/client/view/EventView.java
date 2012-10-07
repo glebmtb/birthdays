@@ -60,9 +60,9 @@ public class EventView extends LayoutContainer implements EventListPresenter.Vie
     cp.setLayout(new FitLayout());
     cp.setBorders(false);
 
-//    btnAdd = createButton("btn-contact-new", localization.btnAdd(), "btn_20120925140802", createAddSelectionListener());
-//    btnEdit = createButton("btn-contact-edit", localization.btnEdit(), "btn_20120925140803", createEditSelectionListener());
-//    btnDel = createButton("btn-contact-delete", localization.btnDelete(), "btn_20120925140804", createDeleteSelectionListener());
+//    btnAdd = createButtonWithIcon("btn-contact-new", localization.btnAdd(), "btn_20120925140802", createAddSelectionListener());
+//    btnEdit = createButtonWithIcon("btn-contact-edit", localization.btnEdit(), "btn_20120925140803", createEditSelectionListener());
+//    btnDel = createButtonWithIcon("btn-contact-delete", localization.btnDelete(), "btn_20120925140804", createDeleteSelectionListener());
     btnRefresh = createButton("btn-refresh-list", localization.btnRefresh(), "btn_20120925140401", createRefreshSelectionListener());
 //    btnEdit.setEnabled(false);
 //    btnDel.setEnabled(false);

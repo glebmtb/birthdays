@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.administrator.event_type.client.localization.EventTypeEditLocalization;
 import ru.n5g.birthdays.administrator.event_type.client.presenter.EventTypeEditPresenter;
+import ru.n5g.birthdays.components.client.view.SimpleCreateField;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
 import ru.n5g.birthdays.core.shared.bean.ActionEnum;
@@ -48,7 +49,7 @@ public class EventTypeEditWindow extends SimpleWindowViewImpl implements EventTy
 
   @Override
   protected void createFields(FormPanel panel, FormData formData) {
-    eventTypeName = createTextField(255, localization.eventTypeName(), "text_20120925144901", true);
+    eventTypeName = SimpleCreateField.createTextField(255, localization.eventTypeName(), "text_20120925144901", true);
     singleCheckBox = new CheckBox();
     singleCheckBox.setFieldLabel(localization.singleCheckBox());
 

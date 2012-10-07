@@ -14,22 +14,23 @@ import com.extjs.gxt.ui.client.widget.HorizontalPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.form.*;
+import com.extjs.gxt.ui.client.widget.form.CheckBox;
+import com.extjs.gxt.ui.client.widget.form.DateField;
+import com.extjs.gxt.ui.client.widget.form.FieldSet;
+import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
-import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
+import ru.n5g.birthdays.components.client.view.SimpleCreateField;
 import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
-import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextAreaField;
 import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
 import ru.n5g.birthdays.core.shared.bean.ActionEnum;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
-import ru.n5g.birthdays.core.shared.combo_box.ComboBoxFilterType;
 import ru.n5g.birthdays.note_book.contact.client.localization.ContactEditLocalization;
 import ru.n5g.birthdays.note_book.contact.client.presenter.ContactEditPresenter;
 
@@ -39,7 +40,6 @@ import ru.n5g.birthdays.note_book.contact.client.presenter.ContactEditPresenter;
 public class ContactEditWindowImplImpl extends Window implements ContactEditPresenter.ContactEditWindow {
   private ContactEditPresenter presenter;
   private ContactEditLocalization localization;
-
   private ActionEnum action;
   private ContactDTO dto;
 
@@ -51,10 +51,10 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private TrimTextField middleName;
   private TrimTextAreaField comment;
 
-  private AdvancedComboBox<EventTypeDTO> eventTypeComboBox;
+  private AdvancedComboBox eventTypeComboBox;
   private EditorGrid<BaseModelData> eventGrid;
 
-  protected static final String DATE_PARSING_PATTERN = "dd.MM.yyyy";
+  private static final FormData FORM_DATE = new FormData("100%");
 
   public ContactEditWindowImplImpl(ContactEditPresenter presenter, ContactEditLocalization localization, ActionEnum action, ContactDTO dto) {
     super();
@@ -70,140 +70,76 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     setLayout(new FitLayout());
     setSize(700, 400);
     setHeading(getTitleWindow());
-    addButton();
-  }
-
-  private void addButton() {
-    btnApply = new Button(localization.getLabelEdit());
-    btnApply.addSelectionListener(new SelectionListener<ButtonEvent>() {
-      @Override
-      public void componentSelected(ButtonEvent ce) {
-        onSave();
-      }
-    });
-
-
-    Button btnCancel;
-    btnCancel = new Button(localization.btnClose());
-    btnCancel.addSelectionListener(new SelectionListener<ButtonEvent>() {
-      @Override
-      public void componentSelected(ButtonEvent ce) {
-        hide();
-      }
-    });
 
     setButtonAlign(Style.HorizontalAlignment.CENTER);
-
+    btnApply = SimpleCreateField.createButton(localization.getLabelEdit(), createSelectionListenerBtnApply(), "btn_201210071224");
     addButton(btnApply);
-    addButton(btnCancel);
+    addButton(SimpleCreateField.createButton(localization.btnClose(), createSelectionListenerBtnCancel(), "btn_201210071223"));
   }
 
   @Override
   protected void onRender(Element parent, int pos) {
     super.onRender(parent, pos);
 
-    ContentPanel cp = new ContentPanel();
-    cp.setHeaderVisible(false);
-    cp.setFrame(true);
-    cp.setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
+    nickname = SimpleCreateField.createTextField(255, localization.nickname(), "text_20120925144901", false);
+    lastName = SimpleCreateField.createTextField(255, localization.lastName(), "text_20120925145002", false);
+    firstName = SimpleCreateField.createTextField(255, localization.firstName(), "text_20120925145003", false);
+    middleName = SimpleCreateField.createTextField(255, localization.middleName(), "text_2012092514504", false);
+    comment = SimpleCreateField.createTextAreaField(1000, localization.comment(), "text_20120925145005", false, 100);
 
-    FormData formData = new FormData("100%");
     FormPanel panel = new FormPanel();
     panel.setHeaderVisible(false);
     panel.setLabelWidth(100);
-    createFields(panel, formData);
 
-    FieldSet contactFieldSet = new FieldSet();
-    contactFieldSet.setHeading(localization.contactFiledSet());
-    contactFieldSet.setLayout(new FitLayout());
+    panel.add(nickname, FORM_DATE);
+    panel.add(lastName, FORM_DATE);
+    panel.add(firstName, FORM_DATE);
+    panel.add(middleName, FORM_DATE);
+    panel.add(comment, FORM_DATE);
+
+    FieldSet contactFieldSet;
+    contactFieldSet = SimpleCreateField.createFieldSet(localization.contactFiledSet());
     contactFieldSet.add(panel);
 
-    FieldSet eventFieldSet = new FieldSet();
-    eventFieldSet.setHeading(localization.eventFieldSet());
-    eventFieldSet.setLayout(new FitLayout());
-    eventFieldSet.add(createEventPanel());
+    eventTypeComboBox = SimpleCreateField.createComboBox(localization.comboBoxLoading()
+        , localization.comboBoxInitialization(), presenter.getEventTypeComboBoxStore()
+        , EventTypeDTO.NAME, "combobox_2012082514453", false);
+    eventTypeComboBox.setWidth(282);
+
+    Button addEventTypeButton;
+    addEventTypeButton = SimpleCreateField.createButtonWithIcon("btn-add-16", localization.addEventType()
+        , "button_201210071212", null);
+
+    HorizontalPanel addEventPanel;
+    addEventPanel = new HorizontalPanel();
+    addEventPanel.setStyleAttribute("padding-bottom", "3px");
+    addEventPanel.add(eventTypeComboBox);
+    addEventPanel.add(addEventTypeButton);
+
+    LayoutContainer eventPanel;
+    eventPanel = new LayoutContainer();
+    eventPanel.setLayout(new FormLayout());
+    eventPanel.add(addEventPanel);
+    eventPanel.add(test());
+
+    FieldSet eventFieldSet;
+    eventFieldSet = SimpleCreateField.createFieldSet(localization.eventFieldSet());
+    eventFieldSet.add(eventPanel);
 
     RowData data = new RowData(.5, 1);
     data.setMargins(new Margins(5));
 
+    ContentPanel cp = new ContentPanel();
+    cp.setHeaderVisible(false);
+    cp.setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
+    cp.setFrame(true);
+
     cp.add(contactFieldSet, data);
     cp.add(eventFieldSet, data);
     add(cp);
-  }
-
-  private String getTitleWindow() {
-    if (action == ActionEnum.ADD) {
-      return localization.getAddTitle();
-    }
-    else if (action == ActionEnum.EDIT) {
-      return localization.getEditTitle();
-    }
-    return "";
-  }
-
-
-  protected void createFields(FormPanel panel, FormData formData) {
-    nickname = SimpleWindowViewImpl.createTextField(255, localization.nickname(), "text_20120925144901", false);
-    lastName = SimpleWindowViewImpl.createTextField(255, localization.lastName(), "text_20120925145002", false);
-    firstName = SimpleWindowViewImpl.createTextField(255, localization.firstName(), "text_20120925145003", false);
-    middleName = SimpleWindowViewImpl.createTextField(255, localization.middleName(), "text_2012092514504", false);
-    comment = SimpleWindowViewImpl.createTextAreaField(1000, localization.comment(), "text_20120925145005", false, 100);
-
-    panel.add(nickname, formData);
-    panel.add(lastName, formData);
-    panel.add(firstName, formData);
-    panel.add(middleName, formData);
-    panel.add(comment, formData);
 
     if (action == ActionEnum.EDIT)
       onWrittenFields();
-  }
-
-  private void onWrittenFields() {
-    nickname.setValue(dto.getNickname());
-    lastName.setValue(dto.getLastName());
-    firstName.setValue(dto.getFirstName());
-    middleName.setValue(dto.getMiddleName());
-    comment.setValue(dto.getComment());
-  }
-
-
-  protected void onSave() {
-    dto.setNickname(nickname.getValue());
-    dto.setLastName(lastName.getValue());
-    dto.setFirstName(firstName.getValue());
-    dto.setMiddleName(middleName.getValue());
-    dto.setComment(comment.getValue());
-    presenter.save(dto);
-  }
-
-  private LayoutContainer createEventPanel() {
-
-    eventTypeComboBox = new AdvancedComboBox<EventTypeDTO>();
-    eventTypeComboBox.setRemoteFilterType(ComboBoxFilterType.ILIKE);
-    eventTypeComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
-    eventTypeComboBox.setForceSelection(true);
-    eventTypeComboBox.setLoadingText(localization.comboBoxLoading());
-    eventTypeComboBox.setInitializingText(localization.comboBoxInitialization());
-    eventTypeComboBox.setStore(presenter.getEventTypeComboBoxStore());
-    eventTypeComboBox.setDisplayField(EventTypeDTO.NAME);
-    eventTypeComboBox.setWidth(282);
-    TestIdSetter.resetTestId(eventTypeComboBox, "form_2012082514453");
-
-    Button addEventTypeButton = new Button();
-    addEventTypeButton.setTitle(localization.addEventType());
-    addEventTypeButton.addStyleName("btn-add-16");
-
-
-    HorizontalPanel addEventPanel = new HorizontalPanel();
-    addEventPanel.add(eventTypeComboBox);
-    addEventPanel.add(addEventTypeButton);
-
-    LayoutContainer eventPanel = new LayoutContainer();
-    eventPanel.setLayout(new FormLayout());
-    eventPanel.add(addEventPanel);
-    eventPanel.add(test());
-    return eventPanel;
   }
 
   private Widget test() {
@@ -277,7 +213,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         button.addSelectionListener(new SelectionListener<ButtonEvent>() {
           @Override
           public void componentSelected(ButtonEvent ce) {
-                   String st = "df";
+            String st = "df";
           }
         });
         return button;
@@ -291,12 +227,12 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
 
     ColumnModel cm = new ColumnModel(columns);
     ListStore<BaseModelData> store = new ListStore<BaseModelData>();
+
     BaseModelData baseModelData = new BaseModelData();
     baseModelData.set("name", "День рождение");
     baseModelData.set("remindCheckBox", true);
     baseModelData.set("day", new Date(88, 05, 22));
     store.add(baseModelData);
-
     baseModelData = new BaseModelData();
     baseModelData.set("name", "День ангела");
     baseModelData.set("remindCheckBox", false);
@@ -308,5 +244,52 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     eventGrid.setHideHeaders(true);
 //    yourButton.setDisabled(yourGrid.store.getModifiedRecords().length === 0);
     return eventGrid;
+  }
+
+  private String getTitleWindow() {
+    if (action == ActionEnum.ADD) {
+      return localization.getAddTitle();
+    }
+    else if (action == ActionEnum.EDIT) {
+      return localization.getEditTitle();
+    }
+    return "";
+  }
+
+
+  private void onWrittenFields() {
+    nickname.setValue(dto.getNickname());
+    lastName.setValue(dto.getLastName());
+    firstName.setValue(dto.getFirstName());
+    middleName.setValue(dto.getMiddleName());
+    comment.setValue(dto.getComment());
+  }
+
+
+  protected void onSave() {
+    dto.setNickname(nickname.getValue());
+    dto.setLastName(lastName.getValue());
+    dto.setFirstName(firstName.getValue());
+    dto.setMiddleName(middleName.getValue());
+    dto.setComment(comment.getValue());
+    presenter.save(dto);
+  }
+
+  private SelectionListener<ButtonEvent> createSelectionListenerBtnCancel() {
+    return new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        hide();
+      }
+    };
+  }
+
+  private SelectionListener<ButtonEvent> createSelectionListenerBtnApply() {
+    return new SelectionListener<ButtonEvent>() {
+      @Override
+      public void componentSelected(ButtonEvent ce) {
+        onSave();
+      }
+    };
   }
 }

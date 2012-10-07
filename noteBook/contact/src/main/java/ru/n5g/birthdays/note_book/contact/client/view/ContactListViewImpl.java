@@ -3,7 +3,6 @@ package ru.n5g.birthdays.note_book.contact.client.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
@@ -20,8 +19,8 @@ import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.LiveToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
+import ru.n5g.birthdays.components.client.view.SimpleCreateField;
 import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
-import ru.n5g.birthdays.core.client.util.TestIdSetter;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.contact.client.localization.ContactListLocalization;
 import ru.n5g.birthdays.note_book.contact.client.presenter.ContactListPresenter;
@@ -58,10 +57,14 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     cp.setLayout(new FitLayout());
     cp.setBorders(false);
 
-    btnAdd = createButton("btn-contact-new", localization.btnAdd(), "btn_20120925140802", createAddSelectionListener());
-    btnEdit = createButton("btn-contact-edit", localization.btnEdit(), "btn_20120925140803", createEditSelectionListener());
-    btnDel = createButton("btn-contact-delete", localization.btnDelete(), "btn_20120925140804", createDeleteSelectionListener());
-    btnRefresh = createButton("btn-refresh-list", localization.btnRefresh(), "btn_20120925140401", createRefreshSelectionListener());
+    btnAdd = SimpleCreateField.createButtonWithIcon("btn-contact-new", localization.btnAdd()
+        , "btn_20120925140802", createAddSelectionListener());
+    btnEdit = SimpleCreateField.createButtonWithIcon("btn-contact-edit", localization.btnEdit()
+        , "btn_20120925140803", createEditSelectionListener());
+    btnDel = SimpleCreateField.createButtonWithIcon("btn-contact-delete", localization.btnDelete()
+        , "btn_20120925140804", createDeleteSelectionListener());
+    btnRefresh = SimpleCreateField.createButtonWithIcon("btn-refresh-list", localization.btnRefresh()
+        , "btn_20120925140401", createRefreshSelectionListener());
     btnEdit.setEnabled(false);
     btnDel.setEnabled(false);
 
@@ -195,15 +198,6 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     btnDel.setEnabled(itemSelected);
   }
 
-  private Button createButton(String styleName, String btnName, String testId, SelectionListener<ButtonEvent> listener) {
-    Button button = new Button();
-    button.addStyleName(styleName);
-    button.setToolTip(btnName);
-    button.setScale(Style.ButtonScale.LARGE);
-    TestIdSetter.resetTestId(button, testId);
-    button.addSelectionListener(listener);
-    return button;
-  }
 
   private ToolBar createToolBarBottom(Grid<ContactDTO> grid) {
     ToolBar toolBarBottom;

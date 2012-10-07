@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.widget.layout.FormData;
 import ru.n5g.birthdays.administrator.user.client.localization.UserListLocalization;
 import ru.n5g.birthdays.administrator.user.client.presenter.UserListPresenter;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
+import ru.n5g.birthdays.components.client.view.SimpleCreateField;
 import ru.n5g.birthdays.components.client.view.SimpleWindowViewImpl;
 import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
 import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
@@ -69,7 +70,7 @@ public class EditUserWindowImpl extends SimpleWindowViewImpl {
     TestIdSetter.resetTestId(login, "form_201208251452");
     RequiredFieldsUtil.setRequired(login, true);
 
-    userName = createTextField(50, localization.userName(), "text_201209281548", true);
+    userName = SimpleCreateField.createTextField(50, localization.userName(), "text_201209281548", true);
 
     userRoleCombo = new AdvancedComboBox<UserRoleDTO>();
     userRoleCombo.setRemoteFilterType(ComboBoxFilterType.ILIKE);

@@ -9,25 +9,14 @@ import com.extjs.gxt.ui.client.widget.form.FormButtonBinding;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormData;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
 import ru.n5g.birthdays.components.client.localization.SimpleWindowLocalization;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
-import ru.n5g.birthdays.core.client.util.RequiredFieldsUtil;
-import ru.n5g.birthdays.core.client.util.TestIdSetter;
-import ru.n5g.birthdays.core.client.widget.form.TrimTextAreaField;
-import ru.n5g.birthdays.core.client.widget.form.TrimTextField;
 
 /**
  * @author home
  */
 public abstract class SimpleWindowViewImpl extends Window implements SimpleWindowView {
-  protected static final String MIN_DATE_STR = "01.01.1000";
-  protected static final String MAX_DATE_STR = "31.12.9999";
-  protected static final String DATE_PARSING_PATTERN = "dd.MM.yyyy";
-  protected static final DateTimeFormat dateParsingFormat = DateTimeFormat.getFormat(DATE_PARSING_PATTERN);
-  protected static final String LABEL_STYLE = "margin-top:4px";
-
   private boolean additionBtnApply = true;
   private int labelWidth = 150;
   private int windowWidth = 500;
@@ -37,6 +26,8 @@ public abstract class SimpleWindowViewImpl extends Window implements SimpleWindo
   private SimpleWindowPresenter presenter;
 
   protected FormPanel panel;
+
+  protected static final String LABEL_STYLE = "margin-top:4px";
 
   public SimpleWindowViewImpl(SimpleWindowPresenter presenter) {
     super();
@@ -206,28 +197,5 @@ public abstract class SimpleWindowViewImpl extends Window implements SimpleWindo
    */
   public void setWindowHeight(int windowHeight) {
     this.windowHeight = windowHeight;
-  }
-
-  public static TrimTextField createTextField(int maxLength, String fieldLabel, String testId, boolean isRequired) {
-    TrimTextField trimTextField;
-    trimTextField = new TrimTextField();
-    trimTextField.setMaxLength(maxLength);
-    trimTextField.setFieldLabel(fieldLabel);
-    trimTextField.setLabelStyle(LABEL_STYLE);
-    TestIdSetter.resetTestId(trimTextField, testId);
-    RequiredFieldsUtil.setRequired(trimTextField, isRequired);
-    return trimTextField;
-  }
-
-  public static TrimTextAreaField createTextAreaField(int maxLength, String fieldLabel, String testId, boolean isRequired, int height) {
-    TrimTextAreaField trimTextField;
-    trimTextField = new TrimTextAreaField();
-    trimTextField.setMaxLength(maxLength);
-    trimTextField.setFieldLabel(fieldLabel);
-    trimTextField.setLabelStyle(LABEL_STYLE);
-    trimTextField.setHeight(height);
-    TestIdSetter.resetTestId(trimTextField, testId);
-    RequiredFieldsUtil.setRequired(trimTextField, isRequired);
-    return trimTextField;
   }
 }
