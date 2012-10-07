@@ -180,7 +180,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     columns.add(column);
 
     DateField dateField = new DateField();
-    dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("MM.dd"));
+    dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("dd.MM"));
     column = new ColumnConfig(EventListDTO.DATE_EVENT, 50);
     column.setDateTimeFormat(DateTimeFormat.getFormat("dd MMM"));
     column.setMenuDisabled(true);
