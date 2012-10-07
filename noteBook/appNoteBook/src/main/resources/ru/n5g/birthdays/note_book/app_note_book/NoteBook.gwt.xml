@@ -19,5 +19,7 @@
     <when-type-is class="ru.n5g.birthdays.note_book.app_note_book.client.factory.AppNoteBookClientFactory"/>
   </replace-with>
 
+  <extend-property name="locale" values="ru"/>
+
   <source path='client'/>
 </module>
