@@ -10,8 +10,7 @@ public class RpcWhiteListContact extends RpcWhiteList {
   public EventListDTO eventListDTO;
 
   public RpcWhiteListContact() {
-    super();
-    contactEditDTO = new ContactEditDTO();
-    eventListDTO = new EventListDTO();
+    this.contactEditDTO = new ContactEditDTO();
+    this.eventListDTO = new EventListDTO();
   }
 }

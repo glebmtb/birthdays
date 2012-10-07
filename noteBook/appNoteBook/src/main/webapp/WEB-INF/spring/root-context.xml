@@ -10,10 +10,10 @@
   <context:annotation-config/>
 
   <!--Определяем папки, в которых будем автоматически искать бины-компоненты (@Component, @Service)-->
-  <context:component-scan base-package="ru.n5g.birthdays.note_book.app_note_book.server"/>
   <context:component-scan base-package="ru.n5g.birthdays.core.server"/>
   <context:component-scan base-package="ru.n5g.birthdays.note_book.contact.server"/>
   <context:component-scan base-package="ru.n5g.birthdays.note_book.event.server"/>
+  <context:component-scan base-package="ru.n5g.birthdays.note_book.app_note_book.server"/>
 
   <!--Файл с настройками ресурсов для работы с данными (Data Access Resources)-->
   <import resource="../db-config.xml"/>

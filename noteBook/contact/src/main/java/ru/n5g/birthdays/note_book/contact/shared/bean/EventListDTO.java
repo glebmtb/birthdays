@@ -13,6 +13,7 @@ public class EventListDTO extends BaseModelData {
   public static final String DATE_EVENT = "dateEvent";
   public static final String YEAR = "year";
   public static final String EVENT_TYPE = "eventType";
+  public static final String IS_DELETE = "isDelete";
 
   public Long getId() {
     return get(ID);
@@ -44,5 +45,13 @@ public class EventListDTO extends BaseModelData {
 
   public void setEventType(EventTypeDTO eventType) {
     set(EVENT_TYPE, eventType);
+  }
+
+  public Boolean getDelete() {
+    return get(IS_DELETE);
+  }
+
+  public void setDelete(Boolean delete) {
+    set(IS_DELETE, delete);
   }
 }

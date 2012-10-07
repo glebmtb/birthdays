@@ -11,6 +11,8 @@ public class RpcWhiteList implements IsSerializable {
   public UserRoleDTO userRoleDTO;
   public ContactDTO contactDTO;
   public ActionEnum actionEnum;
+  public EventTypeDTO eventTypeDTO;
+  public EventDTO eventDTO;
 
   public RpcWhiteList() {
     this.userRoleCode = UserRoleCode.ROLE_ADMIN;
@@ -18,5 +20,7 @@ public class RpcWhiteList implements IsSerializable {
     this.userRoleDTO = new UserRoleDTO();
     this.contactDTO = new ContactDTO();
     this.actionEnum = ActionEnum.ADD;
+    this.eventTypeDTO = new EventTypeDTO();
+    this.eventDTO = new EventDTO();
   }
 }

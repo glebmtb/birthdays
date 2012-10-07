@@ -15,9 +15,9 @@ import ru.n5g.birthdays.core.server.bean.Event;
 import ru.n5g.birthdays.core.server.bean.EventType;
 import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.server.dao.ContactDao;
+import ru.n5g.birthdays.core.server.dao.EventDao;
 import ru.n5g.birthdays.core.server.dao.combo_box.EventTypeComboBoxDao;
 import ru.n5g.birthdays.core.server.service.combo_box.EventTypeComboBoxService;
-import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 import ru.n5g.birthdays.note_book.contact.client.service.ContactEditService;
 import ru.n5g.birthdays.note_book.contact.shared.bean.ContactEditDTO;
@@ -39,11 +39,31 @@ public class ContactEditServiceImpl implements ContactEditService {
   @Autowired
   private EventTypeComboBoxService eventTypeComboBoxService;
 
+  @Autowired
+  private EventDao eventDao;
+
   @Override
-  public void saveContact(ContactDTO dto) {
+  @Transactional
+  public void saveContact(ContactEditDTO dto) {
     Contact bean = Contact.convert(dto);
     bean.setUserId(User.getAuthenticationUserId());
-    contactDAO.saveOrUpdate(bean);
+    contactDAO.saveOrUpdateNonTransactional(bean);
+
+    for (EventListDTO el : dto.getEventList()) {
+      if (el.getDelete() != null && el.getDelete()) {
+        eventDao.deleteNonTransactional(eventDao.get(el.getId()));
+      }
+      else {
+        Event event = el.getId() == null ? new Event() : eventDao.get(el.getId());
+        event.setUserId(User.getAuthenticationUserId());
+        event.setEventTypeId(el.getEventType().getId());
+        event.setDay(el.getDateEvent().getDay());
+        event.setMonth(el.getDateEvent().getMonth());
+        event.setYear(el.getYear() != null ? el.getYear().intValue() : null);
+        event.setContactId(bean.getId());
+        eventDao.saveOrUpdateNonTransactional(event);
+      }
+    }
   }
 
   @Override

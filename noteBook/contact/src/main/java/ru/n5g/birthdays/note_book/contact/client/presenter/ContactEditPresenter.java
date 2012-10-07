@@ -8,7 +8,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.components.client.view.SimpleWindowView;
 import ru.n5g.birthdays.core.shared.bean.ActionEnum;
-import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 import ru.n5g.birthdays.note_book.contact.client.factory.ContactEditFactory;
 import ru.n5g.birthdays.note_book.contact.client.view.ContactEditWindowImplImpl;
@@ -53,7 +52,7 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
     window.show();
   }
 
-  public void save(ContactDTO dto) {
+  public void save(ContactEditDTO dto) {
     factory.getService().saveContact(dto, new AsyncCallback<Void>() {
       public void onFailure(Throwable caught) {
         Info.display("Error", caught.getMessage());
@@ -62,6 +61,7 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
       public void onSuccess(Void result) {
         Info.display(factory.getLocalization().information(), factory.getLocalization().saveSuccess());
         isSave.onSuccess();
+        window.hide();
       }
     });
   }

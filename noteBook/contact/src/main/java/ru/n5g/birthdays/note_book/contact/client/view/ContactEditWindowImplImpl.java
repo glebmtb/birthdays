@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.store.Record;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HorizontalPanel;
@@ -51,6 +52,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private AdvancedComboBox eventTypeComboBox;
   private Button addEventTypeButton;
   private EditorGrid<BaseModelData> eventGrid;
+  private List<EventListDTO> eventListDelete = new ArrayList<EventListDTO>(0);
 
   private static final FormData FORM_DATE = new FormData("100%");
 
@@ -217,7 +219,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
 
     GridCellRenderer<BaseModelData> deleteEventButton = new GridCellRenderer<BaseModelData>() {
       @Override
-      public Object render(BaseModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<BaseModelData> store, Grid<BaseModelData> grid) {
+      public Object render(final BaseModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<BaseModelData> store, Grid<BaseModelData> grid) {
         Button button = new Button();
         button.setBorders(false);
         button.addStyleName("btn-cancel-16");
@@ -225,7 +227,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         button.addSelectionListener(new SelectionListener<ButtonEvent>() {
           @Override
           public void componentSelected(ButtonEvent ce) {
-            String st = "df";
+            eventGrid.getStore().remove(model);
           }
         });
         return button;
@@ -238,14 +240,23 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     columns.add(column);
 
     ColumnModel cm = new ColumnModel(columns);
-    ListStore<BaseModelData> store = new ListStore<BaseModelData>();
+    ListStore<BaseModelData> store = new ListStore<BaseModelData>() {
+      @Override
+      public void remove(int index) {
+        EventListDTO dto = (EventListDTO) getAt(index);
+        if (dto.getId() != null) {
+          dto.setDelete(true);
+          eventListDelete.add(dto);
+        }
+        super.remove(index);
+      }
+    };
     if (dto.getEventList() != null)
       store.add(dto.getEventList());
     eventGrid = new EditorGrid<BaseModelData>(store, cm);
     eventGrid.setHeight(245);
     eventGrid.setBorders(true);
     eventGrid.setHideHeaders(true);
-//    yourButton.setDisabled(yourGrid.store.getModifiedRecords().length === 0);
     return eventGrid;
   }
 
@@ -275,6 +286,19 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     dto.setFirstName(firstName.getValue());
     dto.setMiddleName(middleName.getValue());
     dto.setComment(comment.getValue());
+    if (eventGrid.getStore().getModifiedRecords().size() > 0) {
+      List<EventListDTO> eventList = new ArrayList<EventListDTO>();
+      for (Record ev : eventGrid.getStore().getModifiedRecords()) {
+        eventList.add((EventListDTO) ev.getModel());
+      }
+      dto.setEventList(eventList);
+    }
+    else {
+      dto.setEventList(new ArrayList<EventListDTO>(0));
+    }
+    for (EventListDTO el : eventListDelete) {
+      dto.getEventList().add(el);
+    }
     presenter.save(dto);
   }
 

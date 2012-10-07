@@ -14,7 +14,7 @@ import ru.n5g.birthdays.note_book.contact.shared.bean.RpcWhiteListContact;
  */
 @RemoteServiceRelativePath("contactEditService.rpc")
 public interface ContactEditService extends RemoteService {
-  void saveContact(ContactDTO dto);
+  void saveContact(ContactEditDTO dto);
 
   ContactEditDTO getContact(Long id);
 

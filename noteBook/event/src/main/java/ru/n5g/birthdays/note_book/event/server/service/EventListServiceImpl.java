@@ -13,12 +13,12 @@ import ru.n5g.birthdays.core.server.bean.EventType;
 import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.shared.bean.EventDTO;
 import ru.n5g.birthdays.note_book.event.client.service.EventListService;
-import ru.n5g.birthdays.note_book.event.server.dao.EventDao;
+import ru.n5g.birthdays.note_book.event.server.dao.EventListDao;
 
 @Service("eventTypeListService.rpc")
 public class EventListServiceImpl implements EventListService {
   @Autowired
-  private EventDao eventDao;
+  private EventListDao eventDao;
 
   @Override
   public BasePagingLoadResult<EventDTO> loadList(BasePagingLoadConfig loadConfig) {

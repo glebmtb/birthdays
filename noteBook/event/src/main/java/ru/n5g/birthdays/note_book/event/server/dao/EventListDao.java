@@ -9,7 +9,7 @@ import ru.n5g.birthdays.core.server.dao.BaseDao;
 /**
  * @author belyaev
  */
-public interface EventDao extends BaseDao<Event> {
+public interface EventListDao extends BaseDao<Event> {
   int getTableRowsCount(BaseModelData filter);
 
   List loadTableRows(BaseModelData filter);

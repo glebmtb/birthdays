@@ -18,7 +18,7 @@ import ru.n5g.birthdays.core.server.dao.BaseDaoImpl;
  * @author belyaev
  */
 @Repository
-public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
+public class EventListDaoImpl extends BaseDaoImpl<Event> implements EventListDao {
   @Override
   public int getTableRowsCount(final BaseModelData filter) {
     return hibernateTemplate.execute(new HibernateCallback<Integer>() {
