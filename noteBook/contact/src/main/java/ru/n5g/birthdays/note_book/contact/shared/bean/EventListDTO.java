@@ -1,7 +1,5 @@
 package ru.n5g.birthdays.note_book.contact.shared.bean;
 
-import java.util.Date;
-
 import com.extjs.gxt.ui.client.data.BaseModelData;
 import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 
@@ -10,7 +8,8 @@ import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
  */
 public class EventListDTO extends BaseModelData {
   public static final String ID = "id";
-  public static final String DATE_EVENT = "dateEvent";
+  public static final String DAY = "day";
+  public static final String MONTH = "month";
   public static final String YEAR = "year";
   public static final String EVENT_TYPE = "eventType";
   public static final String IS_DELETE = "isDelete";
@@ -23,12 +22,20 @@ public class EventListDTO extends BaseModelData {
     set(ID, id);
   }
 
-  public Date getDateEvent() {
-    return get(DATE_EVENT);
+  public Number getDay() {
+    return get(DAY);
   }
 
-  public void setDateEvent(Date dateEvent) {
-    set(DATE_EVENT, dateEvent);
+  public void setDay(Number day) {
+    set(DAY, day);
+  }
+
+  public Number getMonth() {
+    return get(MONTH);
+  }
+
+  public void setMonth(Number month) {
+    set(MONTH, month);
   }
 
   public Number getYear() {

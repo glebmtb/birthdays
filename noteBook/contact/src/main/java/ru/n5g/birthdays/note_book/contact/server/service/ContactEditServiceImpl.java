@@ -1,7 +1,6 @@
 package ru.n5g.birthdays.note_book.contact.server.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
@@ -57,8 +56,8 @@ public class ContactEditServiceImpl implements ContactEditService {
         Event event = el.getId() == null ? new Event() : eventDao.get(el.getId());
         event.setUserId(User.getAuthenticationUserId());
         event.setEventTypeId(el.getEventType().getId());
-        event.setDay(el.getDateEvent().getDate());
-        event.setMonth(el.getDateEvent().getMonth());
+        event.setDay(el.getDay() != null ? el.getDay().intValue() : null);
+        event.setMonth(el.getMonth() != null ? el.getMonth().intValue() : null);
         event.setYear(el.getYear() != null ? el.getYear().intValue() + 1900 : null);
         event.setContactId(bean.getId());
         eventDao.saveOrUpdateNonTransactional(event);
@@ -85,7 +84,8 @@ public class ContactEditServiceImpl implements ContactEditService {
       for (Event ev : contact.getEvent()) {
         evenDTO = new EventListDTO();
         evenDTO.setId(ev.getId());
-        evenDTO.setDateEvent(new Date(0, ev.getMonth(), ev.getDay()));
+        evenDTO.setDay(ev.getDay());
+        evenDTO.setMonth(ev.getMonth());
         evenDTO.setYear(ev.getYear() != null ? ev.getYear() - 1900 : null);
         evenDTO.setEventType(EventType.convert(ev.getEventType()));
         eventList.add(evenDTO);

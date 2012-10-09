@@ -175,12 +175,12 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     column.setMenuDisabled(true);
     columns.add(column);
 
-    column = new ColumnConfig(EventListDTO.EVENT_TYPE.concat(".").concat(EventTypeDTO.NAME), 100);
+    column = new ColumnConfig(EventListDTO.EVENT_TYPE + (".") + (EventTypeDTO.NAME), 100);
     column.setMenuDisabled(true);
     column.setFixed(true);
     columns.add(column);
 
-    column = new ColumnConfig(EventListDTO.DATE_EVENT, 60);
+    column = new ColumnConfig(EventListDTO.DAY, 60);
     GridCellRenderer<EventListDTO> eventDate = new GridCellRenderer<EventListDTO>() {
       @Override
       public Object render(final EventListDTO model, final String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, Grid<EventListDTO> grid) {
@@ -188,11 +188,13 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("dd.MM"));
         dateField.setWidth(60);
         dateField.setToolTip(localization.eventDate());
-        dateField.setValue((Date) model.get(property));
+        if (model.getMonth() != null && model.getDay() != null)
+          dateField.setValue(new Date(0, model.getMonth().intValue(), model.getDay().intValue()));
         dateField.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
-            model.set(property, ((FieldEvent) be).getField().getValue());
+            model.setDay(((Date)((FieldEvent) be).getField().getValue()).getDate());
+            model.setMonth(((Date)((FieldEvent) be).getField().getValue()).getMonth());
             if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
               eventListSave.add(model);
             }
