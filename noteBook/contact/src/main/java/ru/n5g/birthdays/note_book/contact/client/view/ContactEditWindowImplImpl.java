@@ -1,13 +1,13 @@
 package ru.n5g.birthdays.note_book.contact.client.view;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
-import com.extjs.gxt.ui.client.store.Record;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HorizontalPanel;
@@ -19,6 +19,7 @@ import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 import ru.n5g.birthdays.components.client.view.SimpleCreateField;
@@ -51,8 +52,8 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
 
   private AdvancedComboBox eventTypeComboBox;
   private Button addEventTypeButton;
-  private EditorGrid<BaseModelData> eventGrid;
-  private List<EventListDTO> eventListDelete = new ArrayList<EventListDTO>(0);
+  private Grid<EventListDTO> eventGrid;
+  private List<EventListDTO> eventListSave = new ArrayList<EventListDTO>(0);
 
   private static final FormData FORM_DATE = new FormData("100%");
 
@@ -174,25 +175,66 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     column.setMenuDisabled(true);
     columns.add(column);
 
-    column = new ColumnConfig(EventListDTO.EVENT_TYPE.concat(".").concat(EventTypeDTO.NAME), 110);
+    column = new ColumnConfig(EventListDTO.EVENT_TYPE.concat(".").concat(EventTypeDTO.NAME), 100);
     column.setMenuDisabled(true);
     column.setFixed(true);
     columns.add(column);
 
-    DateField dateField = new DateField();
-    dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("dd.MM"));
-    column = new ColumnConfig(EventListDTO.DATE_EVENT, 50);
-    column.setDateTimeFormat(DateTimeFormat.getFormat("dd MMM"));
-    column.setMenuDisabled(true);
+    column = new ColumnConfig(EventListDTO.DATE_EVENT, 60);
+    GridCellRenderer<EventListDTO> eventDate = new GridCellRenderer<EventListDTO>() {
+      @Override
+      public Object render(final EventListDTO model, final String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, Grid<EventListDTO> grid) {
+        DateField dateField = new DateField();
+        dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("dd.MM"));
+        dateField.setWidth(60);
+        dateField.setToolTip("Дата события");
+        dateField.setValue((Date) model.get(property));
+        dateField.addListener(Events.Change, new Listener<BaseEvent>() {
+          @Override
+          public void handleEvent(BaseEvent be) {
+            model.set(property, ((FieldEvent) be).getField().getValue());
+            if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
+              eventListSave.add(model);
+            }
+          }
+        });
+        return dateField;
+      }
+    };
+    column.setRenderer(eventDate);
     column.setFixed(true);
-    column.setEditor(new CellEditor(dateField));
+    column.setMenuDisabled(true);
     columns.add(column);
 
-    NumberField year = new NumberField();
     column = new ColumnConfig(EventListDTO.YEAR, 35);
-    column.setMenuDisabled(true);
+    GridCellRenderer<EventListDTO> eventYearDate = new GridCellRenderer<EventListDTO>() {
+      @Override
+      public Object render(final EventListDTO model, final String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, Grid<EventListDTO> grid) {
+        NumberField year = new NumberField();
+        year.getImages().setInvalid(null);
+        year.setToolTip("Год события");
+        year.setMinValue(1900);
+        year.setMaxValue(2100);
+        year.setMinLength(4);
+        year.setMaxLength(4);
+        year.setFormat(NumberFormat.getFormat("####"));
+        year.setWidth(35);
+        year.setValue((Number) model.get(property));
+        year.addListener(Events.Change, new Listener<BaseEvent>() {
+          @Override
+          public void handleEvent(BaseEvent be) {
+            model.setYear((Number) ((FieldEvent) be).getField().getValue());
+            if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
+              eventListSave.add(model);
+            }
+          }
+        });
+        return year;
+      }
+    };
+    column.setRenderer(eventYearDate);
     column.setFixed(true);
-    column.setEditor(new CellEditor(year));
+    column.setMenuDisabled(true);
     columns.add(column);
 
     GridCellRenderer<BaseModelData> editEventButton = new GridCellRenderer<BaseModelData>() {
@@ -217,9 +259,9 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     column.setMenuDisabled(true);
     columns.add(column);
 
-    GridCellRenderer<BaseModelData> deleteEventButton = new GridCellRenderer<BaseModelData>() {
+    GridCellRenderer<EventListDTO> deleteEventButton = new GridCellRenderer<EventListDTO>() {
       @Override
-      public Object render(final BaseModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<BaseModelData> store, Grid<BaseModelData> grid) {
+      public Object render(final EventListDTO model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, Grid<EventListDTO> grid) {
         Button button = new Button();
         button.setBorders(false);
         button.addStyleName("btn-cancel-16");
@@ -240,20 +282,23 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     columns.add(column);
 
     ColumnModel cm = new ColumnModel(columns);
-    ListStore<BaseModelData> store = new ListStore<BaseModelData>() {
+    ListStore<EventListDTO> store = new ListStore<EventListDTO>() {
       @Override
       public void remove(int index) {
-        EventListDTO dto = (EventListDTO) getAt(index);
+        EventListDTO dto = getAt(index);
         if (dto.getId() != null) {
           dto.setDelete(true);
-          eventListDelete.add(dto);
+          eventListSave.add(dto);
+        }
+        else if (eventListSave.contains(dto)) {
+          eventListSave.remove(dto);
         }
         super.remove(index);
       }
     };
     if (dto.getEventList() != null)
       store.add(dto.getEventList());
-    eventGrid = new EditorGrid<BaseModelData>(store, cm);
+    eventGrid = new Grid<EventListDTO>(store, cm);
     eventGrid.setHeight(245);
     eventGrid.setBorders(true);
     eventGrid.setHideHeaders(true);
@@ -286,19 +331,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     dto.setFirstName(firstName.getValue());
     dto.setMiddleName(middleName.getValue());
     dto.setComment(comment.getValue());
-    if (eventGrid.getStore().getModifiedRecords().size() > 0) {
-      List<EventListDTO> eventList = new ArrayList<EventListDTO>();
-      for (Record ev : eventGrid.getStore().getModifiedRecords()) {
-        eventList.add((EventListDTO) ev.getModel());
-      }
-      dto.setEventList(eventList);
-    }
-    else {
-      dto.setEventList(new ArrayList<EventListDTO>(0));
-    }
-    for (EventListDTO el : eventListDelete) {
-      dto.getEventList().add(el);
-    }
+    dto.setEventList(eventListSave);
     presenter.save(dto);
   }
 
@@ -326,9 +359,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       public void componentSelected(ButtonEvent ce) {
         EventListDTO dto = new EventListDTO();
         dto.setEventType((EventTypeDTO) eventTypeComboBox.getValue());
-        eventGrid.stopEditing();
         eventGrid.getStore().insert(dto, 0);
-        eventGrid.startEditing(eventGrid.getStore().indexOf(dto), 0);
         eventTypeComboBox.clear();
         addEventTypeButton.disable();
       }
