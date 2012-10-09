@@ -44,4 +44,14 @@ public interface ContactEditLocalization extends Constants, SimpleWindowLocaliza
   String addEventType();
 
   String btnClose();
+
+  String eventDate();
+
+  String remind();
+
+  String eventYear();
+
+  String editEvent();
+
+  String deleteEvent();
 }

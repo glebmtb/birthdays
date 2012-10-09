@@ -157,7 +157,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       @Override
       public Object render(final BaseModelData model, final String property, ColumnData config, final int rowIndex, int colIndex, ListStore<BaseModelData> store, final Grid<BaseModelData> grid) {
         final CheckBox checkBox = new CheckBox();
-        checkBox.setToolTip("Напомить");
+        checkBox.setToolTip(localization.remind());
         checkBox.setValue((Boolean) model.get(property));
         checkBox.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
@@ -187,7 +187,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         DateField dateField = new DateField();
         dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("dd.MM"));
         dateField.setWidth(60);
-        dateField.setToolTip("Дата события");
+        dateField.setToolTip(localization.eventDate());
         dateField.setValue((Date) model.get(property));
         dateField.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
@@ -212,7 +212,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       public Object render(final EventListDTO model, final String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, Grid<EventListDTO> grid) {
         NumberField year = new NumberField();
         year.getImages().setInvalid(null);
-        year.setToolTip("Год события");
+        year.setToolTip(localization.eventYear());
         year.setMinValue(1900);
         year.setMaxValue(2100);
         year.setMinLength(4);
@@ -242,7 +242,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       public Object render(BaseModelData model, String property, ColumnData config, final int rowIndex, int colIndex, ListStore<BaseModelData> store, final Grid<BaseModelData> grid) {
         Button button = new Button();
         button.addStyleName("btn-kontact-date-16");
-        button.setToolTip("Редактировать напоминание");
+        button.setToolTip(localization.editEvent());
         button.addSelectionListener(new SelectionListener<ButtonEvent>() {
           @Override
           public void componentSelected(ButtonEvent ce) {
@@ -265,7 +265,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         Button button = new Button();
         button.setBorders(false);
         button.addStyleName("btn-cancel-16");
-        button.setToolTip("Удалить событие");
+        button.setToolTip(localization.deleteEvent());
         button.addSelectionListener(new SelectionListener<ButtonEvent>() {
           @Override
           public void componentSelected(ButtonEvent ce) {
