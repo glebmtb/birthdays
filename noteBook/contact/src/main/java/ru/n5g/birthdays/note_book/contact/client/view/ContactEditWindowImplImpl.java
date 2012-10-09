@@ -302,6 +302,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     eventGrid.setHeight(245);
     eventGrid.setBorders(true);
     eventGrid.setHideHeaders(true);
+    eventGrid.setLoadMask(true);
     return eventGrid;
   }
 
@@ -349,6 +350,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       @Override
       public void componentSelected(ButtonEvent ce) {
         onSave();
+        btnApply.disable();
       }
     };
   }

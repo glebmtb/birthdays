@@ -1,9 +1,11 @@
 package ru.n5g.birthdays.note_book.contact.client.presenter;
 
 import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.core.El;
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.Info;
+import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.n5g.birthdays.components.client.presenter.SimpleWindowPresenter;
 import ru.n5g.birthdays.components.client.view.SimpleWindowView;
@@ -33,13 +35,19 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
 
   public void editContact(Long idContact, IsSave isSave) {
     this.isSave = isSave;
+    final MessageBox mes = MessageBox.info("Инфо", "Открытие данных", null);
+    mes.getDialog().mask(factory.getLocalization().loadWindow());
     factory.getService().getContact(idContact, new AsyncCallback<ContactEditDTO>() {
       public void onFailure(Throwable caught) {
         Info.display("Error", caught.getMessage());
+        mes.getDialog().unmask();
+        mes.hide();
       }
 
       public void onSuccess(ContactEditDTO result) {
         openWindow(ActionEnum.EDIT, result);
+        mes.getDialog().unmask();
+        mes.hide();
       }
     });
   }
@@ -53,14 +61,17 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
   }
 
   public void save(ContactEditDTO dto) {
+    window.mask(factory.getLocalization().saveDate());
     factory.getService().saveContact(dto, new AsyncCallback<Void>() {
       public void onFailure(Throwable caught) {
         Info.display("Error", caught.getMessage());
+        window.unmask();
       }
 
       public void onSuccess(Void result) {
         Info.display(factory.getLocalization().information(), factory.getLocalization().saveSuccess());
         isSave.onSuccess();
+        window.unmask();
         window.hide();
       }
     });
@@ -81,6 +92,9 @@ public class ContactEditPresenter extends SimpleWindowPresenter {
   }
 
   public interface ContactEditWindow extends SimpleWindowView {
+    El mask(String message);
+
+    void unmask();
 
     void hide();
   }
