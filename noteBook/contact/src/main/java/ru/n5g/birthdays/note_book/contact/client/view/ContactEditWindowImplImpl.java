@@ -8,7 +8,6 @@ import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
-import com.extjs.gxt.ui.client.store.Record;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.HorizontalPanel;
@@ -54,7 +53,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private AdvancedComboBox eventTypeComboBox;
   private Button addEventTypeButton;
   private Grid<EventListDTO> eventGrid;
-  private List<EventListDTO> eventListDelete = new ArrayList<EventListDTO>(0);
+  private List<EventListDTO> eventListSave = new ArrayList<EventListDTO>(0);
 
   private static final FormData FORM_DATE = new FormData("100%");
 
@@ -188,12 +187,15 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         DateField dateField = new DateField();
         dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("dd.MM"));
         dateField.setWidth(60);
+        dateField.setToolTip("Дата события");
         dateField.setValue((Date) model.get(property));
         dateField.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
             model.set(property, ((FieldEvent) be).getField().getValue());
-            eventGrid.getStore().update(model);
+            if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
+              eventListSave.add(model);
+            }
           }
         });
         return dateField;
@@ -209,6 +211,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       @Override
       public Object render(final EventListDTO model, final String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, Grid<EventListDTO> grid) {
         NumberField year = new NumberField();
+        year.getImages().setInvalid(null);
         year.setToolTip("Год события");
         year.setMinValue(1900);
         year.setMaxValue(2100);
@@ -220,8 +223,10 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         year.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
-            EventListDTO b =  model;
-            b.setYear((Number)((FieldEvent) be).getField().getValue());
+            model.setYear((Number) ((FieldEvent) be).getField().getValue());
+            if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
+              eventListSave.add(model);
+            }
           }
         });
         return year;
@@ -283,7 +288,10 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         EventListDTO dto = getAt(index);
         if (dto.getId() != null) {
           dto.setDelete(true);
-          eventListDelete.add(dto);
+          eventListSave.add(dto);
+        }
+        else if (eventListSave.contains(dto)) {
+          eventListSave.remove(dto);
         }
         super.remove(index);
       }
@@ -323,19 +331,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     dto.setFirstName(firstName.getValue());
     dto.setMiddleName(middleName.getValue());
     dto.setComment(comment.getValue());
-    if (eventGrid.getStore().getModifiedRecords().size() > 0) {
-      List<EventListDTO> eventList = new ArrayList<EventListDTO>();
-      for (Record ev : eventGrid.getStore().getModifiedRecords()) {
-        eventList.add((EventListDTO) ev.getModel());
-      }
-      dto.setEventList(eventList);
-    }
-    else {
-      dto.setEventList(new ArrayList<EventListDTO>(0));
-    }
-    for (EventListDTO el : eventListDelete) {
-      dto.getEventList().add(el);
-    }
+    dto.setEventList(eventListSave);
     presenter.save(dto);
   }
 
