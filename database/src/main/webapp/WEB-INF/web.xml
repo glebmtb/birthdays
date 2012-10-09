@@ -17,8 +17,8 @@
 
   <context-param>
     <param-name>liquibase.datasource</param-name>
-    <!--<param-value>java:/comp/env/BirthdaysPool</param-value>-->
-    <param-value>java:jboss/datasources/PostgreSQLDS</param-value>
+    <param-value>java:/comp/env/BirthdaysPool</param-value>
+    <!--<param-value>java:jboss/datasources/PostgreSQLDS</param-value>-->
   </context-param>
 
   <context-param>
