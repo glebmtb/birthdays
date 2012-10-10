@@ -58,7 +58,7 @@ public class ContactEditServiceImpl implements ContactEditService {
         event.setEventTypeId(el.getEventType().getId());
         event.setDay(el.getDay() != null ? el.getDay().intValue() : null);
         event.setMonth(el.getMonth() != null ? el.getMonth().intValue() : null);
-        event.setYear(el.getYear() != null ? el.getYear().intValue() + 1900 : null);
+        event.setYear(el.getYear() != null ? el.getYear().intValue() : null);
         event.setContactId(bean.getId());
         eventDao.saveOrUpdateNonTransactional(event);
       }
@@ -86,7 +86,7 @@ public class ContactEditServiceImpl implements ContactEditService {
         evenDTO.setId(ev.getId());
         evenDTO.setDay(ev.getDay());
         evenDTO.setMonth(ev.getMonth());
-        evenDTO.setYear(ev.getYear() != null ? ev.getYear() - 1900 : null);
+        evenDTO.setYear(ev.getYear() != null ? ev.getYear(): null);
         evenDTO.setEventType(EventType.convert(ev.getEventType()));
         eventList.add(evenDTO);
       }
