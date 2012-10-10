@@ -189,13 +189,13 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         dateField.setWidth(60);
         dateField.setToolTip(localization.eventDate());
         if (model.getMonth() != null && model.getDay() != null)
-          dateField.setValue(new Date(0, model.getMonth().intValue(), model.getDay().intValue()));
+          dateField.setValue(new Date(0, model.getMonth().intValue() - 1, model.getDay().intValue()));
         dateField.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
-            model.setDay(((Date) ((FieldEvent) be).getField().getValue()).getDate());
-            model.setMonth(((Date) ((FieldEvent) be).getField().getValue()).getMonth());
             if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
+              model.setDay(((Date) ((FieldEvent) be).getField().getValue()).getDate());
+              model.setMonth(((Date) ((FieldEvent) be).getField().getValue()).getMonth() + 1);
               eventListSave.add(model);
             }
           }

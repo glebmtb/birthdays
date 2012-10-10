@@ -21,16 +21,16 @@ import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
 import ru.n5g.birthdays.components.client.view.SimpleCreateField;
 import ru.n5g.birthdays.core.client.dialog.MyMessageBox;
-import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.contact.client.localization.ContactListLocalization;
 import ru.n5g.birthdays.note_book.contact.client.presenter.ContactListPresenter;
+import ru.n5g.birthdays.note_book.contact.shared.bean.ContactListDTO;
 
 public class ContactListViewImpl extends LayoutContainer implements ContactListPresenter.ContactView {
 
   private ContactListPresenter presenter;
   private ContactListLocalization localization;
 
-  private Grid<ContactDTO> gridMain;
+  private Grid<ContactListDTO> gridMain;
   private ToolBar toolBarTop;
   private ToolBar toolBarBottom;
 
@@ -145,14 +145,15 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     };
   }
 
-  private Grid<ContactDTO> createGrid() {
+  private Grid<ContactListDTO> createGrid() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-    columns.add(new ColumnConfig(ContactDTO.NICKNAME, localization.nickname(), 30));
-    columns.add(new ColumnConfig((ContactDTO.LAST_NAME), localization.lastName(), 100));
-    columns.add(new ColumnConfig(ContactDTO.FIRST_NAME, localization.firstName(), 100));
-    columns.add(new ColumnConfig((ContactDTO.MIDDLE_NAME), localization.middleName(), 100));
-    columns.add(new ColumnConfig((ContactDTO.COMMENT), localization.comment(), 200));
+    columns.add(new ColumnConfig(ContactListDTO.NICKNAME, localization.nickname(), 50));
+    columns.add(new ColumnConfig((ContactListDTO.LAST_NAME), localization.lastName(), 80));
+    columns.add(new ColumnConfig(ContactListDTO.FIRST_NAME, localization.firstName(), 80));
+    columns.add(new ColumnConfig((ContactListDTO.MIDDLE_NAME), localization.middleName(), 80));
+    columns.add(new ColumnConfig((ContactListDTO.EVENT_LIST), localization.eventList(), 150));
+    columns.add(new ColumnConfig((ContactListDTO.COMMENT), localization.comment(), 200));
 
 
     ColumnModel cm = new ColumnModel(columns);
@@ -162,8 +163,8 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     liveView = new LiveGridView();
     liveView.setEmptyText(localization.listEmpty());
 
-    Grid<ContactDTO> grid;
-    grid = new Grid<ContactDTO>(store, cm);
+    Grid<ContactListDTO> grid;
+    grid = new Grid<ContactListDTO>(store, cm);
     grid.setBorders(false);
     grid.setLoadMask(true);
     grid.setStripeRows(true);
@@ -171,35 +172,35 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     grid.getView().setAutoFill(true);
     grid.getView().setForceFit(true);
     grid.getView().setShowDirtyCells(false);
-    grid.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<ContactDTO>() {
+    grid.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<ContactListDTO>() {
       @Override
-      public void selectionChanged(SelectionChangedEvent<ContactDTO> se) {
+      public void selectionChanged(SelectionChangedEvent<ContactListDTO> se) {
         int selSize = se.getSelection().size();
         boolean itemSelected = selSize > 0;
         boolean singleItemSelected = selSize == 1;
         enableButtons(itemSelected, singleItemSelected, se.getSelection());
       }
     });
-    grid.addListener(Events.RowDoubleClick, new Listener<GridEvent<ContactDTO>>() {
+    grid.addListener(Events.RowDoubleClick, new Listener<GridEvent<ContactListDTO>>() {
       @Override
-      public void handleEvent(GridEvent<ContactDTO> be) {
+      public void handleEvent(GridEvent<ContactListDTO> be) {
         onGridDoubleClick(be);
       }
     });
     return grid;
   }
 
-  private void onGridDoubleClick(GridEvent<ContactDTO> be) {
+  private void onGridDoubleClick(GridEvent<ContactListDTO> be) {
     onEditContact();
   }
 
-  private void enableButtons(boolean itemSelected, boolean singleItemSelected, List<ContactDTO> selection) {
+  private void enableButtons(boolean itemSelected, boolean singleItemSelected, List<ContactListDTO> selection) {
     btnEdit.setEnabled(singleItemSelected);
     btnDel.setEnabled(itemSelected);
   }
 
 
-  private ToolBar createToolBarBottom(Grid<ContactDTO> grid) {
+  private ToolBar createToolBarBottom(Grid<ContactListDTO> grid) {
     ToolBar toolBarBottom;
     toolBarBottom = new ToolBar();
     LiveToolItem item;

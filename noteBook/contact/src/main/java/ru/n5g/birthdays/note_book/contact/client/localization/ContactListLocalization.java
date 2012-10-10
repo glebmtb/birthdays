@@ -33,4 +33,6 @@ public interface ContactListLocalization extends Constants {
   String confirmationDeleting();
 
   String btnDelete();
+
+  String eventList();
 }

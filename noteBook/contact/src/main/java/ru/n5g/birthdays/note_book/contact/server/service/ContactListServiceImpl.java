@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.core.server.bean.Contact;
+import ru.n5g.birthdays.core.server.bean.Event;
 import ru.n5g.birthdays.core.server.bean.User;
-import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.contact.client.service.ContactListService;
 import ru.n5g.birthdays.note_book.contact.server.dao.ContactListDao;
+import ru.n5g.birthdays.note_book.contact.shared.bean.ContactListDTO;
 
 @Service("contactListService.rpc")
 public class ContactListServiceImpl implements ContactListService {
@@ -21,35 +22,97 @@ public class ContactListServiceImpl implements ContactListService {
   private ContactListDao contactListDao;
 
   @Override
-  public BasePagingLoadResult<ContactDTO> loadContactList(BasePagingLoadConfig loadConfig) {
+  @Transactional
+  public BasePagingLoadResult<ContactListDTO> loadContactList(BasePagingLoadConfig loadConfig) {
     BaseModelData filter = new BaseModelData();
     filter.set("userId", User.getAuthenticationUserId());
-    List<ContactDTO> agentModelList = getModelList(contactListDao.loadTableRows(filter));
+    List<ContactListDTO> agentModelList = getModelList(contactListDao.loadTableRows(filter));
     int start = 0;
     int limit = contactListDao.getTableRowsCount(filter);
     int offsetLimit = 0;
 
-    BasePagingLoadResult<ContactDTO> basePagingLoadResult;
-    basePagingLoadResult = new BasePagingLoadResult<ContactDTO>(agentModelList, start, limit);
+    BasePagingLoadResult<ContactListDTO> basePagingLoadResult;
+    basePagingLoadResult = new BasePagingLoadResult<ContactListDTO>(agentModelList, start, limit);
     return basePagingLoadResult;
   }
 
   @Override
   @Transactional
-  public void deleteContact(List<ContactDTO> dtoList) {
+  public void deleteContact(List<ContactListDTO> dtoList) {
     Contact contact;
-    for (ContactDTO dto : dtoList) {
+    for (ContactListDTO dto : dtoList) {
       contact = contactListDao.get(dto.getId());
       contactListDao.deleteNonTransactional(contact);
     }
   }
 
-  protected List<ContactDTO> getModelList(List dataList) {
+  protected List<ContactListDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
     for (Object o : dataList) {
-
-      resultList.add(Contact.convert((Contact) o));
+      Contact bean = (Contact) o;
+      ContactListDTO dto = new ContactListDTO();
+      dto.setId(bean.getId());
+      dto.setNickname(bean.getNickname());
+      dto.setFirstName(bean.getFirstName());
+      dto.setLastName(bean.getLastName());
+      dto.setMiddleName(bean.getMiddleName());
+      dto.setComment(bean.getComment());
+      dto.setUserId(bean.getUserId());
+      dto.setEventList(getEventList(bean.getEvent()));
+      resultList.add(dto);
     }
     return resultList;
+  }
+
+  private String getEventList( List<Event> beanList) {
+    String list = null;
+    for (Event e : beanList) {
+      list = list == null ? "" : list.concat("; ");
+      StringBuilder st = new StringBuilder();
+      st.append(e.getEventType().getName());
+      st.append(" ");
+      st.append(e.getDay());
+      st.append(" ");
+      switch (e.getMonth()) {
+        case 1:
+          st.append("января");
+          break;
+        case 2:
+          st.append("февраля");
+          break;
+        case 3:
+          st.append("марта");
+          break;
+        case 4:
+          st.append("апреля");
+          break;
+        case 5:
+          st.append("мая");
+          break;
+        case 6:
+          st.append("июня");
+          break;
+        case 7:
+          st.append("июля");
+          break;
+        case 8:
+          st.append("августа");
+          break;
+        case 9:
+          st.append("сентября");
+          break;
+        case 10:
+          st.append("октября");
+          break;
+        case 11:
+          st.append("ноября");
+          break;
+        case 12:
+          st.append("декабря");
+          break;
+      }
+      list = list.concat(st.toString());
+    }
+    return list;
   }
 }
