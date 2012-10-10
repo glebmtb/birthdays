@@ -22,27 +22,27 @@ public class EventListDTO extends BaseModelData {
     set(ID, id);
   }
 
-  public Number getDay() {
+  public Integer getDay() {
     return get(DAY);
   }
 
-  public void setDay(Number day) {
+  public void setDay(Integer day) {
     set(DAY, day);
   }
 
-  public Number getMonth() {
+  public Integer getMonth() {
     return get(MONTH);
   }
 
-  public void setMonth(Number month) {
+  public void setMonth(Integer month) {
     set(MONTH, month);
   }
 
-  public Number getYear() {
+  public Integer getYear() {
     return get(YEAR);
   }
 
-  public void setYear(Number year) {
+  public void setYear(Integer year) {
     set(YEAR, year);
   }
 

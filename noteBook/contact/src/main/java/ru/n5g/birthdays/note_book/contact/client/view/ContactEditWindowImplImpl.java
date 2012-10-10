@@ -193,8 +193,8 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         dateField.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
-            model.setDay(((Date)((FieldEvent) be).getField().getValue()).getDate());
-            model.setMonth(((Date)((FieldEvent) be).getField().getValue()).getMonth());
+            model.setDay(((Date) ((FieldEvent) be).getField().getValue()).getDate());
+            model.setMonth(((Date) ((FieldEvent) be).getField().getValue()).getMonth());
             if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
               eventListSave.add(model);
             }
@@ -225,7 +225,7 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         year.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
-            model.setYear((Number) ((FieldEvent) be).getField().getValue());
+            model.setYear(((Number) ((FieldEvent) be).getField().getValue()).intValue());
             if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
               eventListSave.add(model);
             }
