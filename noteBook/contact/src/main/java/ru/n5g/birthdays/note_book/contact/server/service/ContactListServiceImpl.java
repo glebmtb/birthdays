@@ -64,53 +64,56 @@ public class ContactListServiceImpl implements ContactListService {
     return resultList;
   }
 
-  private String getEventList( List<Event> beanList) {
+  private String getEventList(List<Event> beanList) {
     String list = null;
     for (Event e : beanList) {
+      if (e.getDay() == null)
+        break;
       list = list == null ? "" : list.concat("; ");
       StringBuilder st = new StringBuilder();
       st.append(e.getEventType().getName());
       st.append(" ");
       st.append(e.getDay());
       st.append(" ");
-      switch (e.getMonth()) {
-        case 1:
-          st.append("января");
-          break;
-        case 2:
-          st.append("февраля");
-          break;
-        case 3:
-          st.append("марта");
-          break;
-        case 4:
-          st.append("апреля");
-          break;
-        case 5:
-          st.append("мая");
-          break;
-        case 6:
-          st.append("июня");
-          break;
-        case 7:
-          st.append("июля");
-          break;
-        case 8:
-          st.append("августа");
-          break;
-        case 9:
-          st.append("сентября");
-          break;
-        case 10:
-          st.append("октября");
-          break;
-        case 11:
-          st.append("ноября");
-          break;
-        case 12:
-          st.append("декабря");
-          break;
-      }
+      if (e.getMonth() != null)
+        switch (e.getMonth()) {
+          case 1:
+            st.append("января");
+            break;
+          case 2:
+            st.append("февраля");
+            break;
+          case 3:
+            st.append("марта");
+            break;
+          case 4:
+            st.append("апреля");
+            break;
+          case 5:
+            st.append("мая");
+            break;
+          case 6:
+            st.append("июня");
+            break;
+          case 7:
+            st.append("июля");
+            break;
+          case 8:
+            st.append("августа");
+            break;
+          case 9:
+            st.append("сентября");
+            break;
+          case 10:
+            st.append("октября");
+            break;
+          case 11:
+            st.append("ноября");
+            break;
+          case 12:
+            st.append("декабря");
+            break;
+        }
       list = list.concat(st.toString());
     }
     return list;

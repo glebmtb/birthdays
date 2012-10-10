@@ -21,6 +21,8 @@ import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import ru.n5g.birthdays.components.client.view.SimpleCreateField;
 import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
@@ -193,9 +195,17 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         dateField.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
-            if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
-              model.setDay(((Date) ((FieldEvent) be).getField().getValue()).getDate());
-              model.setMonth(((Date) ((FieldEvent) be).getField().getValue()).getMonth() + 1);
+            if (((FieldEvent) be).getField().isValid()) {
+              if (((FieldEvent) be).getField().getValue() == null) {
+                model.setDay(null);
+                model.setMonth(null);
+              }
+              else {
+                model.setDay(((Date) ((FieldEvent) be).getField().getValue()).getDate());
+                model.setMonth(((Date) ((FieldEvent) be).getField().getValue()).getMonth() + 1);
+              }
+            }
+            if (!eventListSave.contains(model)) {
               eventListSave.add(model);
             }
           }
@@ -213,7 +223,22 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
       @Override
       public Object render(final EventListDTO model, final String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, Grid<EventListDTO> grid) {
         NumberField year = new NumberField();
-        year.getImages().setInvalid(null);
+        year.getImages().setInvalid(new AbstractImagePrototype() {
+          @Override
+          public void applyTo(Image image) {
+
+          }
+
+          @Override
+          public Image createImage() {
+            return new Image();
+          }
+
+          @Override
+          public String getHTML() {
+            return null;
+          }
+        });
         year.setToolTip(localization.eventYear());
         year.setMinValue(1900);
         year.setMaxValue(2100);
@@ -225,8 +250,15 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
         year.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
-            model.setYear(((Number) ((FieldEvent) be).getField().getValue()).intValue());
-            if (((FieldEvent) be).getField().isValid() && !eventListSave.contains(model)) {
+            if (((FieldEvent) be).getField().isValid()) {
+              if (((FieldEvent) be).getField().getValue() == null) {
+                model.setYear(null);
+              }
+              else {
+                model.setYear(((Number) ((FieldEvent) be).getField().getValue()).intValue());
+              }
+            }
+            if (!eventListSave.contains(model)) {
               eventListSave.add(model);
             }
           }

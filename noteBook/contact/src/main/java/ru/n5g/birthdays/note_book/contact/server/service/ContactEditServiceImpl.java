@@ -49,7 +49,7 @@ public class ContactEditServiceImpl implements ContactEditService {
     contactDAO.saveOrUpdateNonTransactional(bean);
 
     for (EventListDTO el : dto.getEventList()) {
-      if (el.getDelete() != null && el.getDelete()) {
+      if ((el.getDelete() != null && el.getDelete()) || (el.getDay() == null && el.getYear() == null)) {
         eventDao.deleteNonTransactional(eventDao.get(el.getId()));
       }
       else {
