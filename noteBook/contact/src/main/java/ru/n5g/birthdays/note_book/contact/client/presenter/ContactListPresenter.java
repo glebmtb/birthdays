@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import ru.n5g.birthdays.core.shared.bean.ContactDTO;
 import ru.n5g.birthdays.note_book.contact.client.factory.ContactListFactory;
 import ru.n5g.birthdays.note_book.contact.client.view.ContactListViewImpl;
+import ru.n5g.birthdays.note_book.contact.shared.bean.ContactListDTO;
 
 public class ContactListPresenter {
   public interface ContactView extends IsWidget {
@@ -32,9 +33,9 @@ public class ContactListPresenter {
   }
 
   public ListStore loadContactList() {
-    RpcProxy<BasePagingLoadResult<ContactDTO>> proxy = new RpcProxy<BasePagingLoadResult<ContactDTO>>() {
+    RpcProxy<BasePagingLoadResult<ContactListDTO>> proxy = new RpcProxy<BasePagingLoadResult<ContactListDTO>>() {
       @Override
-      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<ContactDTO>> listAsyncCallback) {
+      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<ContactListDTO>> listAsyncCallback) {
         factory.getService().loadContactList((BasePagingLoadConfig) loadConfig, listAsyncCallback);
       }
     };
@@ -62,7 +63,7 @@ public class ContactListPresenter {
     });
   }
 
-  public void onDeleteContact(List<ContactDTO> dtoList) {
+  public void onDeleteContact(List<ContactListDTO> dtoList) {
    factory.getService().deleteContact(dtoList, new AsyncCallback<Void>() {
      public void onFailure(Throwable caught) {
        Info.display("Error", caught.getMessage());
