@@ -53,9 +53,11 @@ public class ContactListServiceImpl implements ContactListService {
       ContactListDTO dto = new ContactListDTO();
       dto.setId(bean.getId());
       dto.setNickname(bean.getNickname());
-      dto.setFirstName(bean.getFirstName());
-      dto.setLastName(bean.getLastName());
-      dto.setMiddleName(bean.getMiddleName());
+      StringBuilder fio = new StringBuilder();
+      fio.append(bean.getFirstName() != null ? bean.getFirstName().concat(" ") : "");
+      fio.append(bean.getFirstName() != null ? bean.getLastName().concat(" ") : "");
+      fio.append(bean.getFirstName() != null ? bean.getMiddleName() : "");
+      dto.setFio(fio.toString());
       dto.setComment(bean.getComment());
       dto.setUserId(bean.getUserId());
       dto.setEventList(getEventList(bean.getEvent()));
