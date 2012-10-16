@@ -28,7 +28,7 @@ import ru.n5g.birthdays.note_book.event.client.presenter.EventListPresenter;
 /**
  * @author belyaev
  */
-public class EventView extends LayoutContainer implements EventListPresenter.View {
+public class EventListView extends LayoutContainer implements EventListPresenter.View {
   private EventListPresenter presenter;
   private EventListLocalization localization;
 
@@ -41,7 +41,7 @@ public class EventView extends LayoutContainer implements EventListPresenter.Vie
   private Button btnEdit;
   private Button btnDel;
 
-  public EventView(EventListPresenter presenter, EventListLocalization localization) {
+  public EventListView(EventListPresenter presenter, EventListLocalization localization) {
     super(new FitLayout());
     setBorders(false);
     this.presenter = presenter;

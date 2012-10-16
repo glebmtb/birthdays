@@ -7,11 +7,13 @@ import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import ru.n5g.birthdays.core.server.bean.Event;
 import ru.n5g.birthdays.core.server.bean.EventType;
 import ru.n5g.birthdays.core.server.bean.User;
 import ru.n5g.birthdays.core.shared.bean.EventDTO;
+import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
 import ru.n5g.birthdays.note_book.event.client.service.EventListService;
 import ru.n5g.birthdays.note_book.event.server.dao.EventListDao;
 
@@ -42,5 +44,11 @@ public class EventListServiceImpl implements EventListService {
       resultList.add(dto);
     }
     return resultList;
+  }
+
+
+  @Override
+  public RpcWhiteList registerClasses(RpcWhiteList whiteList) throws AccessDeniedException, RuntimeException {
+    return new RpcWhiteList();
   }
 }

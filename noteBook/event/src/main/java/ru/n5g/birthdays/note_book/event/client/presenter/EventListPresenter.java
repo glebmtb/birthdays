@@ -6,7 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import ru.n5g.birthdays.core.shared.bean.EventDTO;
 import ru.n5g.birthdays.note_book.event.client.factory.EventListFactory;
-import ru.n5g.birthdays.note_book.event.client.view.EventView;
+import ru.n5g.birthdays.note_book.event.client.view.EventListView;
 
 public class EventListPresenter {
   private EventListFactory factory;
@@ -18,7 +18,7 @@ public class EventListPresenter {
 
   public View start() {
     if (view == null) {
-      view = new EventView(this, factory.getLocalization());
+      view = new EventListView(this, factory.getLocalization());
     }
     return view;
   }
