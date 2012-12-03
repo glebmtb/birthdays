@@ -3,6 +3,7 @@ package ru.n5g.birthdays.core.server.bean;
 import javax.persistence.*;
 
 import ru.n5g.birthdays.core.shared.bean.EventDTO;
+import ru.n5g.birthdays.core.shared.util.MonthTranslate;
 
 /**
  * @author belyaev
@@ -127,9 +128,9 @@ public class Event {
       eventDate.append(bean.getDay());
     else
       eventDate.append("**");
-    eventDate.append(".");
+    eventDate.append(" ");
     if (bean.getMonth() != null)
-      eventDate.append(bean.getMonth());
+      eventDate.append(MonthTranslate.getMonthName(bean.getMonth()));
     else
       eventDate.append("**");
     dto.setEventDay(eventDate.toString());

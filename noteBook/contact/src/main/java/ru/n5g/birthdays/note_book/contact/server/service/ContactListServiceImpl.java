@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.n5g.birthdays.core.server.bean.Contact;
 import ru.n5g.birthdays.core.server.bean.Event;
 import ru.n5g.birthdays.core.server.bean.User;
+import ru.n5g.birthdays.core.shared.util.MonthTranslate;
 import ru.n5g.birthdays.note_book.contact.client.service.ContactListService;
 import ru.n5g.birthdays.note_book.contact.server.dao.ContactListDao;
 import ru.n5g.birthdays.note_book.contact.shared.bean.ContactListDTO;
@@ -78,44 +79,7 @@ public class ContactListServiceImpl implements ContactListService {
       st.append(e.getDay());
       st.append(" ");
       if (e.getMonth() != null)
-        switch (e.getMonth()) {
-          case 1:
-            st.append("января");
-            break;
-          case 2:
-            st.append("февраля");
-            break;
-          case 3:
-            st.append("марта");
-            break;
-          case 4:
-            st.append("апреля");
-            break;
-          case 5:
-            st.append("мая");
-            break;
-          case 6:
-            st.append("июня");
-            break;
-          case 7:
-            st.append("июля");
-            break;
-          case 8:
-            st.append("августа");
-            break;
-          case 9:
-            st.append("сентября");
-            break;
-          case 10:
-            st.append("октября");
-            break;
-          case 11:
-            st.append("ноября");
-            break;
-          case 12:
-            st.append("декабря");
-            break;
-        }
+        st.append(MonthTranslate.getMonthName(e.getMonth()));
       list = list.concat(st.toString());
     }
     return list;
