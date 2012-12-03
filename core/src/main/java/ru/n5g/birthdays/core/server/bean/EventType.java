@@ -35,7 +35,7 @@ public class EventType {
   }
 
   @Column(name = "single_event")
-  public Boolean getSingle() {
+  public Boolean isSingle() {
     return isSingle;
   }
 
@@ -55,7 +55,7 @@ public class EventType {
     EventTypeDTO dto = new EventTypeDTO();
     dto.setId(bean.getId());
     dto.setName(bean.getName());
-    dto.setSingle(bean.getSingle());
+    dto.setSingle(bean.isSingle());
     return dto;
   }
 

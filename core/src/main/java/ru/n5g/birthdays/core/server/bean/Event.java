@@ -122,8 +122,17 @@ public class Event {
     dto.setDay(bean.getDay());
     dto.setMonth(bean.getMonth());
     dto.setYear(bean.getMonth());
-    if (bean.getDay() != null && bean.getMonth() != null)
-      dto.setEventDay(bean.getDay().toString().concat(bean.getMonth().toString()));
+    StringBuffer eventDate = new StringBuffer();
+    if (bean.getDay() != null)
+      eventDate.append(bean.getDay());
+    else
+      eventDate.append("**");
+    eventDate.append(".");
+    if (bean.getMonth() != null)
+      eventDate.append(bean.getMonth());
+    else
+      eventDate.append("**");
+    dto.setEventDay(eventDate.toString());
     return dto;
   }
 

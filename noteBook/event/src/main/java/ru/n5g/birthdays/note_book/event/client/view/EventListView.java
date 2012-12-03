@@ -121,7 +121,8 @@ public class EventListView extends LayoutContainer implements EventListPresenter
   private Grid<EventDTO> createGrid() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-    columns.add(new ColumnConfig(EventDTO.EVENT_TYPE + "." + EventTypeDTO.NAME, localization.nameEventType(), 30));
+    columns.add(new ColumnConfig(EventDTO.EVENT_DAY, localization.eventDay(), 30));
+    columns.add(new ColumnConfig(EventDTO.EVENT_TYPE + "." + EventTypeDTO.NAME, localization.nameEventType(), 100));
     //имя контакта
     //дата события
     //дней осталось
