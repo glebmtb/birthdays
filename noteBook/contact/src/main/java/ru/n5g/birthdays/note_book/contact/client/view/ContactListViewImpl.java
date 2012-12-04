@@ -150,9 +150,8 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
 
     columns.add(new ColumnConfig(ContactListDTO.NICKNAME, localization.nickname(), 50));
     columns.add(new ColumnConfig((ContactListDTO.FIO), localization.lastName(), 150));
-    columns.add(new ColumnConfig((ContactListDTO.EVENT_LIST), localization.eventList(), 150));
-    columns.add(new ColumnConfig((ContactListDTO.COMMENT), localization.comment(), 200));
-
+    columns.add(ColumnConfigSortable((ContactListDTO.EVENT_LIST), localization.eventList(), 150, false));
+    columns.add(ColumnConfigSortable((ContactListDTO.COMMENT), localization.comment(), 200, false));
 
     ColumnModel cm = new ColumnModel(columns);
     ListStore store = presenter.loadContactList();
@@ -164,7 +163,6 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     Grid<ContactListDTO> grid;
     grid = new Grid<ContactListDTO>(store, cm);
     grid.setBorders(false);
-    grid.setLoadMask(true);
     grid.setStripeRows(true);
     grid.setView(liveView);
     grid.getView().setAutoFill(true);
@@ -185,11 +183,23 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
         onGridDoubleClick(be);
       }
     });
+
+/*    GridFilters filters = new GridFilters();
+    StringFilter nameFilter = new StringFilter(ContactListDTO.FIO);
+    filters.addFilter(nameFilter);
+    grid.addPlugin(filters);
+    grid.setAutoExpandColumn(ContactListDTO.FIO);*/
     return grid;
   }
 
   private void onGridDoubleClick(GridEvent<ContactListDTO> be) {
     onEditContact();
+  }
+
+  public ColumnConfig ColumnConfigSortable(String id, String name, int width, boolean sortable) {
+    ColumnConfig columnConfig = new ColumnConfig(id, name, width);
+    columnConfig.setSortable(sortable);
+    return columnConfig;
   }
 
   private void enableButtons(boolean itemSelected, boolean singleItemSelected, List<ContactListDTO> selection) {

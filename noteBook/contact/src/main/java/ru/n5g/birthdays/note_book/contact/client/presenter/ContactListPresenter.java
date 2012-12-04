@@ -2,6 +2,7 @@ package ru.n5g.birthdays.note_book.contact.client.presenter;
 
 import java.util.List;
 
+import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.Info;
@@ -35,13 +36,22 @@ public class ContactListPresenter {
   public ListStore loadContactList() {
     RpcProxy<BasePagingLoadResult<ContactListDTO>> proxy = new RpcProxy<BasePagingLoadResult<ContactListDTO>>() {
       @Override
-      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<ContactListDTO>> listAsyncCallback) {
-        factory.getService().loadContactList((BasePagingLoadConfig) loadConfig, listAsyncCallback);
+      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<ContactListDTO>> callback) {
+        factory.getService().loadContactList((BasePagingLoadConfig) loadConfig, callback);
       }
     };
-    PagingLoader<PagingLoadResult<ContactDTO>> loader;
-    loader = new BasePagingLoader<PagingLoadResult<ContactDTO>>(proxy, new ModelReader());
 
+    // loader
+    final PagingLoader<PagingLoadResult<ContactListDTO>> loader = new BasePagingLoader<PagingLoadResult<ContactListDTO>>(proxy) {
+      @Override
+      protected Object newLoadConfig() {
+        BasePagingLoadConfig config = new BaseFilterPagingLoadConfig();
+        return config;
+      }
+    };
+    loader.setSortDir(Style.SortDir.ASC);
+    loader.setSortField(ContactListDTO.FIO);
+    loader.setRemoteSort(true);
     return new ListStore<ContactDTO>(loader);
   }
 

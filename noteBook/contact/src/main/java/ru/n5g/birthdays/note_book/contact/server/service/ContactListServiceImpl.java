@@ -27,13 +27,11 @@ public class ContactListServiceImpl implements ContactListService {
   public BasePagingLoadResult<ContactListDTO> loadContactList(BasePagingLoadConfig loadConfig) {
     BaseModelData filter = new BaseModelData();
     filter.set("userId", User.getAuthenticationUserId());
+    filter.set("sortDir",loadConfig.getSortDir());
+    filter.set("sortField",loadConfig.getSortField());
     List<ContactListDTO> agentModelList = getModelList(contactListDao.loadTableRows(filter));
-    int start = 0;
-    int limit = contactListDao.getTableRowsCount(filter);
-    int offsetLimit = 0;
-
     BasePagingLoadResult<ContactListDTO> basePagingLoadResult;
-    basePagingLoadResult = new BasePagingLoadResult<ContactListDTO>(agentModelList, start, limit);
+    basePagingLoadResult = new BasePagingLoadResult<ContactListDTO>(agentModelList);
     return basePagingLoadResult;
   }
 
