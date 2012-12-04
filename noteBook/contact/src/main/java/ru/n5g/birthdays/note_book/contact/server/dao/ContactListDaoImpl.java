@@ -5,12 +5,11 @@ import java.util.List;
 
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.BaseModelData;
+import com.extjs.gxt.ui.client.data.FilterConfig;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 import ru.n5g.birthdays.core.server.bean.Contact;
@@ -29,9 +28,27 @@ public class ContactListDaoImpl extends BaseDaoImpl<Contact> implements ContactL
       public List<Contact> doInHibernate(Session session) throws HibernateException, SQLException {
         Criteria criteria = createCriteria(session, filter);     //SortDir
         addOrder(criteria, filter.get("sortDir"), filter.get("sortField"));
+        addFilters(criteria, filter.get("filterConfigs"));
         return criteria.list();
       }
     });
+  }
+
+  private void addFilters(Criteria criteria, Object filterConfigs) {
+    if (filterConfigs == null)
+      return;
+    List<FilterConfig> filterConfigList = (List<FilterConfig>) filterConfigs;
+    for (FilterConfig fc : filterConfigList) {
+      if (fc.getField().equals("storeFilterField") && fc.getType() instanceof String) {
+        Disjunction dis = Restrictions.disjunction();
+        dis.add(Restrictions.ilike("firstName", (String) fc.getValue(), MatchMode.ANYWHERE));
+        dis.add(Restrictions.ilike("lastName", (String) fc.getValue(), MatchMode.ANYWHERE));
+        dis.add(Restrictions.ilike("middleName", (String) fc.getValue(), MatchMode.ANYWHERE));
+        dis.add(Restrictions.ilike("nickname", (String) fc.getValue(), MatchMode.ANYWHERE));
+        dis.add(Restrictions.ilike("comment", (String) fc.getValue(), MatchMode.ANYWHERE));
+        criteria.add(dis);
+      }
+    }
   }
 
   private void addOrder(Criteria criteria, Object sortDirO, Object sortFieldO) {

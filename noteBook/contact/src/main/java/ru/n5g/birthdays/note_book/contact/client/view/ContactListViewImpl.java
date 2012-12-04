@@ -5,16 +5,19 @@ import java.util.List;
 
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.store.Store;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Dialog;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.form.StoreFilterField;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.LiveGridView;
+import com.extjs.gxt.ui.client.widget.grid.filters.GridFilters;
+import com.extjs.gxt.ui.client.widget.grid.filters.StringFilter;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
-import com.extjs.gxt.ui.client.widget.tips.QuickTip;
 import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.LiveToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
@@ -76,12 +79,31 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
 
     gridMain = createGrid();
     toolBarBottom = createToolBarBottom(gridMain);
-    new QuickTip(gridMain);
+    toolBarTop.add(createStoreFilterField(gridMain));
 
     cp.setTopComponent(toolBarTop);
     cp.add(gridMain);
     cp.setBottomComponent(toolBarBottom);
     add(cp);
+  }
+
+  private StoreFilterField createStoreFilterField(final Grid<ContactListDTO> grid) {
+    GridFilters filters = new GridFilters();
+    final StringFilter stringFilter = new StringFilter("storeFilterField");
+    filters.addFilter(stringFilter);
+    grid.addPlugin(filters);
+    StoreFilterField<ContactListDTO> filter = new StoreFilterField<ContactListDTO>() {
+      @Override
+      protected boolean doSelect(Store<ContactListDTO> store, ContactListDTO parent, ContactListDTO record, String property, String filter) {
+        return false;
+      }
+      @Override
+      protected void onFilter () {
+        focus();
+        stringFilter.setValue(getRawValue());
+      }
+    };
+    return filter;
   }
 
   private SelectionListener<ButtonEvent> createDeleteSelectionListener() {
@@ -148,8 +170,8 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   private Grid<ContactListDTO> createGrid() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-    columns.add(new ColumnConfig(ContactListDTO.NICKNAME, localization.nickname(), 50));
-    columns.add(new ColumnConfig((ContactListDTO.FIO), localization.fio(), 100));
+    columns.add(ColumnConfigSortable(ContactListDTO.NICKNAME, localization.nickname(), 50, true));
+    columns.add(ColumnConfigSortable((ContactListDTO.FIO), localization.fio(), 100, true));
     columns.add(ColumnConfigSortable((ContactListDTO.EVENT_LIST), localization.eventList(), 250, false));
     columns.add(ColumnConfigSortable((ContactListDTO.COMMENT), localization.comment(), 200, false));
 
@@ -167,7 +189,6 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     grid.setView(liveView);
     grid.getView().setAutoFill(true);
     grid.getView().setForceFit(true);
-    grid.getView().setShowDirtyCells(false);
     grid.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<ContactListDTO>() {
       @Override
       public void selectionChanged(SelectionChangedEvent<ContactListDTO> se) {
@@ -183,12 +204,9 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
         onGridDoubleClick(be);
       }
     });
+    grid.setAutoExpandColumn(ContactListDTO.FIO);
 
-/*    GridFilters filters = new GridFilters();
-    StringFilter nameFilter = new StringFilter(ContactListDTO.FIO);
-    filters.addFilter(nameFilter);
-    grid.addPlugin(filters);
-    grid.setAutoExpandColumn(ContactListDTO.FIO);*/
+
     return grid;
   }
 
@@ -199,6 +217,7 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   public ColumnConfig ColumnConfigSortable(String id, String name, int width, boolean sortable) {
     ColumnConfig columnConfig = new ColumnConfig(id, name, width);
     columnConfig.setSortable(sortable);
+    columnConfig.setMenuDisabled(true);
     return columnConfig;
   }
 

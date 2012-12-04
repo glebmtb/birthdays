@@ -3,6 +3,7 @@ package ru.n5g.birthdays.note_book.contact.server.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.extjs.gxt.ui.client.data.BaseFilterPagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
@@ -29,6 +30,7 @@ public class ContactListServiceImpl implements ContactListService {
     filter.set("userId", User.getAuthenticationUserId());
     filter.set("sortDir",loadConfig.getSortDir());
     filter.set("sortField",loadConfig.getSortField());
+    filter.set("filterConfigs",((BaseFilterPagingLoadConfig) loadConfig).getFilterConfigs());
     List<ContactListDTO> agentModelList = getModelList(contactListDao.loadTableRows(filter));
     BasePagingLoadResult<ContactListDTO> basePagingLoadResult;
     basePagingLoadResult = new BasePagingLoadResult<ContactListDTO>(agentModelList);
