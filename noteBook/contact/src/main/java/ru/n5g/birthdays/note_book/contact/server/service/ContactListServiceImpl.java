@@ -53,8 +53,8 @@ public class ContactListServiceImpl implements ContactListService {
       dto.setId(bean.getId());
       dto.setNickname(bean.getNickname());
       StringBuilder fio = new StringBuilder();
-      fio.append(bean.getFirstName() != null ? bean.getFirstName().concat(" ") : "");
       fio.append(bean.getLastName() != null ? bean.getLastName().concat(" ") : "");
+      fio.append(bean.getFirstName() != null ? bean.getFirstName().concat(" ") : "");
       fio.append(bean.getMiddleName() != null ? bean.getMiddleName() : "");
       dto.setFio(fio.toString());
       dto.setComment(bean.getComment());

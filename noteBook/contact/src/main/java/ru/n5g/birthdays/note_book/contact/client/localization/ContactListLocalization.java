@@ -8,12 +8,6 @@ public interface ContactListLocalization extends Constants {
 
   String nickname();
 
-  String firstName();
-
-  String lastName();
-
-  String middleName();
-
   String comment();
 
   String listEmpty();
@@ -35,4 +29,6 @@ public interface ContactListLocalization extends Constants {
   String btnDelete();
 
   String eventList();
+
+  String fio();
 }

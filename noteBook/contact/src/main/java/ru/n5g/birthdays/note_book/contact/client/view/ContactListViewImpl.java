@@ -149,8 +149,8 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
     columns.add(new ColumnConfig(ContactListDTO.NICKNAME, localization.nickname(), 50));
-    columns.add(new ColumnConfig((ContactListDTO.FIO), localization.lastName(), 150));
-    columns.add(ColumnConfigSortable((ContactListDTO.EVENT_LIST), localization.eventList(), 150, false));
+    columns.add(new ColumnConfig((ContactListDTO.FIO), localization.fio(), 70));
+    columns.add(ColumnConfigSortable((ContactListDTO.EVENT_LIST), localization.eventList(), 250, false));
     columns.add(ColumnConfigSortable((ContactListDTO.COMMENT), localization.comment(), 200, false));
 
     ColumnModel cm = new ColumnModel(columns);
