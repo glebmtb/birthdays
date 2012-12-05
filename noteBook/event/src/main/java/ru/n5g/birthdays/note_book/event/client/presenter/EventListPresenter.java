@@ -1,5 +1,6 @@
 package ru.n5g.birthdays.note_book.event.client.presenter;
 
+import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -30,9 +31,17 @@ public class EventListPresenter {
         factory.getService().loadList((BasePagingLoadConfig) loadConfig, listAsyncCallback);
       }
     };
-    PagingLoader<PagingLoadResult<EventListDTO>> loader;
-    loader = new BasePagingLoader<PagingLoadResult<EventListDTO>>(proxy, new ModelReader());
-
+    // loader
+    final PagingLoader<PagingLoadResult<EventListDTO>> loader = new BasePagingLoader<PagingLoadResult<EventListDTO>>(proxy) {
+      @Override
+      protected Object newLoadConfig() {
+        BasePagingLoadConfig config = new BaseFilterPagingLoadConfig();
+        return config;
+      }
+    };
+    loader.setSortDir(Style.SortDir.ASC);
+    loader.setSortField(EventListDTO.EVENT_DAYS_LEFT);
+    loader.setRemoteSort(true);
     return new ListStore<EventListDTO>(loader);
   }
 

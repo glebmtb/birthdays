@@ -20,6 +20,11 @@ public class EventListView {
   private String eventYears;
   private Integer eventDay;
   private Integer eventMonth;
+  private String contactLastName;
+  private String contactFirstName;
+  private String contactMiddleName;
+  private String contactNickname;
+
 
   @Id
   @Column(name = "event_id", insertable = false, updatable = false)
@@ -101,5 +106,41 @@ public class EventListView {
 
   public void setEventMonth(Integer eventMonth) {
     this.eventMonth = eventMonth;
+  }
+
+  @Column(name = "contact_last_name", insertable = false, updatable = false)
+  public String getContactLastName() {
+    return contactLastName;
+  }
+
+  public void setContactLastName(String contactLastName) {
+    this.contactLastName = contactLastName;
+  }
+
+  @Column(name = "contact_first_name", insertable = false, updatable = false)
+  public String getContactFirstName() {
+    return contactFirstName;
+  }
+
+  public void setContactFirstName(String contactFirstName) {
+    this.contactFirstName = contactFirstName;
+  }
+
+  @Column(name = "contact_middle_name", insertable = false, updatable = false)
+  public String getContactMiddleName() {
+    return contactMiddleName;
+  }
+
+  public void setContactMiddleName(String contactMiddleName) {
+    this.contactMiddleName = contactMiddleName;
+  }
+
+  @Column(name = "contact_nickname", insertable = false, updatable = false)
+  public String getContactNickname() {
+    return contactNickname;
+  }
+
+  public void setContactNickname(String contactNickname) {
+    this.contactNickname = contactNickname;
   }
 }

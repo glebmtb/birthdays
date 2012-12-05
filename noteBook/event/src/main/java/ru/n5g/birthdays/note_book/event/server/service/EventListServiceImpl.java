@@ -3,6 +3,7 @@ package ru.n5g.birthdays.note_book.event.server.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.extjs.gxt.ui.client.data.BaseFilterPagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.data.BasePagingLoadConfig;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
@@ -27,6 +28,9 @@ public class EventListServiceImpl implements EventListService {
   public BasePagingLoadResult<EventListDTO> loadList(BasePagingLoadConfig loadConfig) {
     BaseModelData filter = new BaseModelData();
     filter.set("userId", User.getAuthenticationUserId());
+    filter.set("sortDir",loadConfig.getSortDir());
+    filter.set("sortField",loadConfig.getSortField());
+    filter.set("filterConfigs",((BaseFilterPagingLoadConfig) loadConfig).getFilterConfigs());
     List<EventListDTO> agentModelList = getModelList(eventListDao.loadTableRows(filter));
     BasePagingLoadResult<EventListDTO> basePagingLoadResult;
     basePagingLoadResult = new BasePagingLoadResult<EventListDTO>(agentModelList);
