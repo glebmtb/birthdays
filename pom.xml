@@ -7,7 +7,7 @@
   <groupId>ru.n5g</groupId>
   <artifactId>birthdays</artifactId>
   <packaging>pom</packaging>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.3-SHAPSHOT</version>
   <modules>
     <module>core</module>
     <module>components</module>
@@ -38,32 +38,32 @@
       <dependency>
         <groupId>ru.n5g.birthdays</groupId>
         <artifactId>core</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.3-SHAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>ru.n5g.birthdays</groupId>
         <artifactId>components</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.3-SHAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>ru.n5g.birthdays.noteBook</groupId>
         <artifactId>contact</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.3-SHAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>ru.n5g.birthdays.noteBook</groupId>
         <artifactId>event</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.3-SHAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>ru.n5g.birthdays.administrator</groupId>
         <artifactId>user</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.3-SHAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>ru.n5g.birthdays.administrator</groupId>
         <artifactId>eventType</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.3-SHAPSHOT</version>
       </dependency>
 
       <dependency>
