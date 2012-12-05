@@ -5,18 +5,14 @@ import java.util.List;
 
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
-import com.extjs.gxt.ui.client.store.Store;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Dialog;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.form.StoreFilterField;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.LiveGridView;
-import com.extjs.gxt.ui.client.widget.grid.filters.GridFilters;
-import com.extjs.gxt.ui.client.widget.grid.filters.StringFilter;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.LiveToolItem;
@@ -79,31 +75,12 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
 
     gridMain = createGrid();
     toolBarBottom = createToolBarBottom(gridMain);
-    toolBarTop.add(createStoreFilterField(gridMain));
+    toolBarTop.add(SimpleCreateField.createStoreFilterField(gridMain));
 
     cp.setTopComponent(toolBarTop);
     cp.add(gridMain);
     cp.setBottomComponent(toolBarBottom);
     add(cp);
-  }
-
-  private StoreFilterField createStoreFilterField(final Grid<ContactListDTO> grid) {
-    GridFilters filters = new GridFilters();
-    final StringFilter stringFilter = new StringFilter("storeFilterField");
-    filters.addFilter(stringFilter);
-    grid.addPlugin(filters);
-    StoreFilterField<ContactListDTO> filter = new StoreFilterField<ContactListDTO>() {
-      @Override
-      protected boolean doSelect(Store<ContactListDTO> store, ContactListDTO parent, ContactListDTO record, String property, String filter) {
-        return false;
-      }
-      @Override
-      protected void onFilter () {
-        focus();
-        stringFilter.setValue(getRawValue());
-      }
-    };
-    return filter;
   }
 
   private SelectionListener<ButtonEvent> createDeleteSelectionListener() {

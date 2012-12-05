@@ -5,12 +5,11 @@ import java.util.List;
 
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.BaseModelData;
+import com.extjs.gxt.ui.client.data.FilterConfig;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 import ru.n5g.birthdays.core.server.bean.Event;
@@ -109,6 +108,7 @@ public class EventListDaoImpl extends BaseDaoImpl<EventListView> implements Even
       public List<Event> doInHibernate(Session session) throws HibernateException, SQLException {
         Criteria criteria = createCriteria(session, filter);
         addOrder(criteria, filter.get("sortDir"), filter.get("sortField"));
+        addFilters(criteria, filter.get("filterConfigs"));
         return criteria.list();
       }
     });
@@ -118,5 +118,18 @@ public class EventListDaoImpl extends BaseDaoImpl<EventListView> implements Even
     Criteria criteria = session.createCriteria(EventListView.class);
     criteria.add(Restrictions.eq("userId", filter.get("userId")));
     return criteria;
+  }
+
+  private void addFilters(Criteria criteria, Object filterConfigs) {
+    if (filterConfigs == null)
+      return;
+    List<FilterConfig> filterConfigList = (List<FilterConfig>) filterConfigs;
+    for (FilterConfig fc : filterConfigList) {
+      if (fc.getField().equals("storeFilterField") && fc.getType() instanceof String) {
+        Disjunction dis = Restrictions.disjunction();
+        dis.add(Restrictions.ilike("contactFio", (String) fc.getValue(), MatchMode.ANYWHERE));
+        criteria.add(dis);
+      }
+    }
   }
 }

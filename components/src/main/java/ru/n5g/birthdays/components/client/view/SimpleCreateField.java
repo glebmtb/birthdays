@@ -1,13 +1,19 @@
 package ru.n5g.birthdays.components.client.view;
 
 import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.store.Store;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.FieldSet;
+import com.extjs.gxt.ui.client.widget.form.StoreFilterField;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
+import com.extjs.gxt.ui.client.widget.grid.Grid;
+import com.extjs.gxt.ui.client.widget.grid.filters.GridFilters;
+import com.extjs.gxt.ui.client.widget.grid.filters.StringFilter;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
@@ -95,5 +101,24 @@ public class SimpleCreateField {
     columnConfig.setSortable(sortable);
     columnConfig.setMenuDisabled(true);
     return columnConfig;
+  }
+
+  public static<М extends ModelData> StoreFilterField createStoreFilterField(final Grid<М> grid) {
+    GridFilters filters = new GridFilters();
+    final StringFilter stringFilter = new StringFilter("storeFilterField");
+    filters.addFilter(stringFilter);
+    grid.addPlugin(filters);
+    StoreFilterField<М> filter = new StoreFilterField<М>() {
+      @Override
+      protected boolean doSelect(Store<М> store, М parent, М record, String property, String filter) {
+        return false;
+      }
+      @Override
+      protected void onFilter () {
+        focus();
+        stringFilter.setValue(getRawValue());
+      }
+    };
+    return filter;
   }
 }

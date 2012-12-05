@@ -76,7 +76,7 @@ public class EventListView extends LayoutContainer implements EventListPresenter
     gridMain = createGrid();
     toolBarBottom = createToolBarBottom(gridMain);
     new QuickTip(gridMain);
-
+    toolBarTop.add(SimpleCreateField.createStoreFilterField(gridMain));
     cp.setTopComponent(toolBarTop);
     cp.add(gridMain);
     cp.setBottomComponent(toolBarBottom);
