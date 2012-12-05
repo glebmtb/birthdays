@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+  <changeSet id="001" author="belyaev">
+    <comment>Создание новой таблицы user_role - список людей</comment>
+    <createTable tableName="user_role" remarks="список ролей">
+      <column name="user_role_id" autoIncrement="true" type="bigint" remarks="П.К.">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_user_role"/>
+      </column>
+      <column name="name" type="varchar(255)" remarks="Имя роли">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code" type="varchar(255)" remarks="Код роли">
+        <constraints nullable="false"/>
+      </column>
+      <column name="comment" type="varchar(1000)" remarks="Комментарий"/>
+    </createTable>
+    <addUniqueConstraint tableName="user_role" columnNames="code" constraintName="uni_user_role"/>
+    <insert tableName="user_role">
+      <column name="name" value="Администратор"/>
+      <column name="code" value="ROLE_ADMIN"/>
+    </insert>
+    <dropColumn tableName="users" columnName="role"/>
+    <delete tableName="users"/>
+    <addColumn tableName="users">
+      <column name="user_role_id" type="bigint">
+        <constraints nullable="false" foreignKeyName="fk_users1"
+                     references="user_role(user_role_id)"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="002" author="belyaev">
+    <sql>
+      insert into users(login, password, user_role_id, comment)
+      values('admin', '1a1dc91c907325c69271ddf0c944bc72',
+      (SELECT a.user_role_id FROM user_role a WHERE a.code = 'ROLE_ADMIN'), 'pass')
+    </sql>
+  </changeSet>
+
+  <changeSet id="003" author="belyaev">
+    <comment>Изменения таблицы people</comment>
+    <dropColumn tableName="people" columnName="phone"/>
+    <addColumn tableName="people">
+      <column name="user_id" type="bigint" remarks="ид пользователя">
+        <constraints nullable="false" foreignKeyName="fk_people1" references="users(id)"/>
+      </column>
+      <column name="nickname" type="varchar(255)" remarks="Прозвище"/>
+    </addColumn>
+    <dropNotNullConstraint tableName="people" columnName="last_name"/>
+    <dropNotNullConstraint tableName="people" columnName="first_name"/>
+  </changeSet>
+
+  <changeSet id="004" author="belyaev">
+    <comment>Изменение название таблиц User</comment>
+    <dropForeignKeyConstraint constraintName="fk_people1" baseTableName="people"/>
+    <renameTable oldTableName="users" newTableName="user"/>
+    <dropPrimaryKey tableName="user" constraintName="pk_users"/>
+    <renameColumn tableName="user" oldColumnName="id" newColumnName="user_id"/>
+    <addPrimaryKey tableName="user" columnNames="user_id" constraintName="pk_user"/>
+    <dropForeignKeyConstraint constraintName="fk_users1" baseTableName="user"/>
+    <addForeignKeyConstraint constraintName="fk_user1"
+                             baseTableName="user" baseColumnNames="user_role_id"
+                             referencedTableName="user_role" referencedColumnNames="user_role_id"
+        />
+  </changeSet>
+
+  <changeSet id="005" author="belyaev">
+    <comment>Изменение таблицы for people to contact</comment>
+    <dropUniqueConstraint tableName="user" constraintName="uni_login"/>
+    <addUniqueConstraint tableName="user" columnNames="login" constraintName="uni_user1"/>
+    <dropPrimaryKey tableName="people" constraintName="pk_people"/>
+    <renameTable oldTableName="people" newTableName="contact"/>
+    <renameColumn tableName="contact" oldColumnName="id" newColumnName="contact_id"/>
+    <addPrimaryKey tableName="contact" columnNames="contact_id" constraintName="pk_contact"/>
+    <addForeignKeyConstraint constraintName="fk_contact1"
+                             baseTableName="contact" baseColumnNames="user_id"
+                             referencedTableName="user" referencedColumnNames="user_id"/>
+  </changeSet>
+
+  <changeSet id="006" author="belyaev">
+    <insert tableName="user_role">
+      <column name="name" value="Пользователь"/>
+      <column name="code" value="ROLE_USER"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="007" author="belyaev">
+    <sql>
+      create view
+        contact_count
+      as
+        select s.user_id, count(d.contact_id) as contact_count
+        from "user" s
+        left join contact d on d.user_id=s.user_id
+        GROUP BY s.user_id
+    </sql>
+  </changeSet>
+
+  <changeSet id="008" author="belyaev">
+    <addColumn tableName="user">
+      <column name="user_name" type="varchar(50)" remarks="Имя пользователя"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="009" author="belyaev">
+    <comment>Добавил таблицу event_type - тип события</comment>
+    <createTable tableName="event_type" remarks="Тип событий">
+      <column name="event_type_id" autoIncrement="true" type="bigint" remarks="П.К.">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_event_type"/>
+      </column>
+      <column name="event_name" type="varchar(100)" remarks="Название события">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="010" author="belyaev">
+    <comment>Добавил таблицу event - события</comment>
+    <createTable tableName="event" remarks="Событий">
+      <column name="event_id" autoIncrement="true" type="bigint" remarks="П.К.">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_event"/>
+      </column>
+      <column name="user_id" type="bigint" remarks="ид пользователя">
+        <constraints nullable="false" foreignKeyName="fk_event1" references="&quot;user&quot;(user_id)"/>
+      </column>
+      <column name="event_type_id" type="bigint" remarks="ид типа события">
+        <constraints nullable="false" foreignKeyName="fk_event2" references="event_type(event_type_id)"/>
+      </column>
+      <column name="day" type="int" remarks="день события"/>
+      <column name="month" type="int" remarks="месяц события"/>
+      <column name="year" type="int" remarks="год события"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="011" author="belyaev">
+    <comment>Добавление колонки в таблицу event</comment>
+    <addColumn tableName="event">
+      <column name="contact_id" type="bigint" remarks="Ид контакта">
+        <constraints nullable="false" foreignKeyName="fk_event3" references="contact(contact_id)"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id="012" author="belyaev">
+    <comment>Добавление новой колонки в event_type</comment>
+    <addColumn tableName="event_type">
+      <column name="single_event" type="boolean" defaultValue="true" remarks="тип праздника может быть только один">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <changeSet id='013' author="belyaev">
+    <comment>Добавление новой вьюшки - список событий</comment>
+    <sql>
+      create view
+        event_list_view
+      as
+        select e.event_id, e.user_id, e.day as event_day, e.month as event_month, et.event_type_id, et.event_name as event_type_name,
+        case when c.nickname is not null
+        then '(' || c.nickname || ')' || ' ' || c.last_name || ' ' || c.first_name || ' ' || c.middle_name
+        else c.last_name || ' ' || c.first_name || ' ' || c.middle_name
+        end as contact_fio,
+        case when (date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date) > -1
+        then date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date
+        else date ((date_part('year', current_date) + 1) || '-' || e.month || '-' || e.day) - current_date
+        end as event_days_left,
+        case when e.year is not null
+        then e.year || ' (' || date_part('year', current_date)-e.year || ')'
+        end as event_years
+        from event e
+        left join event_type et on et.event_type_id=e.event_type_id
+        left join contact c on c.contact_id = e.contact_id
+    </sql>
+  </changeSet>
+
+  <changeSet id='014' author="belyaev">
+    <comment>Исправление вьюшки - список событий</comment>
+    <sql>
+      DROP VIEW event_list_view;
+      create view
+        event_list_view
+      as
+        select e.event_id, e.user_id, e.day as event_day, e.month as event_month, et.event_type_id, et.event_name as event_type_name,
+        c.last_name as contact_last_name,
+        c.first_name as contact_first_name,
+        c.middle_name as contact_middle_name,
+        c.nickname as contact_nickname,
+        case when c.nickname is not null
+        then '(' || c.nickname || ')' || ' ' || c.last_name || ' ' || c.first_name || ' ' || c.middle_name
+        else c.last_name || ' ' || c.first_name || ' ' || c.middle_name
+        end as contact_fio,
+        case when (date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date) > -1
+        then date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date
+        else date ((date_part('year', current_date) + 1) || '-' || e.month || '-' || e.day) - current_date
+        end as event_days_left,
+        case when e.year is not null
+        then e.year || ' (' || date_part('year', current_date)-e.year || ')'
+        end as event_years
+        from event e
+        left join event_type et on et.event_type_id=e.event_type_id
+        left join contact c on c.contact_id = e.contact_id;
+    </sql>
+  </changeSet>
+
+  <changeSet id="015" author="belyaev">
+    <comment>Каскадное удаление событий</comment>
+    <dropForeignKeyConstraint constraintName="fk_event2" baseTableName="event"/>
+    <addForeignKeyConstraint constraintName="fk_event2"
+                             baseTableName="event" baseColumnNames="contact_id"
+                             referencedTableName="contact" referencedColumnNames="contact_id"
+                             onDelete="CASCADE"
+        />
+  </changeSet>
+</databaseChangeLog>

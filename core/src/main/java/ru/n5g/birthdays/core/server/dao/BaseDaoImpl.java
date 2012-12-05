@@ -6,6 +6,8 @@ import java.lang.reflect.TypeVariable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 public class BaseDaoImpl<T> implements BaseDao<T> {
   private Class<T> beanClass;
@@ -31,5 +33,27 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     return beanClass;
+  }
+
+  @Override
+  public void saveOrUpdateNonTransactional(T bean) {
+    hibernateTemplate.saveOrUpdate(bean);
+  }
+
+  @Override
+  @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+  public void saveOrUpdate(T bean) {
+    saveOrUpdateNonTransactional(bean);
+  }
+
+  @Override
+  @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+  public void delete(T bean) {
+    deleteNonTransactional(bean);
+  }
+
+  @Override
+  public void deleteNonTransactional(T bean) {
+    hibernateTemplate.delete(bean);
   }
 }

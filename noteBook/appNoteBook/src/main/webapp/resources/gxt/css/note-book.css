@@ -1,0 +1,17 @@
+.x-grid3-col-deleteEventButton {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.x-grid3-col-editEventButton {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.x-grid3-col-remindCheckBox,
+.x-grid3-col-day,
+.x-grid3-col-year {
+    padding: 0;
+}

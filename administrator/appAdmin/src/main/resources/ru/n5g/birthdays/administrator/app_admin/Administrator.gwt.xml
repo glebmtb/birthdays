@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN"
+    "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to='administrator'>
+  <inherits name="ru.n5g.birthdays.core.Core"/>
+  <inherits name="ru.n5g.birthdays.administrator.user.User"/>
+  <inherits name="ru.n5g.birthdays.administrator.event_type.EventType"/>
+
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='com.extjs.gxt.ui.GXT'/>
+  <inherits name="com.extjs.gxt.desktop.WebDesktop"/>
+  <inherits name="com.google.gwt.place.Place"/>
+  <inherits name="com.google.gwt.activity.Activity"/>
+
+  <entry-point class='ru.n5g.birthdays.administrator.app_admin.client.MainEntryPoint'/>
+
+  <replace-with class="ru.n5g.birthdays.administrator.app_admin.client.factory.AppAdminClientFactoryImpl">
+    <when-type-is class="ru.n5g.birthdays.administrator.app_admin.client.factory.AppAdminClientFactory"/>
+  </replace-with>
+
+  <source path='client'/>
+</module>

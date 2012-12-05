@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<Context>
+  <Resource name="BirthdaysPool"
+            auth="Container"
+            type="javax.sql.DataSource"
+            factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+            testWhileIdle="true"
+            testOnBorrow="true"
+            testOnReturn="false"
+            validationQuery="SELECT 1"
+            validationInterval="30000"
+            timeBetweenEvictionRunsMillis="30000"
+            maxActive="4"
+            maxIdle="4"
+            maxWait="10000"
+            initialSize="4"
+            removeAbandonedTimeout="60"
+            removeAbandoned="true"
+            logAbandoned="true"
+            minEvictableIdleTimeMillis="30000"
+            jmxEnabled="true"
+            jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+            username="birthdaysuser"
+            password="birthdaysuser"
+            driverClassName="org.postgresql.Driver"
+            url="jdbc:postgresql://localhost:5432/birthdays"/>
+</Context>

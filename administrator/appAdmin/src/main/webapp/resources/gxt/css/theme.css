@@ -1,0 +1,227 @@
+.btn-large {
+    /*height: 90px;
+    margin: 3px 10px;
+    min-width: 60px;*/
+    height: 32px;
+    width: 32px;
+
+}
+
+.btn-large .x-btn-text {
+    /*padding-top:  40px;*/
+}
+
+.btn-large button {
+    /*height: 90px !important;*/
+    background-position: center 0px !important;
+    background-repeat: no-repeat !important;
+    /*min-width: 60px;
+    white-space: normal;
+    max-width: 110px;*/
+    width: 32px;
+    height: 32px;
+}
+
+.btn-save-large button {
+    background-image: url("../icons/save.png");
+}
+
+.btn-add-role-large button {
+    background-image: url("../icons/add.png");
+}
+
+.btn-crop-large button {
+    background-image: url("../icons/crop.png");
+}
+
+.btn-signature-large button {
+    background-image: url("../icons/signature.png");
+}
+
+.btn-back-large button {
+    background-image: url("../icons/back.png");
+}
+
+.btn-play-large button {
+    background-image: url("../icons/play.png");
+}
+
+.btn-stop-large button {
+    background-image: url("../icons/stop.png");
+}
+
+.btn-pause-large button {
+    background-image: url("../icons/pause.png");
+}
+
+.btn-add-large button {
+    background-image: url("../icons/add.png");
+}
+
+.btn-edit-large button {
+    background-image: url("../icons/edit.png");
+}
+
+.btn-delete-large button {
+    background-image: url("../icons/delete.png");
+}
+
+.btn-ok-large button {
+    background-image: url("../icons/ok.png");
+}
+
+.btn-photo-large button {
+    background-image: url("../icons/photo.png");
+}
+
+.btn-print-large button {
+    background-image: url("../icons/print.png");
+}
+
+.btn-note-large button {
+    background-image: url("../icons/note.png");
+}
+
+.btn-export-large button {
+    background-image: url("../icons/export.png");
+}
+
+.btn-download-large button {
+    background-image: url("../icons/download.png");
+}
+
+.btn-filter-large button {
+    background-image: url("../icons/filter.png");
+}
+
+.btn-remove-filter-large button {
+    background-image: url("../icons/filter-.png");
+}
+
+btn-chart-large button {
+    background-image: url("../icons/edit.png");
+}
+
+.x-panel-body {
+    border-width: 0px;
+}
+
+.btn-tab {
+    margin-left: 15px;
+    padding-left: 15px;
+}
+
+.btn-sex-f, .btn-sex-m {
+    width: 32px;
+    height: 26px;
+}
+.btn-sex-m button {
+    background: url("../icons/male.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}
+
+.btn-sex-f button {
+    background: url("../icons/female.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}
+
+.toolbar-tab {
+    background: none;
+}
+
+.toolbar-tab ul.x-tab-strip li {
+    margin-left: 15px;
+}
+
+.toolbar-tab .x-tab-panel-header {
+    border: none;
+    padding-bottom: 0px;
+}
+
+#app-form{
+    padding: 0px;
+    margin: 0px;
+
+}
+
+.x-panel-bwrap {
+    margin-top: -1px;
+}
+
+#imgPanel{
+
+}
+
+.funnel{
+    background-image: url(../icons/search.png);
+    width: 24px;
+    height: 24px;
+}
+
+.filter-filed{
+
+}
+
+.panel-jp{
+    padding: 0px;
+    margin: 0px;
+    border-width: 0px !important;
+}
+
+.redstar{
+    color:red;
+    font-weight: bold;
+}
+
+.file-upload-panel .x-panel-bwrap .x-panel-body form .x-form-field-wrap input[type=text]{
+    height: 18px !important;
+}
+
+.top-panel{
+    position: absolute;
+    z-index: 1;
+    top: 35px;
+    right: 0px;
+}
+
+.panel-header-right{
+    padding-top: 20px !important;
+}
+
+.btn-refresh-list button {
+    background: url("../icons/refresh_list.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}
+
+.btn-contact-new button {
+    background: url("../icons/contact_new.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}
+
+.btn-contact-edit button {
+    background: url("../icons/contact_edit.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}
+
+.btn-contact-delete button {
+    background: url("../icons/contact_delete.png") no-repeat center;
+    height: 32px;
+    width: 32px;
+}
+
+.btn-delete button {
+    background: url("../icons/delete.png") no-repeat center;
+    height: 32px !important;
+    width: 32px;
+}
+
+.btn-add button {
+    background: url("../icons/add.png") no-repeat center;
+    height: 32px !important;
+    width: 32px;
+}
