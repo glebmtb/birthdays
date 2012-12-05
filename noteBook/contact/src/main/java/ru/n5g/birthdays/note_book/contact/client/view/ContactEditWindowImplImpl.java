@@ -53,7 +53,6 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private TrimTextAreaField comment;
 
   private AdvancedComboBox eventTypeComboBox;
-  private Button addEventTypeButton;
   private Grid<EventListDTO> eventGrid;
   private List<EventListDTO> eventListSave = new ArrayList<EventListDTO>(0);
 
@@ -107,24 +106,20 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     eventTypeComboBox = SimpleCreateField.createComboBox(localization.comboBoxLoading()
         , localization.comboBoxInitialization(), presenter.getEventTypeComboBoxStore()
         , EventTypeDTO.NAME, "combobox_2012082514453", false);
-    eventTypeComboBox.setWidth(282);
-    eventTypeComboBox.addListener(Events.Change, new Listener<BaseEvent>() {
+    eventTypeComboBox.setWidth(305);
+    eventTypeComboBox.addListener(Events.Select, new Listener<BaseEvent>() {
       @Override
       public void handleEvent(BaseEvent be) {
-        addEventTypeButton.setEnabled(eventTypeComboBox.getValue() != null);
+        if (eventTypeComboBox.getValue() != null)
+          createSelectionListenerAddEventTypeButton();
       }
     });
 
-
-    addEventTypeButton = SimpleCreateField.createButtonWithIcon("btn-add-16", localization.addEventType()
-        , "button_201210071212", createSelectionListenerAddEventTypeButton());
-    addEventTypeButton.disable();
 
     HorizontalPanel addEventPanel;
     addEventPanel = new HorizontalPanel();
     addEventPanel.setStyleAttribute("padding-bottom", "3px");
     addEventPanel.add(eventTypeComboBox);
-    addEventPanel.add(addEventTypeButton);
 
     LayoutContainer eventPanel;
     eventPanel = new LayoutContainer();
@@ -389,16 +384,10 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     };
   }
 
-  private SelectionListener<ButtonEvent> createSelectionListenerAddEventTypeButton() {
-    return new SelectionListener<ButtonEvent>() {
-      @Override
-      public void componentSelected(ButtonEvent ce) {
-        EventListDTO dto = new EventListDTO();
-        dto.setEventType((EventTypeDTO) eventTypeComboBox.getValue());
-        eventGrid.getStore().insert(dto, 0);
-        eventTypeComboBox.clear();
-        addEventTypeButton.disable();
-      }
-    };
+  private void createSelectionListenerAddEventTypeButton() {
+    EventListDTO dto = new EventListDTO();
+    dto.setEventType((EventTypeDTO) eventTypeComboBox.getValue());
+    eventGrid.getStore().insert(dto, 0);
+    eventTypeComboBox.clear();
   }
 }
