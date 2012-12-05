@@ -5,7 +5,7 @@
   <parent>
     <artifactId>birthdays</artifactId>
     <groupId>ru.n5g</groupId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>ru.n5g.birthdays</groupId>
