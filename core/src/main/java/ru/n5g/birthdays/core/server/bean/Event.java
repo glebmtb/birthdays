@@ -98,7 +98,7 @@ public class Event {
     this.year = year;
   }
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
   @JoinColumn(name = "contact_id", insertable = false, updatable = false)
   public Contact getContact() {
     return contact;

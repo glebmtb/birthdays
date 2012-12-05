@@ -94,7 +94,7 @@ public class Contact {
     this.userId = userId;
   }
 
-  @OneToMany(mappedBy = "contact")
+  @OneToMany(cascade = {CascadeType.ALL},mappedBy = "contact")
   public List<Event> getEvent() {
     return event;
   }

@@ -206,4 +206,14 @@
         left join contact c on c.contact_id = e.contact_id;
     </sql>
   </changeSet>
+
+  <changeSet id="015" author="belyaev">
+    <comment>Каскадное удаление событий</comment>
+    <dropForeignKeyConstraint constraintName="fk_event2" baseTableName="event"/>
+    <addForeignKeyConstraint constraintName="fk_event2"
+                             baseTableName="event" baseColumnNames="contact_id"
+                             referencedTableName="contact" referencedColumnNames="contact_id"
+                             onDelete="CASCADE"
+        />
+  </changeSet>
 </databaseChangeLog>
