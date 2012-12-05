@@ -170,10 +170,10 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
   private Grid<ContactListDTO> createGrid() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-    columns.add(ColumnConfigSortable(ContactListDTO.NICKNAME, localization.nickname(), 50, true));
-    columns.add(ColumnConfigSortable((ContactListDTO.FIO), localization.fio(), 100, true));
-    columns.add(ColumnConfigSortable((ContactListDTO.EVENT_LIST), localization.eventList(), 250, false));
-    columns.add(ColumnConfigSortable((ContactListDTO.COMMENT), localization.comment(), 200, false));
+    columns.add(SimpleCreateField.columnConfigSortable(ContactListDTO.NICKNAME, localization.nickname(), 50, true));
+    columns.add(SimpleCreateField.columnConfigSortable((ContactListDTO.FIO), localization.fio(), 100, true));
+    columns.add(SimpleCreateField.columnConfigSortable((ContactListDTO.EVENT_LIST), localization.eventList(), 250, false));
+    columns.add(SimpleCreateField.columnConfigSortable((ContactListDTO.COMMENT), localization.comment(), 200, false));
 
     ColumnModel cm = new ColumnModel(columns);
     ListStore store = presenter.loadContactList();
@@ -212,13 +212,6 @@ public class ContactListViewImpl extends LayoutContainer implements ContactListP
 
   private void onGridDoubleClick(GridEvent<ContactListDTO> be) {
     onEditContact();
-  }
-
-  public ColumnConfig ColumnConfigSortable(String id, String name, int width, boolean sortable) {
-    ColumnConfig columnConfig = new ColumnConfig(id, name, width);
-    columnConfig.setSortable(sortable);
-    columnConfig.setMenuDisabled(true);
-    return columnConfig;
   }
 
   private void enableButtons(boolean itemSelected, boolean singleItemSelected, List<ContactListDTO> selection) {

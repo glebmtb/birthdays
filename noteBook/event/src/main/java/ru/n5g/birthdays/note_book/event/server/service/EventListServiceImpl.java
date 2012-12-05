@@ -9,46 +9,67 @@ import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import ru.n5g.birthdays.core.server.bean.Event;
-import ru.n5g.birthdays.core.server.bean.EventType;
+import ru.n5g.birthdays.core.server.bean.EventListView;
 import ru.n5g.birthdays.core.server.bean.User;
-import ru.n5g.birthdays.core.shared.bean.EventDTO;
 import ru.n5g.birthdays.core.shared.bean.RpcWhiteList;
+import ru.n5g.birthdays.core.shared.util.MonthTranslate;
 import ru.n5g.birthdays.note_book.event.client.service.EventListService;
 import ru.n5g.birthdays.note_book.event.server.dao.EventListDao;
+import ru.n5g.birthdays.note_book.event.shared.bean.EventListDTO;
+import ru.n5g.birthdays.note_book.event.shared.bean.RpcWhiteListEvent;
 
 @Service("eventTypeListService.rpc")
 public class EventListServiceImpl implements EventListService {
   @Autowired
-  private EventListDao eventDao;
+  private EventListDao eventListDao;
 
   @Override
-  public BasePagingLoadResult<EventDTO> loadList(BasePagingLoadConfig loadConfig) {
+  public BasePagingLoadResult<EventListDTO> loadList(BasePagingLoadConfig loadConfig) {
     BaseModelData filter = new BaseModelData();
     filter.set("userId", User.getAuthenticationUserId());
-    List<EventDTO> agentModelList = getModelList(eventDao.loadTableRows(filter));
-    int start = 0;
-    int limit = eventDao.getTableRowsCount(filter);
-    int offsetLimit = 0;
-
-    BasePagingLoadResult<EventDTO> basePagingLoadResult;
-    basePagingLoadResult = new BasePagingLoadResult<EventDTO>(agentModelList, start, limit);
+    List<EventListDTO> agentModelList = getModelList(eventListDao.loadTableRows(filter));
+    BasePagingLoadResult<EventListDTO> basePagingLoadResult;
+    basePagingLoadResult = new BasePagingLoadResult<EventListDTO>(agentModelList);
     return basePagingLoadResult;
   }
 
-  protected List<EventDTO> getModelList(List dataList) {
+  protected List<EventListDTO> getModelList(List dataList) {
     List resultList = new ArrayList();
+    EventListView bean;
+    EventListDTO dto;
     for (Object o : dataList) {
-      EventDTO dto = Event.convert((Event) o);
-      dto.setEventType(EventType.convert(((Event) o).getEventType()));
+      bean = (EventListView) o;
+      dto = new EventListDTO();
+      dto.setId(bean.getId());
+      dto.setEventTypeName(bean.getEventTypeName());
+      dto.setContactFio(bean.getContactFio());
+      dto.setEventDaysLeft(bean.getEventDaysLeft());
+      dto.setEventYears(bean.getEventYears());
+      dto.setEventDay(convertDay(bean.getEventDay(), bean.getEventMonth()));
       resultList.add(dto);
     }
+    bean = null;
+    dto = null;
     return resultList;
   }
 
 
   @Override
   public RpcWhiteList registerClasses(RpcWhiteList whiteList) throws AccessDeniedException, RuntimeException {
-    return new RpcWhiteList();
+    return new RpcWhiteListEvent();
+  }
+
+  private String convertDay(Integer day, Integer month) {
+    StringBuilder st = new StringBuilder();
+    if (day != null)
+      st.append(day);
+    else
+      st.append("**");
+    st.append(" ");
+    if (month != null)
+      st.append(MonthTranslate.getMonthName(month));
+    else
+      st.append("*****");
+    return st.toString();
   }
 }

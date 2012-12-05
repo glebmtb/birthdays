@@ -19,11 +19,11 @@ import com.extjs.gxt.ui.client.widget.toolbar.FillToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.LiveToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
+import ru.n5g.birthdays.components.client.view.SimpleCreateField;
 import ru.n5g.birthdays.core.client.util.TestIdSetter;
-import ru.n5g.birthdays.core.shared.bean.EventDTO;
-import ru.n5g.birthdays.core.shared.bean.EventTypeDTO;
 import ru.n5g.birthdays.note_book.event.client.localization.EventListLocalization;
 import ru.n5g.birthdays.note_book.event.client.presenter.EventListPresenter;
+import ru.n5g.birthdays.note_book.event.shared.bean.EventListDTO;
 
 /**
  * @author belyaev
@@ -32,7 +32,7 @@ public class EventListView extends LayoutContainer implements EventListPresenter
   private EventListPresenter presenter;
   private EventListLocalization localization;
 
-  private Grid<EventDTO> gridMain;
+  private Grid<EventListDTO> gridMain;
   private ToolBar toolBarTop;
   private ToolBar toolBarBottom;
 
@@ -83,7 +83,7 @@ public class EventListView extends LayoutContainer implements EventListPresenter
     add(cp);
   }
 
-  private ToolBar createToolBarBottom(Grid<EventDTO> grid) {
+  private ToolBar createToolBarBottom(Grid<EventListDTO> grid) {
     ToolBar toolBarBottom;
     toolBarBottom = new ToolBar();
     LiveToolItem item;
@@ -118,14 +118,14 @@ public class EventListView extends LayoutContainer implements EventListPresenter
     gridMain.getStore().getLoader().load();
   }
 
-  private Grid<EventDTO> createGrid() {
+  private Grid<EventListDTO> createGrid() {
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
-    columns.add(new ColumnConfig(EventDTO.EVENT_DAY, localization.eventDay(), 30));
-    columns.add(new ColumnConfig(EventDTO.EVENT_TYPE + "." + EventTypeDTO.NAME, localization.nameEventType(), 100));
-    //имя контакта
-    //дата события
-    //дней осталось
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_DAYS_LEFT, localization.days(), 30, true));
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.CONTACT_FIO, localization.fio(), 30, true));
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_TYPE_NAME, localization.eventName(), 30, true));
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_DAY , localization.eventDay(), 30, true));
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_YEARS , localization.years(), 30, true));
 
     ColumnModel cm = new ColumnModel(columns);
     ListStore store = presenter.loadList();
@@ -134,8 +134,8 @@ public class EventListView extends LayoutContainer implements EventListPresenter
     liveView = new LiveGridView();
     liveView.setEmptyText(localization.listEmpty());
 
-    Grid<EventDTO> grid;
-    grid = new Grid<EventDTO>(store, cm);
+    Grid<EventListDTO> grid;
+    grid = new Grid<EventListDTO>(store, cm);
     grid.setBorders(false);
     grid.setLoadMask(true);
     grid.setStripeRows(true);
@@ -143,31 +143,31 @@ public class EventListView extends LayoutContainer implements EventListPresenter
     grid.getView().setAutoFill(true);
     grid.getView().setForceFit(true);
     grid.getView().setShowDirtyCells(false);
-    grid.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<EventDTO>() {
+    grid.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<EventListDTO>() {
       @Override
-      public void selectionChanged(SelectionChangedEvent<EventDTO> se) {
+      public void selectionChanged(SelectionChangedEvent<EventListDTO> se) {
         int selSize = se.getSelection().size();
         boolean itemSelected = selSize > 0;
         boolean singleItemSelected = selSize == 1;
         enableButtons(itemSelected, singleItemSelected, se.getSelection());
       }
     });
-    grid.addListener(Events.RowDoubleClick, new Listener<GridEvent<EventDTO>>() {
+    grid.addListener(Events.RowDoubleClick, new Listener<GridEvent<EventListDTO>>() {
       @Override
-      public void handleEvent(GridEvent<EventDTO> be) {
+      public void handleEvent(GridEvent<EventListDTO> be) {
         onGridDoubleClick(be);
       }
     });
     return grid;
   }
 
-  private void enableButtons(boolean itemSelected, boolean singleItemSelected, List<EventDTO> selection) {
+
+  private void enableButtons(boolean itemSelected, boolean singleItemSelected, List<EventListDTO> selection) {
     btnEdit.setEnabled(singleItemSelected);
     btnDel.setEnabled(itemSelected);
   }
 
-  private void onGridDoubleClick(GridEvent<EventDTO> be) {
+  private void onGridDoubleClick(GridEvent<EventListDTO> be) {
 //TODO
   }
-
 }

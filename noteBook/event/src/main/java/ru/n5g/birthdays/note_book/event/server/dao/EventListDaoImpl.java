@@ -12,13 +12,14 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 import ru.n5g.birthdays.core.server.bean.Event;
+import ru.n5g.birthdays.core.server.bean.EventListView;
 import ru.n5g.birthdays.core.server.dao.BaseDaoImpl;
 
 /**
  * @author belyaev
  */
 @Repository
-public class EventListDaoImpl extends BaseDaoImpl<Event> implements EventListDao {
+public class EventListDaoImpl extends BaseDaoImpl<EventListView> implements EventListDao {
   @Override
   public int getTableRowsCount(final BaseModelData filter) {
     return hibernateTemplate.execute(new HibernateCallback<Integer>() {
@@ -43,7 +44,7 @@ public class EventListDaoImpl extends BaseDaoImpl<Event> implements EventListDao
   }
 
   private Criteria createCriteria(Session session, BaseModelData filter) {
-    Criteria criteria = session.createCriteria(Event.class);
+    Criteria criteria = session.createCriteria(EventListView.class);
     criteria.add(Restrictions.eq("userId", filter.get("userId")));
     return criteria;
   }

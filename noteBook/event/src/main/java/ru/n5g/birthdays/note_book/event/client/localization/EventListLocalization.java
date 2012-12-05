@@ -18,4 +18,12 @@ public interface EventListLocalization extends Constants {
   String listEmpty();
 
   String eventDay();
+
+  String days();
+
+  String fio();
+
+  String eventName();
+
+  String years();
 }

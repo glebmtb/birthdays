@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.FieldSet;
+import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import ru.n5g.birthdays.core.client.combo_box.AdvancedComboBox;
@@ -87,5 +88,12 @@ public class SimpleCreateField {
     button.addSelectionListener(listener);
     TestIdSetter.resetTestId(button, testId);
     return button;
+  }
+
+  public static ColumnConfig columnConfigSortable(String id, String name, int width, boolean sortable) {
+    ColumnConfig columnConfig = new ColumnConfig(id, name, width);
+    columnConfig.setSortable(sortable);
+    columnConfig.setMenuDisabled(true);
+    return columnConfig;
   }
 }

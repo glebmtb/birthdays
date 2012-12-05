@@ -4,9 +4,9 @@ import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
-import ru.n5g.birthdays.core.shared.bean.EventDTO;
 import ru.n5g.birthdays.note_book.event.client.factory.EventListFactory;
 import ru.n5g.birthdays.note_book.event.client.view.EventListView;
+import ru.n5g.birthdays.note_book.event.shared.bean.EventListDTO;
 
 public class EventListPresenter {
   private EventListFactory factory;
@@ -24,16 +24,16 @@ public class EventListPresenter {
   }
 
   public ListStore loadList() {
-    RpcProxy<BasePagingLoadResult<EventDTO>> proxy = new RpcProxy<BasePagingLoadResult<EventDTO>>() {
+    RpcProxy<BasePagingLoadResult<EventListDTO>> proxy = new RpcProxy<BasePagingLoadResult<EventListDTO>>() {
       @Override
-      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<EventDTO>> listAsyncCallback) {
+      protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<EventListDTO>> listAsyncCallback) {
         factory.getService().loadList((BasePagingLoadConfig) loadConfig, listAsyncCallback);
       }
     };
-    PagingLoader<PagingLoadResult<EventDTO>> loader;
-    loader = new BasePagingLoader<PagingLoadResult<EventDTO>>(proxy, new ModelReader());
+    PagingLoader<PagingLoadResult<EventListDTO>> loader;
+    loader = new BasePagingLoader<PagingLoadResult<EventListDTO>>(proxy, new ModelReader());
 
-    return new ListStore<EventDTO>(loader);
+    return new ListStore<EventListDTO>(loader);
   }
 
   public interface View extends IsWidget {

@@ -153,4 +153,28 @@
       </column>
     </addColumn>
   </changeSet>
+
+  <changeSet id='013' author="belyaev">
+    <comment>Добавление новой вьюшки - список событий</comment>
+    <sql>
+      create view
+        event_list_view
+      as
+        select e.event_id, e.user_id, e.day as event_day, e.month as event_month, et.event_type_id, et.event_name as event_type_name,
+        case when c.nickname is not null
+        then '(' || c.nickname || ')' || ' ' || c.last_name || ' ' || c.first_name || ' ' || c.middle_name
+        else c.last_name || ' ' || c.first_name || ' ' || c.middle_name
+        end as contact_fio,
+        case when (date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date) > -1
+        then date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date
+        else date ((date_part('year', current_date) + 1) || '-' || e.month || '-' || e.day) - current_date
+        end as event_days_left,
+        case when e.year is not null
+        then e.year || ' (' || date_part('year', current_date)-e.year || ')'
+        end as event_years
+        from event e
+        left join event_type et on et.event_type_id=e.event_type_id
+        left join contact c on c.contact_id = e.contact_id
+    </sql>
+  </changeSet>
 </databaseChangeLog>
