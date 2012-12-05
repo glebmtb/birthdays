@@ -122,10 +122,10 @@ public class EventListView extends LayoutContainer implements EventListPresenter
     List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 
     columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_DAYS_LEFT, localization.days(), 30, true));
-    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.CONTACT_FIO, localization.fio(), 30, true));
-    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_TYPE_NAME, localization.eventName(), 30, true));
-    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_DAY , localization.eventDay(), 30, true));
-    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_YEARS , localization.years(), 30, true));
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.CONTACT_FIO, localization.fio(), 60, true));
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_TYPE_NAME, localization.eventName(), 60, true));
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_DAY , localization.eventDay(), 60, true));
+    columns.add(SimpleCreateField.columnConfigSortable(EventListDTO.EVENT_YEARS , localization.years(), 60, true));
 
     ColumnModel cm = new ColumnModel(columns);
     ListStore store = presenter.loadList();
