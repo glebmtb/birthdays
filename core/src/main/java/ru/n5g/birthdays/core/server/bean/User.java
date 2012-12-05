@@ -15,7 +15,7 @@ public class User {
   private String password;
   private String comment;
   private UserRole role;
-  private ContactCount contactCount;
+  private ContactCountView contactCountView;
   private String userName;
 
   @Id
@@ -68,12 +68,12 @@ public class User {
 
   @OneToOne
   @JoinColumn(name = "user_id", insertable = false, updatable = false)
-  public ContactCount getContactCount() {
-    return contactCount;
+  public ContactCountView getContactCountView() {
+    return contactCountView;
   }
 
-  public void setContactCount(ContactCount contactCount) {
-    this.contactCount = contactCount;
+  public void setContactCountView(ContactCountView contactCountView) {
+    this.contactCountView = contactCountView;
   }
 
   @Column(name = "user_name")
@@ -91,7 +91,7 @@ public class User {
     dto.setLogin(bean.getLogin());
     dto.setRole(UserRole.convert(bean.getRole()));
     dto.setComment(bean.getComment());
-    dto.setCountContact(bean.getContactCount().getCount());
+    dto.setCountContact(bean.getContactCountView().getCount());
     dto.setUserName(bean.getUserName());
     return dto;
   }

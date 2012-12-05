@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "contact_count")
-public class ContactCount {
+public class ContactCountView {
   private Long id;
   private Integer count;
 
