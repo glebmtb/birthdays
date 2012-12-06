@@ -4,4 +4,33 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
+  <changeSet id='001' author="belyaev">
+    <comment>Исправление вьюшки - список событий</comment>
+    <sql>
+      DROP VIEW event_list_view;
+      create view
+        event_list_view
+      as
+        select e.event_id, e.user_id, e.day as event_day, e.month as event_month, et.event_type_id, et.event_name as event_type_name,
+        c.last_name as contact_last_name,
+        c.first_name as contact_first_name,
+        c.middle_name as contact_middle_name,
+        c.nickname as contact_nickname,
+        case when c.nickname is not null
+        then '(' || coalesce(c.nickname, '') || ')' || ' ' || coalesce(c.last_name, '') || ' ' || coalesce(c.first_name, '') || ' ' || coalesce(c.middle_name, '')
+        else coalesce(c.last_name, '') || ' ' || coalesce(c.first_name, '') || ' ' || coalesce(c.middle_name, '')
+        end as contact_fio,
+        case when (date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date) > -1
+        then date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date
+        else date ((date_part('year', current_date) + 1) || '-' || e.month || '-' || e.day) - current_date
+        end as event_days_left,
+        case when coalesce((date (date_part('year', current_date) || '-' || e.month || '-' || e.day) - current_date), 0) > -1
+        then coalesce(e.year || ' (' || date_part('year', current_date) - e.year || ')', '')
+        else coalesce(e.year || ' (' || date_part('year', current_date) - e.year + 1 || ')', '')
+        end as event_years
+        from event e
+        left join event_type et on et.event_type_id=e.event_type_id
+        left join contact c on c.contact_id = e.contact_id;
+    </sql>
+  </changeSet>
 </databaseChangeLog>
