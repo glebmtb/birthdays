@@ -180,13 +180,12 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     column = new ColumnConfig(EventListDTO.DAY, 60);
     GridCellRenderer<EventListDTO> eventDate = new GridCellRenderer<EventListDTO>() {
       @Override
-      public Object render(final EventListDTO model, final String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, Grid<EventListDTO> grid) {
+      public Object render(final EventListDTO model, final String property, ColumnData config, int rowIndex, int colIndex, ListStore<EventListDTO> store, final Grid<EventListDTO> grid) {
         DateField dateField = new DateField();
         dateField.getPropertyEditor().setFormat(DateTimeFormat.getFormat("dd.MM"));
         dateField.setWidth(60);
         dateField.setToolTip(localization.eventDate());
-        if (model.getMonth() != null && model.getDay() != null)
-          dateField.setValue(new Date(0, model.getMonth().intValue() - 1, model.getDay().intValue()));
+        dateField.setValue(createDate(model.getDay(), model.getMonth(), model.getYear()));
         dateField.addListener(Events.Change, new Listener<BaseEvent>() {
           @Override
           public void handleEvent(BaseEvent be) {
@@ -335,6 +334,25 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
     return eventGrid;
   }
 
+  /**
+   * Создает из предоставленных параметров Дату (если день или месяц пуст то воз
+   *
+   * @param day
+   * @param month
+   * @param year
+   * @return - Дату если день или месяц пуст то возвращает нулл
+   */
+  private Date createDate(Integer day, Integer month, Integer year) {
+    if (day == null && month == null)
+      return null;
+
+    Date date = new Date(0, month, day);
+    if (year != null)
+      date.setYear(year);
+
+    return date;
+  }
+
   private String getTitleWindow() {
     if (action == ActionEnum.ADD) {
       return localization.getAddTitle();
@@ -387,7 +405,21 @@ public class ContactEditWindowImplImpl extends Window implements ContactEditPres
   private void createSelectionListenerAddEventTypeButton() {
     EventListDTO dto = new EventListDTO();
     dto.setEventType((EventTypeDTO) eventTypeComboBox.getValue());
+    setDefaultDate(dto);
     eventGrid.getStore().insert(dto, 0);
     eventTypeComboBox.clear();
+  }
+
+  /**
+   * Устанавливает текущий дату в объект
+   *
+   * @param dto - EventListDTO
+   */
+  public void setDefaultDate(EventListDTO dto) {
+    //TODO найти другую Date для использования получения дней и убрать устарелые методы
+    Date currentDate = new Date();
+    dto.setDay(currentDate.getDay());
+    dto.setMonth(currentDate.getMonth());
+    dto.setYear(currentDate.getYear() + 1900);
   }
 }
