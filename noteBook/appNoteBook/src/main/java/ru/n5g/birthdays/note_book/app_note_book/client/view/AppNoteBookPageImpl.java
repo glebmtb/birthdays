@@ -93,8 +93,8 @@ public class AppNoteBookPageImpl extends ContentPanel implements AppNoteBookPage
     btnEventType.setBorders(false);
 
 
-    toolBar.add(btnContact);
     toolBar.add(btnEventType);
+    toolBar.add(btnContact);
     toolBar.add(btnLogout);
   }
 
