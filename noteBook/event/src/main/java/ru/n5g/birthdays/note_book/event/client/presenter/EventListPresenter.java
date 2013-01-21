@@ -24,7 +24,7 @@ public class EventListPresenter {
     return view;
   }
 
-  public ListStore loadList() {
+  public ListStore<EventListDTO> loadList() {
     RpcProxy<BasePagingLoadResult<EventListDTO>> proxy = new RpcProxy<BasePagingLoadResult<EventListDTO>>() {
       @Override
       protected void load(Object loadConfig, AsyncCallback<BasePagingLoadResult<EventListDTO>> listAsyncCallback) {
